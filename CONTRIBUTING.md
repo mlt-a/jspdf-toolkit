@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping. Issues and pull requests are welcome.
+Thanks for helping. Issues and pull requests are welcome. For a security problem, see [SECURITY.md](SECURITY.md).
 
 ## Setup
 
