@@ -1,0 +1,1985 @@
+properties title="Acme Technologies — Operations & Compliance Manual 2026" subject="Internal operations manual — stress test document" author="Acme Technologies SA" keywords="operations, compliance, manual, stress-test"
+
+## page 1 (210.00 x 297.00 mm)
+fill   x=12.00 y=20.00 w=30.00 h=1.50 #3673b8 f
+text   x=12.00 y=34.61 28pt #1e293b Inter-bold "Operations & Compliance Manual"
+text   x=12.00 y=46.17 14pt #64748b Inter-normal "Acme Technologies SA — Fiscal Year 2026"
+fill   x=0.00 y=178.05 w=210.00 h=118.95 #e0ebf5 f
+
+## page 2 (210.00 x 297.00 mm)
+text   x=12.00 y=26.10 24pt #1e293b Inter-bold "Operations & Compliance Manual 2026"
+fill   x=12.00 y=33.01 w=56.50 h=8.13 #e0ebf5 B
+stroke x=12.00 y=33.01 w=56.50 h=8.13 #e0ebf5 line=0.30 B
+text   x=18.00 y=38.21 9pt #3572b8 Inter-bold "INTERNAL — CONFIDENTIAL"
+stroke x=12.00 y=49.13 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=58.69 14pt #1e293b Inter-bold "Document information"
+text   x=12.00 y=66.09 10pt #64748b Inter-normal "Reference"
+text   x=47.00 y=66.09 10pt #1e293b Inter-normal "MT-OPS-2026-001"
+text   x=12.00 y=71.68 10pt #64748b Inter-normal "Version"
+text   x=47.00 y=71.68 10pt #1e293b Inter-normal "3.2"
+text   x=12.00 y=77.27 10pt #64748b Inter-normal "Effective date"
+text   x=47.00 y=77.27 10pt #1e293b Inter-normal "1 January 2026"
+text   x=109.00 y=58.69 14pt #1e293b Inter-bold "Distribution"
+text   x=109.00 y=66.09 10pt #64748b Inter-normal "Classification"
+text   x=144.00 y=66.09 10pt #1e293b Inter-normal "Confidential"
+text   x=109.00 y=71.68 10pt #64748b Inter-normal "Audience"
+text   x=144.00 y=71.68 10pt #1e293b Inter-normal "Board, Exec, Compliance"
+text   x=109.00 y=77.27 10pt #64748b Inter-normal "Retention"
+text   x=144.00 y=77.27 10pt #1e293b Inter-normal "10 years"
+text   x=12.00 y=93.60 9pt #1e293b Inter-normal "This manual consolidates all operational policies, governance structures, regulatory requirements, and internal procedures"
+text   x=12.00 y=97.73 9pt #1e293b Inter-normal "for Acme Technologies SA for the fiscal year 2026. All employees with management responsibilities are expected to review"
+text   x=12.00 y=101.85 9pt #1e293b Inter-normal "and acknowledge the contents of this document."
+text   x=12.00 y=119.25 14pt #3572b8 Inter-bold "Executive Summary"
+text   x=12.00 y=128.40 9pt #1e293a Inter-normal "Acme Technologies enters 2026 with strong operational foundations following a year of significant growth across all"
+text   x=12.00 y=132.53 9pt #1e293a Inter-normal "business units. Our compliance framework has been reinforced with enhanced monitoring capabilities, and our IT"
+text   x=12.00 y=136.66 9pt #1e293a Inter-normal "infrastructure has achieved 99.97% uptime across all production systems."
+text   x=12.00 y=144.53 8pt #64748b Inter-bold "Revenue growth"
+fill   x=12.00 y=146.35 w=14.64 h=4.13 #e8edf5 f
+text   x=13.00 y=149.21 9pt #1e293b Inter-bold "+23.4%"
+text   x=76.67 y=144.53 8pt #64748b Inter-bold "Compliance score"
+fill   x=76.67 y=146.35 w=17.58 h=4.13 #e8edf5 f
+text   x=77.67 y=149.21 9pt #1e293b Inter-bold "98.2 / 100"
+text   x=141.33 y=144.53 8pt #64748b Inter-bold "Employee count"
+fill   x=141.33 y=146.35 w=10.42 h=4.13 #e8edf5 f
+text   x=142.33 y=149.21 9pt #1e293b Inter-bold "1,247"
+text   x=12.00 y=158.76 9pt #1e293b Inter-normal "Strategic initiatives for the coming year include the expansion of our APAC operations center, the rollout of a unified client"
+text   x=12.00 y=162.89 9pt #1e293b Inter-normal "portal, and the migration of legacy trading systems to the next-generation platform."
+text   x=12.00 y=171.02 9pt #1e293b Inter-normal "The board has approved a capital expenditure budget of EUR 42M for infrastructure modernization, with an additional EUR"
+text   x=12.00 y=175.15 9pt #1e293b Inter-normal "8.5M allocated for regulatory technology upgrades mandated by the revised MiFID III framework."
+fill   x=12.00 y=180.99 w=186.00 h=32.64 #f2f5fa B
+stroke x=12.00 y=180.99 w=186.00 h=32.64 #d6e3f2 line=0.30 B
+text   x=16.00 y=187.27 9pt #3572b8 Inter-bold "Key strategic priorities for 2026"
+text   x=16.00 y=193.40 9pt #1e293b Inter-normal "The executive committee has identified the following areas as mission-critical for the fiscal year:"
+text   x=16.00 y=199.53 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=199.53 9pt #1e293b Inter-normal "Complete APAC operations center build-out by Q3 2026"
+text   x=16.00 y=203.66 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=203.66 9pt #1e293b Inter-normal "Achieve ISO 27001 recertification with zero non-conformities"
+text   x=16.00 y=207.78 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=207.78 9pt #1e293b Inter-normal "Reduce client onboarding time from 14 days to 5 business days"
+text   x=12.00 y=219.91 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=219.91 9pt #1e293b Inter-normal "Regulatory compliance across all jurisdictions of operation"
+text   x=12.00 y=225.04 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=225.04 9pt #1e293b Inter-normal "Operational resilience and business continuity planning"
+text   x=12.00 y=230.17 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=230.17 9pt #1e293b Inter-normal "Technology modernization roadmap"
+text   x=16.00 y=235.29 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=235.29 9pt #1e293b Inter-normal "Legacy system decommissioning"
+text   x=16.00 y=240.42 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=240.42 9pt #1e293b Inter-normal "Cloud migration phases 2 and 3"
+text   x=12.00 y=246.55 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=246.55 9pt #1e293b Inter-normal "Talent acquisition and retention strategy"
+text   x=12.00 y=251.68 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=251.68 9pt #1e293b Inter-normal "Client experience improvement program"
+text   x=16.00 y=256.80 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=256.80 9pt #1e293b Inter-normal "Portal redesign"
+text   x=16.00 y=261.93 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=261.93 9pt #1e293b Inter-normal "API self-service capabilities"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.78 y=289.39 7pt #64748b Inter-bold tracking=0.18 "1/13"
+
+## page 3 (210.00 x 297.00 mm)
+text   x=12.00 y=23.56 14pt #3572b8 Inter-bold "Organization & Governance"
+text   x=12.00 y=36.96 10pt #1e293b Inter-bold "Executive Leadership Team"
+text   x=12.00 y=45.04 8pt #64748b Inter-bold "Executive Committee"
+text   x=12.00 y=50.96 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=50.96 9pt #1e293b Inter-normal "C. Harper — CEO"
+text   x=12.00 y=56.09 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=56.09 9pt #1e293b Inter-normal "M. Lawson — CFO"
+text   x=12.00 y=61.22 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=61.22 9pt #1e293b Inter-normal "A. Novak — CTO"
+text   x=12.00 y=66.34 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=66.34 9pt #1e293b Inter-normal "S. Chen — COO"
+text   x=109.00 y=45.04 8pt #64748b Inter-bold "Board of Directors"
+text   x=109.00 y=50.96 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=50.96 9pt #1e293b Inter-normal "J. Whitfield — Chair"
+text   x=109.00 y=56.09 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=56.09 9pt #1e293b Inter-normal "R. Tanaka — Independent"
+text   x=109.00 y=61.22 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=61.22 9pt #1e293b Inter-normal "L. Marques — Independent"
+text   x=109.00 y=66.34 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=66.34 9pt #1e293b Inter-normal "P. Reinhardt — Observer"
+text   x=12.00 y=78.73 10pt #1e293b Inter-bold "Governance Framework"
+text   x=12.00 y=85.06 9pt #1e293b Inter-normal "1."
+text   x=17.00 y=85.06 9pt #1e293b Inter-normal "Annual board review of operational risk appetite and tolerance levels"
+text   x=12.00 y=90.19 9pt #1e293b Inter-normal "2."
+text   x=17.00 y=90.19 9pt #1e293b Inter-normal "Quarterly compliance committee meetings"
+text   x=16.00 y=95.31 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=95.31 9pt #1e293b Inter-normal "Review of regulatory changes"
+text   x=16.00 y=100.44 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=100.44 9pt #1e293b Inter-normal "Assessment of compliance incidents"
+text   x=16.00 y=105.57 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=105.57 9pt #1e293b Inter-normal "Policy update approvals"
+text   x=12.00 y=111.70 9pt #1e293b Inter-normal "3."
+text   x=17.00 y=111.70 9pt #1e293b Inter-normal "Monthly executive risk dashboard publication"
+text   x=12.00 y=116.82 9pt #1e293b Inter-normal "4."
+text   x=17.00 y=116.82 9pt #1e293b Inter-normal "Bi-annual internal audit cycle with external validation"
+text   x=12.00 y=129.20 10pt #1e293b Inter-bold "Registered Office"
+stroke x=12.00 y=133.25 w=93.00 h=23.56 #d6e3f2 line=0.40 S
+text   x=16.00 y=139.54 9pt #3572b8 Inter-bold "Acme Technologies SA"
+text   x=16.00 y=143.66 8pt #64748b Inter-normal "European Headquarters"
+text   x=16.00 y=147.79 9pt #1e293b Inter-normal "47 Kingsway"
+text   x=16.00 y=151.92 9pt #1e293b Inter-normal "London WC2B 6TP, United Kingdom"
+stroke x=12.00 y=162.81 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=178.36 14pt #3572b8 Inter-bold "Compliance & Regulatory Framework"
+text   x=12.00 y=191.77 10pt #1e293b Inter-bold "Regulatory Status"
+stroke x=12.00 y=195.21 w=3.50 h=3.50 #3673b8 line=0.28 S
+stroke x=12.87 y=196.96 w=0.70 h=0.70 #3673b8 line=0.50 S
+stroke x=13.58 y=196.19 w=1.16 h=1.47 #3673b8 line=0.50 S
+text   x=17.50 y=198.10 9pt #1e293b Inter-normal "MiFID II / MiFID III — Full compliance achieved"
+stroke x=12.00 y=201.34 w=3.50 h=3.50 #3673b8 line=0.28 S
+stroke x=12.87 y=203.09 w=0.70 h=0.70 #3673b8 line=0.50 S
+stroke x=13.58 y=202.32 w=1.16 h=1.47 #3673b8 line=0.50 S
+text   x=17.50 y=204.23 9pt #1e293b Inter-normal "GDPR — Data Protection Officer appointed"
+stroke x=12.00 y=207.46 w=3.50 h=3.50 #63738c line=0.28 S
+text   x=17.50 y=210.36 9pt #1e293b Inter-normal "DORA — Implementation in progress (deadline Q4 2026)"
+stroke x=12.00 y=213.59 w=3.50 h=3.50 #e01c47 line=0.28 S
+stroke x=12.98 y=214.57 w=1.54 h=1.54 #e01c47 line=0.50 S
+stroke x=12.98 y=214.57 w=1.54 h=1.54 #e01c47 line=0.50 S
+text   x=17.50 y=216.48 9pt #1e293b Inter-normal "Basel IV — Not applicable to current license scope"
+text   x=12.00 y=228.86 10pt #1e293b Inter-bold "Compliance Questionnaire"
+text   x=12.00 y=235.20 9pt #1e293b Inter-normal "Has the annual compliance training been completed?"
+stroke x=187.01 y=232.55 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=187.76 y=234.05 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=188.36 y=233.39 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=192.01 y=235.20 9pt #059669 Inter-bold "Yes"
+text   x=12.00 y=243.32 9pt #1e293b Inter-normal "Are all client files up to date with KYC requirements?"
+stroke x=161.18 y=240.68 w=3.00 h=3.00 #e01c47 line=0.24 S
+stroke x=162.02 y=241.52 w=1.32 h=1.32 #e01c47 line=0.43 S
+stroke x=162.02 y=241.52 w=1.32 h=1.32 #e01c47 line=0.43 S
+text   x=166.18 y=243.32 9pt #e11d48 Inter-bold "Remediation needed"
+text   x=12.00 y=251.45 9pt #1e293b Inter-normal "Has the whistleblowing policy been distributed?"
+stroke x=175.39 y=248.81 w=3.00 h=3.00 #63738c line=0.24 S
+text   x=180.39 y=251.45 9pt #64748b Inter-bold "In progress"
+text   x=12.00 y=259.33 8pt #1e293b Inter-normal "Note: All compliance gaps identified above must be addressed within 90 calendar days of this report. The Chief Compliance Officer will"
+text   x=12.00 y=262.99 8pt #1e293b Inter-normal "track remediation progress on a bi-weekly basis."
+fill   x=12.00 y=268.63 w=101.00 h=6.67 #3673b8 B
+stroke x=12.00 y=268.63 w=101.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=272.66 8pt #ffffff Inter-bold "Regulation"
+fill   x=113.00 y=268.63 w=35.00 h=6.67 #3673b8 B
+stroke x=113.00 y=268.63 w=35.00 h=6.67 #6994c9 line=0.30 B
+text   x=115.00 y=272.66 8pt #ffffff Inter-bold "Authority"
+fill   x=148.00 y=268.63 w=25.00 h=6.67 #3673b8 B
+stroke x=148.00 y=268.63 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=156.06 y=272.66 8pt #ffffff Inter-bold "Status"
+fill   x=173.00 y=268.63 w=25.00 h=6.67 #3673b8 B
+stroke x=173.00 y=268.63 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=183.90 y=272.66 8pt #ffffff Inter-bold "Deadline"
+fill   x=12.00 y=275.30 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=275.30 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=279.33 8pt #1e293b Inter-normal "MiFID III"
+fill   x=113.00 y=275.30 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=275.30 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=279.33 8pt #1e293b Inter-normal "AMF / ESMA"
+fill   x=148.00 y=275.30 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=275.30 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=153.75 y=279.33 8pt #1e293b Inter-normal "Compliant"
+fill   x=173.00 y=275.30 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=275.30 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.67 y=279.33 8pt #1e293b Inter-normal "Ongoing"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.29 y=289.39 7pt #64748b Inter-bold tracking=0.18 "2/13"
+
+## page 4 (210.00 x 297.00 mm)
+fill   x=12.00 y=20.00 w=101.00 h=6.67 #3673b8 B
+stroke x=12.00 y=20.00 w=101.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=24.03 8pt #ffffff Inter-bold "Regulation"
+fill   x=113.00 y=20.00 w=35.00 h=6.67 #3673b8 B
+stroke x=113.00 y=20.00 w=35.00 h=6.67 #6994c9 line=0.30 B
+text   x=115.00 y=24.03 8pt #ffffff Inter-bold "Authority"
+fill   x=148.00 y=20.00 w=25.00 h=6.67 #3673b8 B
+stroke x=148.00 y=20.00 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=156.06 y=24.03 8pt #ffffff Inter-bold "Status"
+fill   x=173.00 y=20.00 w=25.00 h=6.67 #3673b8 B
+stroke x=173.00 y=20.00 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=183.90 y=24.03 8pt #ffffff Inter-bold "Deadline"
+fill   x=12.00 y=26.67 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=26.67 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=30.70 8pt #1e293b Inter-normal "GDPR"
+fill   x=113.00 y=26.67 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=26.67 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=30.70 8pt #1e293b Inter-normal "CNIL"
+fill   x=148.00 y=26.67 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=26.67 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=153.75 y=30.70 8pt #1e293b Inter-normal "Compliant"
+fill   x=173.00 y=26.67 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=26.67 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.67 y=30.70 8pt #1e293b Inter-normal "Ongoing"
+fill   x=12.00 y=33.34 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=33.34 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=37.37 8pt #1e293b Inter-normal "DORA"
+fill   x=113.00 y=33.34 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=33.34 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=37.37 8pt #1e293b Inter-normal "ACPR"
+fill   x=148.00 y=33.34 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=33.34 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.94 y=37.37 8pt #1e293b Inter-normal "In progress"
+fill   x=173.00 y=33.34 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=33.34 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.25 y=37.37 8pt #1e293b Inter-normal "Q4 2026"
+fill   x=12.00 y=40.01 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=40.01 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=44.04 8pt #1e293b Inter-normal "EMIR Refit"
+fill   x=113.00 y=40.01 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=40.01 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=44.04 8pt #1e293b Inter-normal "ESMA"
+fill   x=148.00 y=40.01 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=40.01 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=153.75 y=44.04 8pt #1e293b Inter-normal "Compliant"
+fill   x=173.00 y=40.01 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=40.01 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.67 y=44.04 8pt #1e293b Inter-normal "Ongoing"
+fill   x=12.00 y=46.68 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=46.68 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=50.71 8pt #1e293b Inter-normal "AML / CFT 6th Directive"
+fill   x=113.00 y=46.68 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=46.68 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=50.71 8pt #1e293b Inter-normal "TRACFIN"
+fill   x=148.00 y=46.68 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=46.68 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=155.66 y=50.71 8pt #1e293b Inter-normal "Review"
+fill   x=173.00 y=46.68 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=46.68 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.36 y=50.71 8pt #1e293b Inter-normal "Q2 2026"
+fill   x=12.00 y=53.34 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=53.34 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=57.38 8pt #1e293b Inter-normal "CSRD Reporting"
+fill   x=113.00 y=53.34 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=53.34 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=57.38 8pt #1e293b Inter-normal "AMF"
+fill   x=148.00 y=53.34 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=53.34 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=155.11 y=57.38 8pt #1e293b Inter-normal "Planned"
+fill   x=173.00 y=53.34 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=53.34 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.08 y=57.38 8pt #1e293b Inter-normal "Q1 2027"
+fill   x=12.00 y=64.01 w=186.00 h=26.51 #ffffff B
+stroke x=12.00 y=64.01 w=186.00 h=26.51 #e3e8f0 line=0.40 B
+text   x=16.00 y=70.30 9pt #1e293b Inter-normal "The undersigned confirms that all regulatory filings required under applicable national and EU law have been"
+text   x=16.00 y=74.43 9pt #1e293b Inter-normal "submitted within the prescribed deadlines for the current reporting period."
+text   x=16.00 y=80.55 9pt #1e293b Inter-normal "Acme Technologies SA maintains adequate capital reserves as required by its operating license and has no"
+text   x=16.00 y=84.68 9pt #1e293b Inter-normal "outstanding regulatory sanctions or enforcement actions."
+text   x=12.00 y=106.08 14pt #3572b8 Inter-bold "Project Portfolio"
+text   x=12.00 y=119.48 10pt #1e293b Inter-bold "Active Projects Overview"
+text   x=12.00 y=125.82 9pt #1e293b Inter-normal "The following table summarizes all active projects within the technology and operations divisions. Projects are tracked"
+text   x=12.00 y=129.94 9pt #1e293b Inter-normal "through the centralized PMO and reported to the executive committee monthly."
+fill   x=12.00 y=135.79 w=86.00 h=6.67 #3673b8 B
+stroke x=12.00 y=135.79 w=86.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=139.82 8pt #ffffff Inter-bold "Project"
+fill   x=98.00 y=135.79 w=28.00 h=6.67 #3673b8 B
+stroke x=98.00 y=135.79 w=28.00 h=6.67 #6994c9 line=0.30 B
+text   x=100.00 y=139.82 8pt #ffffff Inter-bold "Division"
+fill   x=126.00 y=135.79 w=25.00 h=6.67 #3673b8 B
+stroke x=126.00 y=135.79 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=128.00 y=139.82 8pt #ffffff Inter-bold "Lead"
+fill   x=151.00 y=135.79 w=22.00 h=6.67 #3673b8 B
+stroke x=151.00 y=135.79 w=22.00 h=6.67 #6994c9 line=0.30 B
+text   x=157.56 y=139.82 8pt #ffffff Inter-bold "Status"
+fill   x=173.00 y=135.79 w=25.00 h=6.67 #3673b8 B
+stroke x=173.00 y=135.79 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=176.03 y=139.82 8pt #ffffff Inter-bold "Budget (kEUR)"
+fill   x=12.00 y=142.45 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=142.45 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=146.49 8pt #1e293b Inter-normal "APAC Ops Center"
+fill   x=98.00 y=142.45 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=142.45 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=146.49 8pt #1e293b Inter-normal "Operations"
+fill   x=126.00 y=142.45 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=142.45 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=146.49 8pt #1e293b Inter-normal "S. Chen"
+fill   x=151.00 y=142.45 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=142.45 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=146.49 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=142.45 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=142.45 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=186.94 y=146.49 8pt #1e293b Inter-normal "12,400"
+fill   x=12.00 y=149.12 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=149.12 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=153.15 8pt #1e293b Inter-normal "Client Portal v2"
+fill   x=98.00 y=149.12 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=149.12 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=153.15 8pt #1e293b Inter-normal "Technology"
+fill   x=126.00 y=149.12 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=149.12 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=153.15 8pt #1e293b Inter-normal "A. Novak"
+fill   x=151.00 y=149.12 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=149.12 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=153.15 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=149.12 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=149.12 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.16 y=153.15 8pt #1e293b Inter-normal "3,200"
+fill   x=12.00 y=155.79 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=155.79 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=159.82 8pt #1e293b Inter-normal "Legacy Migration"
+fill   x=98.00 y=155.79 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=155.79 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=159.82 8pt #1e293b Inter-normal "Technology"
+fill   x=126.00 y=155.79 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=155.79 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=159.82 8pt #1e293b Inter-normal "K. Richter"
+fill   x=151.00 y=155.79 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=155.79 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.78 y=159.82 8pt #1e293b Inter-normal "At risk"
+fill   x=173.00 y=155.79 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=155.79 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.28 y=159.82 8pt #1e293b Inter-normal "8,700"
+fill   x=12.00 y=162.46 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=162.46 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=166.49 8pt #1e293b Inter-normal "ISO 27001 Recert"
+fill   x=98.00 y=162.46 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=162.46 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=166.49 8pt #1e293b Inter-normal "Compliance"
+fill   x=126.00 y=162.46 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=162.46 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=166.49 8pt #1e293b Inter-normal "J. Reeves"
+fill   x=151.00 y=162.46 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=162.46 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=166.49 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=162.46 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=162.46 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=190.68 y=166.49 8pt #1e293b Inter-normal "420"
+fill   x=12.00 y=169.13 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=169.13 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=173.16 8pt #1e293b Inter-normal "DORA Implementation"
+fill   x=98.00 y=169.13 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=169.13 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=173.16 8pt #1e293b Inter-normal "Compliance"
+fill   x=126.00 y=169.13 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=169.13 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=173.16 8pt #1e293b Inter-normal "L. Bianchi"
+fill   x=151.00 y=169.13 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=169.13 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.55 y=173.16 8pt #1e293b Inter-normal "Delayed"
+fill   x=173.00 y=169.13 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=169.13 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.84 y=173.16 8pt #1e293b Inter-normal "1,850"
+fill   x=12.00 y=175.80 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=175.80 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=179.83 8pt #1e293b Inter-normal "API Gateway Upgrade"
+fill   x=98.00 y=175.80 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=175.80 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=179.83 8pt #1e293b Inter-normal "Technology"
+fill   x=126.00 y=175.80 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=175.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=179.83 8pt #1e293b Inter-normal "P. Santos"
+fill   x=151.00 y=175.80 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=175.80 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=155.58 y=179.83 8pt #1e293b Inter-normal "Complete"
+fill   x=173.00 y=175.80 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=175.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=190.88 y=179.83 8pt #1e293b Inter-normal "780"
+fill   x=12.00 y=182.47 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=182.47 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=186.50 8pt #1e293b Inter-normal "ESG Data Platform"
+fill   x=98.00 y=182.47 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=182.47 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=186.50 8pt #1e293b Inter-normal "Data"
+fill   x=126.00 y=182.47 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=182.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=186.50 8pt #1e293b Inter-normal "F. Nakamura"
+fill   x=151.00 y=182.47 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=182.47 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=186.50 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=182.47 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=182.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.76 y=186.50 8pt #1e293b Inter-normal "2,100"
+fill   x=12.00 y=189.14 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=189.14 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=193.17 8pt #1e293b Inter-normal "Talent Management System"
+fill   x=98.00 y=189.14 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=189.14 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=193.17 8pt #1e293b Inter-normal "HR"
+fill   x=126.00 y=189.14 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=189.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=193.17 8pt #1e293b Inter-normal "V. Okafor"
+fill   x=151.00 y=189.14 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=189.14 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=193.17 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=189.14 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=189.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=190.80 y=193.17 8pt #1e293b Inter-normal "650"
+fill   x=12.00 y=195.81 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=195.81 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=199.84 8pt #1e293b Inter-normal "Trading Engine v3"
+fill   x=98.00 y=195.81 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=195.81 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=199.84 8pt #1e293b Inter-normal "Technology"
+fill   x=126.00 y=195.81 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=195.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=199.84 8pt #1e293b Inter-normal "M. Kowalski"
+fill   x=151.00 y=195.81 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=195.81 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=199.84 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=195.81 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=195.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.13 y=199.84 8pt #1e293b Inter-normal "5,400"
+fill   x=12.00 y=202.47 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=202.47 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=206.51 8pt #1e293b Inter-normal "DR Site Build-out"
+fill   x=98.00 y=202.47 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=202.47 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=206.51 8pt #1e293b Inter-normal "Infrastructure"
+fill   x=126.00 y=202.47 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=202.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=206.51 8pt #1e293b Inter-normal "D. Patel"
+fill   x=151.00 y=202.47 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=202.47 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.61 y=206.51 8pt #1e293b Inter-normal "Planned"
+fill   x=173.00 y=202.47 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=202.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.13 y=206.51 8pt #1e293b Inter-normal "3,900"
+fill   x=12.00 y=209.14 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=209.14 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=213.17 8pt #1e293b Inter-normal "Cloud Cost Optimization"
+fill   x=98.00 y=209.14 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=209.14 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=213.17 8pt #1e293b Inter-normal "Infrastructure"
+fill   x=126.00 y=209.14 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=209.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=213.17 8pt #1e293b Inter-normal "H. Mueller"
+fill   x=151.00 y=209.14 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=209.14 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=213.17 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=209.14 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=209.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=191.33 y=213.17 8pt #1e293b Inter-normal "180"
+fill   x=12.00 y=215.81 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=215.81 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=219.84 8pt #1e293b Inter-normal "Regulatory Reporting Automation"
+fill   x=98.00 y=215.81 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=215.81 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=219.84 8pt #1e293b Inter-normal "Compliance"
+fill   x=126.00 y=215.81 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=215.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=219.84 8pt #1e293b Inter-normal "E. Dupont"
+fill   x=151.00 y=215.81 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=215.81 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=219.84 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=215.81 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=215.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.76 y=219.84 8pt #1e293b Inter-normal "1,200"
+fill   x=12.00 y=222.48 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=222.48 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=226.51 8pt #1e293b Inter-normal "Network Segmentation"
+fill   x=98.00 y=222.48 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=222.48 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=226.51 8pt #1e293b Inter-normal "Security"
+fill   x=126.00 y=222.48 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=222.48 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=226.51 8pt #1e293b Inter-normal "R. Ivanov"
+fill   x=151.00 y=222.48 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=222.48 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=226.51 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=222.48 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=222.48 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=190.75 y=226.51 8pt #1e293b Inter-normal "920"
+fill   x=12.00 y=229.15 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=229.15 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=233.18 8pt #1e293b Inter-normal "Identity & Access Mgmt"
+fill   x=98.00 y=229.15 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=229.15 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=233.18 8pt #1e293b Inter-normal "Security"
+fill   x=126.00 y=229.15 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=229.15 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=233.18 8pt #1e293b Inter-normal "T. Andersen"
+fill   x=151.00 y=229.15 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=229.15 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.78 y=233.18 8pt #1e293b Inter-normal "At risk"
+fill   x=173.00 y=229.15 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=229.15 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.84 y=233.18 8pt #1e293b Inter-normal "1,350"
+fill   x=12.00 y=235.82 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=235.82 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=239.85 8pt #1e293b Inter-normal "Document Management"
+fill   x=98.00 y=235.82 w=28.00 h=6.67 #ededf0 B
+stroke x=98.00 y=235.82 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=239.85 8pt #1e293b Inter-normal "Operations"
+fill   x=126.00 y=235.82 w=25.00 h=6.67 #ededf0 B
+stroke x=126.00 y=235.82 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=239.85 8pt #1e293b Inter-normal "C. Ferreira"
+fill   x=151.00 y=235.82 w=22.00 h=6.67 #ededf0 B
+stroke x=151.00 y=235.82 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.61 y=239.85 8pt #1e293b Inter-normal "Planned"
+fill   x=173.00 y=235.82 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=235.82 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=190.80 y=239.85 8pt #1e293b Inter-normal "470"
+fill   x=12.00 y=242.49 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=242.49 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=246.52 8pt #1e293b Inter-normal "Mobile App Refresh"
+fill   x=98.00 y=242.49 w=28.00 h=6.67 #ffffff B
+stroke x=98.00 y=242.49 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=100.00 y=246.52 8pt #1e293b Inter-normal "Technology"
+fill   x=126.00 y=242.49 w=25.00 h=6.67 #ffffff B
+stroke x=126.00 y=242.49 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.00 y=246.52 8pt #1e293b Inter-normal "Y. Kim"
+fill   x=151.00 y=242.49 w=22.00 h=6.67 #ffffff B
+stroke x=151.00 y=242.49 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.33 y=246.52 8pt #1e293b Inter-normal "On track"
+fill   x=173.00 y=242.49 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=242.49 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=190.73 y=246.52 8pt #1e293b Inter-normal "890"
+fill   x=12.00 y=249.16 w=86.00 h=6.67 #e0ebf5 B
+stroke x=12.00 y=249.16 w=86.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=14.00 y=253.19 8pt #1e293b Inter-bold "16 active projects"
+fill   x=98.00 y=249.16 w=28.00 h=6.67 #e0ebf5 B
+stroke x=98.00 y=249.16 w=28.00 h=6.67 #d6e3f2 line=0.30 B
+fill   x=126.00 y=249.16 w=25.00 h=6.67 #e0ebf5 B
+stroke x=126.00 y=249.16 w=25.00 h=6.67 #d6e3f2 line=0.30 B
+fill   x=151.00 y=249.16 w=22.00 h=6.67 #e0ebf5 B
+stroke x=151.00 y=249.16 w=22.00 h=6.67 #d6e3f2 line=0.30 B
+fill   x=173.00 y=249.16 w=25.00 h=6.67 #e0ebf5 B
+stroke x=173.00 y=249.16 w=25.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=186.34 y=253.19 8pt #1e293b Inter-bold "42,410"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.25 y=289.39 7pt #64748b Inter-bold tracking=0.18 "3/13"
+
+## page 5 (210.00 x 297.00 mm)
+text   x=12.00 y=22.03 8pt #64748b Inter-bold "Projects by status"
+fill   x=12.00 y=25.67 w=116.25 h=9.00 #059669 f
+text   x=66.87 y=31.18 8pt #ffffff Inter-bold "63%"
+fill   x=128.25 y=25.67 w=11.63 h=9.00 #5c8cc4 f
+fill   x=139.88 y=25.67 w=23.25 h=9.00 #82a6d4 f
+text   x=148.55 y=31.18 8pt #1e293b Inter-bold "13%"
+fill   x=163.13 y=25.67 w=23.25 h=9.00 #63738c f
+text   x=171.80 y=31.18 8pt #ffffff Inter-bold "13%"
+fill   x=186.38 y=25.67 w=11.63 h=9.00 #e01c47 f
+stroke x=12.00 y=25.67 w=186.00 h=9.00 #e3e8f0 line=0.20 S
+fill   x=12.00 y=36.18 w=3.00 h=3.00 #059669 f
+text   x=17.00 y=38.70 8pt #64748b Inter-normal "On track 63%"
+fill   x=41.41 y=36.18 w=3.00 h=3.00 #5c8cc4 f
+text   x=46.41 y=38.70 8pt #64748b Inter-normal "Complete 6%"
+fill   x=70.58 y=36.18 w=3.00 h=3.00 #82a6d4 f
+text   x=75.58 y=38.70 8pt #64748b Inter-normal "Planned 13%"
+fill   x=98.81 y=36.18 w=3.00 h=3.00 #63738c f
+text   x=103.81 y=38.70 8pt #64748b Inter-normal "At risk 13%"
+fill   x=124.72 y=36.18 w=3.00 h=3.00 #e01c47 f
+text   x=129.72 y=38.70 8pt #64748b Inter-normal "Delayed 6%"
+text   x=12.00 y=46.37 8pt #64748b Inter-bold "Total budget"
+fill   x=12.00 y=48.19 w=21.80 h=4.13 #e8edf5 f
+text   x=13.00 y=51.05 9pt #1e293b Inter-bold "EUR 42,410k"
+text   x=76.67 y=46.37 8pt #64748b Inter-bold "On track"
+fill   x=76.67 y=48.19 w=18.29 h=4.13 #e8edf5 f
+text   x=77.67 y=51.05 9pt #1e293b Inter-bold "11 projects"
+text   x=141.33 y=46.37 8pt #64748b Inter-bold "At risk / Delayed"
+fill   x=141.33 y=48.19 w=17.60 h=4.13 #e8edf5 f
+text   x=142.33 y=51.05 9pt #1e293b Inter-bold "3 projects"
+text   x=12.00 y=58.35 8pt #64748b Inter-bold "PMO contact"
+text   x=12.00 y=63.03 10pt #1e293b Inter-normal "operations-pmo@acme-tech.example"
+text   x=12.00 y=68.10 8pt #64748b Inter-normal "Bi-weekly status reports distributed every Monday"
+text   x=109.00 y=58.35 8pt #64748b Inter-bold "Governance"
+text   x=109.00 y=63.03 10pt #1e293b Inter-normal "Monthly SteerCo review"
+fill   x=12.00 y=73.74 w=186.00 h=22.38 #f2f5fa B
+stroke x=12.00 y=73.74 w=186.00 h=22.38 #d6e3f2 line=0.30 B
+text   x=16.00 y=80.03 9pt #3572b8 Inter-bold "Project escalation procedure"
+text   x=16.00 y=86.15 9pt #1e293b Inter-normal "Any project exceeding 15% budget overrun or more than 4 weeks behind schedule must be escalated to the Executive"
+text   x=16.00 y=90.28 9pt #1e293b Inter-normal "Committee within 5 business days. The project lead must prepare a recovery plan."
+text   x=12.00 y=111.68 14pt #3572b8 Inter-bold "Human Resources"
+text   x=12.00 y=125.08 10pt #1e293b Inter-bold "Headcount Summary"
+fill   x=12.00 y=129.13 w=86.00 h=6.67 #3673b8 B
+stroke x=12.00 y=129.13 w=86.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=133.16 8pt #ffffff Inter-bold "Quarter"
+fill   x=98.00 y=129.13 w=25.00 h=6.67 #3673b8 B
+stroke x=98.00 y=129.13 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=105.86 y=133.16 8pt #ffffff Inter-bold "Headcount"
+fill   x=123.00 y=129.13 w=25.00 h=6.67 #3673b8 B
+stroke x=123.00 y=129.13 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=132.17 y=133.16 8pt #ffffff Inter-bold "New hires"
+fill   x=148.00 y=129.13 w=25.00 h=6.67 #3673b8 B
+stroke x=148.00 y=129.13 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=155.51 y=133.16 8pt #ffffff Inter-bold "Departures"
+fill   x=173.00 y=129.13 w=25.00 h=6.67 #3673b8 B
+stroke x=173.00 y=129.13 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=183.20 y=133.16 8pt #ffffff Inter-bold "Turnover"
+fill   x=12.00 y=135.80 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=135.80 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=139.83 8pt #1e293b Inter-normal "Q1 2025"
+fill   x=98.00 y=135.80 w=25.00 h=6.67 #ededf0 B
+stroke x=98.00 y=135.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=113.76 y=139.83 8pt #1e293b Inter-normal "1,089"
+fill   x=123.00 y=135.80 w=25.00 h=6.67 #ededf0 B
+stroke x=123.00 y=135.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=142.46 y=139.83 8pt #1e293b Inter-normal "42"
+fill   x=148.00 y=135.80 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=135.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=168.11 y=139.83 8pt #1e293b Inter-normal "18"
+fill   x=173.00 y=135.80 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=135.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.67 y=139.83 8pt #1e293b Inter-normal "1.7%"
+fill   x=12.00 y=142.47 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=142.47 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=146.50 8pt #1e293b Inter-normal "Q2 2025"
+fill   x=98.00 y=142.47 w=25.00 h=6.67 #ffffff B
+stroke x=98.00 y=142.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=114.43 y=146.50 8pt #1e293b Inter-normal "1,128"
+fill   x=123.00 y=142.47 w=25.00 h=6.67 #ffffff B
+stroke x=123.00 y=142.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=142.73 y=146.50 8pt #1e293b Inter-normal "57"
+fill   x=148.00 y=142.47 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=142.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=167.56 y=146.50 8pt #1e293b Inter-normal "22"
+fill   x=173.00 y=142.47 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=142.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.92 y=146.50 8pt #1e293b Inter-normal "2.0%"
+fill   x=12.00 y=149.14 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=149.14 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=153.17 8pt #1e293b Inter-normal "Q3 2025"
+fill   x=98.00 y=149.14 w=25.00 h=6.67 #ededf0 B
+stroke x=98.00 y=149.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=114.55 y=153.17 8pt #1e293b Inter-normal "1,178"
+fill   x=123.00 y=149.14 w=25.00 h=6.67 #ededf0 B
+stroke x=123.00 y=149.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=142.51 y=153.17 8pt #1e293b Inter-normal "68"
+fill   x=148.00 y=149.14 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=149.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=167.46 y=153.17 8pt #1e293b Inter-normal "24"
+fill   x=173.00 y=149.14 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=149.14 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.92 y=153.17 8pt #1e293b Inter-normal "2.0%"
+fill   x=12.00 y=155.81 w=86.00 h=6.67 #ffffff B
+stroke x=12.00 y=155.81 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=159.84 8pt #1e293b Inter-normal "Q4 2025"
+fill   x=98.00 y=155.81 w=25.00 h=6.67 #ffffff B
+stroke x=98.00 y=155.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.02 y=159.84 8pt #1e293b Inter-normal "1,211"
+fill   x=123.00 y=155.81 w=25.00 h=6.67 #ffffff B
+stroke x=123.00 y=155.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=143.18 y=159.84 8pt #1e293b Inter-normal "51"
+fill   x=148.00 y=155.81 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=155.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=168.10 y=159.84 8pt #1e293b Inter-normal "19"
+fill   x=173.00 y=155.81 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=155.81 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.52 y=159.84 8pt #1e293b Inter-normal "1.6%"
+fill   x=12.00 y=162.47 w=86.00 h=6.67 #ededf0 B
+stroke x=12.00 y=162.47 w=86.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=166.51 8pt #1e293b Inter-normal "Q1 2026 (est.)"
+fill   x=98.00 y=162.47 w=25.00 h=6.67 #ededf0 B
+stroke x=98.00 y=162.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=113.90 y=166.51 8pt #1e293b Inter-normal "1,247"
+fill   x=123.00 y=162.47 w=25.00 h=6.67 #ededf0 B
+stroke x=123.00 y=162.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=142.43 y=166.51 8pt #1e293b Inter-normal "48"
+fill   x=148.00 y=162.47 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=162.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=168.13 y=166.51 8pt #1e293b Inter-normal "12"
+fill   x=173.00 y=162.47 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=162.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.49 y=166.51 8pt #1e293b Inter-normal "1.0%"
+text   x=12.00 y=175.18 8pt #64748b Inter-bold "Hires per quarter"
+fill   x=15.00 y=209.69 w=25.10 h=11.12 #3673b8 f
+fill   x=15.00 y=194.87 w=25.10 h=14.82 #ccdbed f
+fill   x=46.10 y=207.22 w=25.10 h=13.59 #3673b8 f
+fill   x=46.10 y=185.61 w=25.10 h=21.62 #ccdbed f
+fill   x=77.19 y=205.99 w=25.10 h=14.82 #3673b8 f
+fill   x=77.19 y=178.81 w=25.10 h=27.18 #ccdbed f
+fill   x=108.29 y=209.08 w=25.10 h=11.74 #3673b8 f
+fill   x=108.29 y=189.31 w=25.10 h=19.76 #ccdbed f
+fill   x=139.39 y=213.40 w=25.10 h=7.41 #3673b8 f
+fill   x=139.39 y=191.16 w=25.10 h=22.24 #ccdbed f
+stroke x=12.00 y=220.81 w=155.48 h=0.00 #e3e8f0 line=0.20 S
+stroke x=12.00 y=186.84 w=155.48 h=0.00 #1f293b line=0.20 S dash=[1.00 1.00]
+text   x=168.48 y=187.73 7pt #94a3b8 Inter-normal "Plan: 55 hires per quarter"
+text   x=22.05 y=224.84 8pt #64748b Inter-normal "Q1 2025"
+text   x=52.86 y=224.84 8pt #64748b Inter-normal "Q2 2025"
+text   x=83.95 y=224.84 8pt #64748b Inter-normal "Q3 2025"
+text   x=115.00 y=224.84 8pt #64748b Inter-normal "Q4 2025"
+text   x=142.54 y=224.84 8pt #64748b Inter-normal "Q1 2026 (est.)"
+text   x=22.10 y=228.51 8pt #1e293b Inter-normal "42 hires"
+text   x=53.34 y=228.51 8pt #1e293b Inter-normal "57 hires"
+text   x=84.32 y=228.51 8pt #1e293b Inter-normal "68 hires"
+text   x=115.76 y=228.51 8pt #1e293b Inter-normal "51 hires"
+text   x=146.48 y=228.51 8pt #1e293b Inter-normal "48 hires"
+fill   x=12.00 y=231.67 w=3.00 h=3.00 #3673b8 f
+text   x=17.00 y=234.18 8pt #64748b Inter-normal "Replacements"
+fill   x=41.91 y=231.67 w=3.00 h=3.00 #ccdbed f
+text   x=46.91 y=234.18 8pt #64748b Inter-normal "Net growth"
+text   x=12.00 y=246.36 10pt #1e293b Inter-bold "Compensation & Benefits"
+text   x=12.00 y=252.44 8pt #64748b Inter-bold "Average salary"
+fill   x=12.00 y=254.26 w=20.49 h=4.13 #e8edf5 f
+text   x=13.00 y=257.11 9pt #1e293b Inter-bold "EUR 78,400"
+text   x=76.67 y=252.44 8pt #64748b Inter-bold "Median bonus"
+fill   x=76.67 y=254.26 w=19.80 h=4.13 #e8edf5 f
+text   x=77.67 y=257.11 9pt #1e293b Inter-bold "EUR 12,200"
+text   x=141.33 y=252.44 8pt #64748b Inter-bold "Benefits cost ratio"
+fill   x=141.33 y=254.26 w=11.77 h=4.13 #e8edf5 f
+text   x=142.33 y=257.11 9pt #1e293b Inter-bold "18.3%"
+text   x=12.00 y=266.42 8pt #64748b Inter-bold "HR contact"
+text   x=12.00 y=271.09 10pt #1e293b Inter-normal "compensation-and-benefits.administration@"
+text   x=12.00 y=275.68 10pt #1e293b Inter-normal "group-headquarters.example.org"
+text   x=109.00 y=266.42 8pt #64748b Inter-bold "Payroll IBAN"
+text   x=109.00 y=271.09 10pt #1e293b Inter-normal "DE89370400440532013000"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.17 y=289.39 7pt #64748b Inter-bold tracking=0.18 "4/13"
+
+## page 6 (210.00 x 297.00 mm)
+text   x=12.00 y=22.03 8pt #64748b Inter-bold "Benefits portal"
+text   x=12.00 y=26.71 10pt #1e293b Inter-normal "https://benefits.example.org/employees/self-service/enrolment-and-claims_2026"
+text   x=12.00 y=34.79 8pt #64748b Inter-bold "Benefits Package"
+text   x=12.00 y=40.46 8pt #64748b Inter-bold "Health insurance"
+text   x=12.00 y=45.13 10pt #1e293b Inter-normal "Health plan Premium — 100%"
+text   x=12.00 y=49.72 10pt #1e293b Inter-normal "employer-paid"
+text   x=76.67 y=40.46 8pt #64748b Inter-bold "Pension"
+text   x=76.67 y=45.13 10pt #1e293b Inter-normal "Pension plan — 4% employer"
+text   x=76.67 y=49.72 10pt #1e293b Inter-normal "contribution"
+text   x=141.33 y=40.46 8pt #64748b Inter-bold "Stock options"
+text   x=141.33 y=45.13 10pt #1e293b Inter-normal "Stock option plan — annual"
+text   x=141.33 y=49.72 10pt #1e293b Inter-normal "vesting over 4 years"
+text   x=12.00 y=62.31 10pt #1e293b Inter-bold "Training & Development"
+text   x=12.00 y=68.64 9pt #1e293b Inter-bold "Acme Technologies allocates a minimum of 2.5% of gross payroll to professional development. Each employee is"
+text   x=12.00 y=72.76 9pt #1e293b Inter-bold "entitled to at least 40 hours of training per year."
+text   x=12.00 y=80.89 9pt #1e293b Inter-normal "1."
+text   x=17.00 y=80.89 9pt #1e293b Inter-normal "Mandatory compliance training (all employees, annually)"
+text   x=12.00 y=86.02 9pt #1e293b Inter-normal "2."
+text   x=17.00 y=86.02 9pt #1e293b Inter-normal "Technical certification programs"
+text   x=16.00 y=91.15 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=91.15 9pt #1e293b Inter-normal "AWS Solutions Architect"
+text   x=16.00 y=96.27 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=96.27 9pt #1e293b Inter-normal "Certified Kubernetes Administrator"
+text   x=16.00 y=101.40 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=101.40 9pt #1e293b Inter-normal "CISSP for security team"
+text   x=12.00 y=107.53 9pt #1e293b Inter-normal "3."
+text   x=17.00 y=107.53 9pt #1e293b Inter-normal "Leadership development program for senior managers"
+text   x=12.00 y=112.66 9pt #1e293b Inter-normal "4."
+text   x=17.00 y=112.66 9pt #1e293b Inter-normal "Language courses"
+text   x=16.00 y=117.78 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=117.78 9pt #1e293b Inter-normal "English (business level)"
+text   x=16.00 y=122.91 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=122.91 9pt #1e293b Inter-normal "Mandarin (APAC team)"
+text   x=12.00 y=131.79 8pt #64748b Inter-bold "Training Compliance"
+text   x=12.00 y=137.71 9pt #1e293a Inter-normal "Has the 2025 training budget been fully utilized?"
+stroke x=163.02 y=135.07 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=163.77 y=136.57 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=164.37 y=135.91 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=168.02 y=137.71 9pt #059669 Inter-bold "Yes — 97% utilized"
+text   x=12.00 y=145.84 9pt #1e293b Inter-normal "Are all mandatory certifications current?"
+stroke x=160.99 y=143.19 w=3.00 h=3.00 #e01c47 line=0.24 S
+stroke x=161.83 y=144.03 w=1.32 h=1.32 #e01c47 line=0.43 S
+stroke x=161.83 y=144.03 w=1.32 h=1.32 #e01c47 line=0.43 S
+text   x=165.99 y=145.84 9pt #e11d48 Inter-bold "12 renewals overdue"
+text   x=12.00 y=153.96 9pt #1e293b Inter-normal "Have the individual development plans of every employee promoted during the reporting period been"
+text   x=12.00 y=158.09 9pt #1e293b Inter-normal "reviewed and signed off by the line manager?"
+stroke x=180.23 y=151.32 w=3.00 h=3.00 #63738c line=0.24 S
+stroke x=180.98 y=152.82 w=0.60 h=0.60 #63738c line=0.43 S
+stroke x=181.58 y=152.16 w=0.99 h=1.26 #63738c line=0.43 S
+text   x=185.23 y=153.96 9pt #64748b Inter-bold "Pending"
+stroke x=12.00 y=163.33 w=3.50 h=3.50 #3673b8 line=0.28 S
+stroke x=12.87 y=165.08 w=0.70 h=0.70 #3673b8 line=0.50 S
+stroke x=13.58 y=164.31 w=1.16 h=1.47 #3673b8 line=0.50 S
+text   x=17.50 y=166.22 9pt #1e293b Inter-normal "Annual performance reviews completed for all employees"
+stroke x=12.00 y=169.45 w=3.50 h=3.50 #3673b8 line=0.28 S
+stroke x=12.87 y=171.20 w=0.70 h=0.70 #3673b8 line=0.50 S
+stroke x=13.58 y=170.43 w=1.16 h=1.47 #3673b8 line=0.50 S
+text   x=17.50 y=172.35 9pt #1e293b Inter-normal "Succession planning documented for critical roles"
+stroke x=12.00 y=180.19 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=190.73 10pt #1e293b Inter-bold "HR Contact"
+text   x=12.00 y=197.06 9pt #1e293b Inter-normal "For HR inquiries, contact the People team at"
+text   x=78.82 y=197.06 9pt #3572b8 Inter-normal "people@acme-tech.example"
+stroke x=78.82 y=197.56 w=43.23 h=0.00 #3673b8 line=0.20 S
+text   x=122.94 y=197.06 9pt #1e293b Inter-normal "or visit the"
+text   x=139.52 y=197.06 9pt #3572b8 Inter-normal "internal HR portal"
+stroke x=139.52 y=197.56 w=25.98 h=0.00 #3673b8 line=0.20 S
+text   x=165.50 y=197.06 9pt #1e293b Inter-normal "."
+fill   x=12.00 y=202.90 w=93.00 h=23.56 #e0ebf5 B
+stroke x=12.00 y=202.90 w=93.00 h=23.56 #adc7e3 line=0.30 B
+text   x=16.00 y=209.19 9pt #3572b8 Inter-bold "People & Culture Department"
+text   x=16.00 y=213.31 8pt #64748b Inter-normal "Acme Technologies SA"
+text   x=16.00 y=217.44 9pt #1e293b Inter-normal "47 Kingsway, 3rd Floor"
+text   x=16.00 y=221.57 9pt #1e293b Inter-normal "London WC2B 6TP, United Kingdom"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.31 y=289.39 7pt #64748b Inter-bold tracking=0.18 "5/13"
+link   x=78.82 y=193.76 w=43.23 h=4.13 url "mailto:people@acme-tech.example"
+link   x=139.52 y=193.76 w=25.98 h=4.13 url "https://hr.acme-tech.example"
+
+## page 7 (210.00 x 297.00 mm)
+text   x=12.00 y=23.56 14pt #3572b8 Inter-bold "IT Infrastructure & Security"
+text   x=12.00 y=36.96 10pt #1e293b Inter-bold "System Inventory"
+text   x=12.00 y=43.29 9pt #1e293b Inter-normal "The following table lists all production-grade systems maintained by the Infrastructure division. Each system is subject to"
+text   x=12.00 y=47.42 9pt #1e293b Inter-normal "quarterly security assessments and annual penetration testing."
+fill   x=12.00 y=53.26 w=113.00 h=6.67 #3673b8 B
+stroke x=12.00 y=53.26 w=113.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=57.29 8pt #ffffff Inter-bold "System"
+fill   x=125.00 y=53.26 w=28.00 h=6.67 #3673b8 B
+stroke x=125.00 y=53.26 w=28.00 h=6.67 #6994c9 line=0.30 B
+text   x=127.00 y=57.29 8pt #ffffff Inter-bold "Environment"
+fill   x=153.00 y=53.26 w=20.00 h=6.67 #3673b8 B
+stroke x=153.00 y=53.26 w=20.00 h=6.67 #6994c9 line=0.30 B
+text   x=160.23 y=57.29 8pt #ffffff Inter-bold "SLA"
+fill   x=173.00 y=53.26 w=25.00 h=6.67 #3673b8 B
+stroke x=173.00 y=53.26 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=182.51 y=57.29 8pt #ffffff Inter-bold "Last audit"
+fill   x=12.00 y=59.93 w=113.00 h=6.67 #ededf0 B
+stroke x=12.00 y=59.93 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=63.96 8pt #1e293b Inter-normal "Trading Platform"
+fill   x=125.00 y=59.93 w=28.00 h=6.67 #ededf0 B
+stroke x=125.00 y=59.93 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=63.96 8pt #1e293b Inter-normal "Production"
+fill   x=153.00 y=59.93 w=20.00 h=6.67 #ededf0 B
+stroke x=153.00 y=59.93 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.71 y=63.96 8pt #1e293b Inter-normal "99.99%"
+fill   x=173.00 y=59.93 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=59.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.04 y=63.96 8pt #1e293b Inter-normal "Mar 2026"
+fill   x=12.00 y=66.60 w=113.00 h=6.67 #ffffff B
+stroke x=12.00 y=66.60 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=70.63 8pt #1e293b Inter-normal "Client Portal"
+fill   x=125.00 y=66.60 w=28.00 h=6.67 #ffffff B
+stroke x=125.00 y=66.60 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=70.63 8pt #1e293b Inter-normal "Production"
+fill   x=153.00 y=66.60 w=20.00 h=6.67 #ffffff B
+stroke x=153.00 y=66.60 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.75 y=70.63 8pt #1e293b Inter-normal "99.95%"
+fill   x=173.00 y=66.60 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=66.60 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.20 y=70.63 8pt #1e293b Inter-normal "Feb 2026"
+fill   x=12.00 y=73.27 w=113.00 h=6.67 #ededf0 B
+stroke x=12.00 y=73.27 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=77.30 8pt #1e293b Inter-normal "Risk Engine"
+fill   x=125.00 y=73.27 w=28.00 h=6.67 #ededf0 B
+stroke x=125.00 y=73.27 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=77.30 8pt #1e293b Inter-normal "Production"
+fill   x=153.00 y=73.27 w=20.00 h=6.67 #ededf0 B
+stroke x=153.00 y=73.27 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.71 y=77.30 8pt #1e293b Inter-normal "99.99%"
+fill   x=173.00 y=73.27 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=73.27 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.04 y=77.30 8pt #1e293b Inter-normal "Mar 2026"
+fill   x=12.00 y=79.94 w=113.00 h=6.67 #ffffff B
+stroke x=12.00 y=79.94 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=83.97 8pt #1e293b Inter-normal "Data Warehouse"
+fill   x=125.00 y=79.94 w=28.00 h=6.67 #ffffff B
+stroke x=125.00 y=79.94 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=83.97 8pt #1e293b Inter-normal "Production"
+fill   x=153.00 y=79.94 w=20.00 h=6.67 #ffffff B
+stroke x=153.00 y=79.94 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.69 y=83.97 8pt #1e293b Inter-normal "99.90%"
+fill   x=173.00 y=79.94 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=79.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.37 y=83.97 8pt #1e293b Inter-normal "Jan 2026"
+fill   x=12.00 y=86.61 w=113.00 h=6.67 #ededf0 B
+stroke x=12.00 y=86.61 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=90.64 8pt #1e293b Inter-normal "Email & Collaboration"
+fill   x=125.00 y=86.61 w=28.00 h=6.67 #ededf0 B
+stroke x=125.00 y=86.61 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=90.64 8pt #1e293b Inter-normal "SaaS"
+fill   x=153.00 y=86.61 w=20.00 h=6.67 #ededf0 B
+stroke x=153.00 y=86.61 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.75 y=90.64 8pt #1e293b Inter-normal "99.95%"
+fill   x=173.00 y=86.61 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=86.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.02 y=90.64 8pt #1e293b Inter-normal "Dec 2025"
+fill   x=12.00 y=93.28 w=113.00 h=6.67 #ffffff B
+stroke x=12.00 y=93.28 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=97.31 8pt #1e293b Inter-normal "HR Management"
+fill   x=125.00 y=93.28 w=28.00 h=6.67 #ffffff B
+stroke x=125.00 y=93.28 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=97.31 8pt #1e293b Inter-normal "SaaS"
+fill   x=153.00 y=93.28 w=20.00 h=6.67 #ffffff B
+stroke x=153.00 y=93.28 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.69 y=97.31 8pt #1e293b Inter-normal "99.90%"
+fill   x=173.00 y=93.28 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=93.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=182.91 y=97.31 8pt #1e293b Inter-normal "Nov 2025"
+fill   x=12.00 y=99.94 w=113.00 h=6.67 #ededf0 B
+stroke x=12.00 y=99.94 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=103.98 8pt #1e293b Inter-normal "CRM Platform"
+fill   x=125.00 y=99.94 w=28.00 h=6.67 #ededf0 B
+stroke x=125.00 y=99.94 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=103.98 8pt #1e293b Inter-normal "Hybrid"
+fill   x=153.00 y=99.94 w=20.00 h=6.67 #ededf0 B
+stroke x=153.00 y=99.94 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.75 y=103.98 8pt #1e293b Inter-normal "99.95%"
+fill   x=173.00 y=99.94 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=99.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.20 y=103.98 8pt #1e293b Inter-normal "Feb 2026"
+fill   x=12.00 y=106.61 w=113.00 h=6.67 #ffffff B
+stroke x=12.00 y=106.61 w=113.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=110.64 8pt #1e293b Inter-normal "Backup & DR"
+fill   x=125.00 y=106.61 w=28.00 h=6.67 #ffffff B
+stroke x=125.00 y=106.61 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.00 y=110.64 8pt #1e293b Inter-normal "On-premise"
+fill   x=153.00 y=106.61 w=20.00 h=6.67 #ffffff B
+stroke x=153.00 y=106.61 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.71 y=110.64 8pt #1e293b Inter-normal "99.99%"
+fill   x=173.00 y=106.61 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=106.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=183.04 y=110.64 8pt #1e293b Inter-normal "Mar 2026"
+text   x=12.00 y=123.82 10pt #1e293b Inter-bold "Incident Response Procedure"
+text   x=12.00 y=136.41 10pt #1e293b Inter-bold "Escalation Levels"
+text   x=12.00 y=142.74 9pt #1e293b Inter-normal "1."
+text   x=17.00 y=142.74 9pt #1e293b Inter-normal "Level 1 — Service desk triage (response: 15 min)"
+text   x=12.00 y=147.87 9pt #1e293b Inter-normal "2."
+text   x=17.00 y=147.87 9pt #1e293b Inter-normal "Level 2 — Platform engineering team (response: 30 min)"
+text   x=12.00 y=152.99 9pt #1e293b Inter-normal "3."
+text   x=17.00 y=152.99 9pt #1e293b Inter-normal "Level 3 — Senior engineering and management"
+text   x=16.00 y=158.12 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=158.12 9pt #1e293b Inter-normal "CTO notification required"
+text   x=16.00 y=163.25 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=163.25 9pt #1e293b Inter-normal "Client communication initiated"
+text   x=16.00 y=168.38 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=168.38 9pt #1e293b Inter-normal "Post-incident review within 48h"
+text   x=12.00 y=174.50 9pt #1e293b Inter-normal "4."
+text   x=17.00 y=174.50 9pt #1e293b Inter-normal "Level 4 — Executive crisis team (CEO + Board notification)"
+fill   x=12.00 y=180.35 w=186.00 h=45.02 #f2f5fa B
+stroke x=12.00 y=180.35 w=186.00 h=45.02 #d6e3f2 line=0.30 B
+text   x=16.00 y=186.63 9pt #3572b8 Inter-bold "Security incident reporting"
+text   x=16.00 y=192.76 9pt #1e293b Inter-normal "All suspected security incidents must be reported to the CISO within 1 hour of detection. The Security Operations"
+text   x=16.00 y=196.89 9pt #1e293b Inter-normal "Center operates 24/7 and can be reached at +33 1 44 55 66 77."
+text   x=16.00 y=203.01 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=203.01 9pt #1e293b Inter-normal "Preserve all evidence — do not modify or delete affected systems"
+text   x=16.00 y=207.14 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=207.14 9pt #1e293b Inter-normal "Document the timeline of events with maximum precision"
+text   x=16.00 y=211.27 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=211.27 9pt #1e293b Inter-normal "Notify the DPO if personal data may be affected (GDPR 72h rule)"
+text   x=16.00 y=215.40 9pt #1e293b Inter-bold "•"
+text   x=19.00 y=215.40 9pt #1e293b Inter-bold "Escalation:"
+text   x=37.02 y=215.40 9pt #1e293b Inter-normal "any incident touching client data is reported to the Executive Committee within 24 hours, together with"
+text   x=19.00 y=219.52 9pt #1e293b Inter-normal "the list of affected systems and the first containment measures taken."
+text   x=12.00 y=235.91 10pt #1e293b Inter-bold "Patch Management"
+text   x=12.00 y=242.24 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=242.24 9pt #1e293b Inter-normal "Critical vulnerabilities: patch within 24 hours"
+text   x=12.00 y=247.37 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=247.37 9pt #1e293b Inter-normal "High severity: patch within 7 calendar days"
+text   x=12.00 y=252.49 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=252.49 9pt #1e293b Inter-normal "Medium severity: patch within 30 calendar days"
+text   x=12.00 y=257.62 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=257.62 9pt #1e293b Inter-normal "Low severity: include in next scheduled maintenance window"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.24 y=289.39 7pt #64748b Inter-bold tracking=0.18 "6/13"
+
+## page 8 (210.00 x 297.00 mm)
+stroke x=12.00 y=20.00 w=186.00 h=16.26 #e3e8f0 line=0.40 S
+text   x=16.00 y=26.29 9pt #1e293b Inter-normal "All production changes follow the approved change management process. Emergency changes require retrospective"
+text   x=16.00 y=30.41 9pt #1e293b Inter-normal "CAB approval within 48 hours."
+text   x=12.00 y=51.81 14pt #3572b8 Inter-bold "Client Portfolio"
+text   x=12.00 y=65.22 10pt #1e293b Inter-bold "Client Distribution by Segment"
+fill   x=12.00 y=69.26 w=101.00 h=6.67 #3673b8 B
+stroke x=12.00 y=69.26 w=101.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=73.29 8pt #ffffff Inter-bold "Segment"
+fill   x=113.00 y=69.26 w=20.00 h=6.67 #3673b8 B
+stroke x=113.00 y=69.26 w=20.00 h=6.67 #6994c9 line=0.30 B
+text   x=121.33 y=73.29 8pt #ffffff Inter-bold "Clients"
+fill   x=133.00 y=69.26 w=25.00 h=6.67 #3673b8 B
+stroke x=133.00 y=69.26 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=137.47 y=73.29 8pt #ffffff Inter-bold "AUM (EUR M)"
+fill   x=158.00 y=69.26 w=25.00 h=6.67 #3673b8 B
+stroke x=158.00 y=69.26 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=160.42 y=73.29 8pt #ffffff Inter-bold "Revenue share"
+fill   x=183.00 y=69.26 w=15.00 h=6.67 #3673b8 B
+stroke x=183.00 y=69.26 w=15.00 h=6.67 #6994c9 line=0.30 B
+text   x=187.59 y=73.29 8pt #ffffff Inter-bold "NPS"
+fill   x=12.00 y=75.93 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=75.93 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=79.96 8pt #1e293b Inter-normal "Institutional"
+fill   x=113.00 y=75.93 w=20.00 h=6.67 #ededf0 B
+stroke x=113.00 y=75.93 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.58 y=79.96 8pt #1e293b Inter-normal "47"
+fill   x=133.00 y=75.93 w=25.00 h=6.67 #ededf0 B
+stroke x=133.00 y=75.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=146.94 y=79.96 8pt #1e293b Inter-normal "12,400"
+fill   x=158.00 y=75.93 w=25.00 h=6.67 #ededf0 B
+stroke x=158.00 y=75.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=174.69 y=79.96 8pt #1e293b Inter-normal "42%"
+fill   x=183.00 y=75.93 w=15.00 h=6.67 #ededf0 B
+stroke x=183.00 y=75.93 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.84 y=79.96 8pt #1e293b Inter-normal "72"
+fill   x=12.00 y=82.60 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=82.60 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=86.63 8pt #1e293b Inter-normal "Corporate"
+fill   x=113.00 y=82.60 w=20.00 h=6.67 #ffffff B
+stroke x=113.00 y=82.60 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=126.36 y=86.63 8pt #1e293b Inter-normal "183"
+fill   x=133.00 y=82.60 w=25.00 h=6.67 #ffffff B
+stroke x=133.00 y=82.60 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=148.06 y=86.63 8pt #1e293b Inter-normal "4,800"
+fill   x=158.00 y=82.60 w=25.00 h=6.67 #ffffff B
+stroke x=158.00 y=82.60 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=174.69 y=86.63 8pt #1e293b Inter-normal "24%"
+fill   x=183.00 y=82.60 w=15.00 h=6.67 #ffffff B
+stroke x=183.00 y=82.60 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.75 y=86.63 8pt #1e293b Inter-normal "68"
+fill   x=12.00 y=89.27 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=89.27 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=93.30 8pt #1e293b Inter-normal "Family Office"
+fill   x=113.00 y=89.27 w=20.00 h=6.67 #ededf0 B
+stroke x=113.00 y=89.27 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.43 y=93.30 8pt #1e293b Inter-normal "64"
+fill   x=133.00 y=89.27 w=25.00 h=6.67 #ededf0 B
+stroke x=133.00 y=89.27 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=148.16 y=93.30 8pt #1e293b Inter-normal "3,200"
+fill   x=158.00 y=89.27 w=25.00 h=6.67 #ededf0 B
+stroke x=158.00 y=89.27 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=175.34 y=93.30 8pt #1e293b Inter-normal "18%"
+fill   x=183.00 y=89.27 w=15.00 h=6.67 #ededf0 B
+stroke x=183.00 y=89.27 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.05 y=93.30 8pt #1e293b Inter-normal "81"
+fill   x=12.00 y=95.94 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=95.94 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=99.97 8pt #1e293b Inter-normal "Wealth Management"
+fill   x=113.00 y=95.94 w=20.00 h=6.67 #ffffff B
+stroke x=113.00 y=95.94 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=126.39 y=99.97 8pt #1e293b Inter-normal "312"
+fill   x=133.00 y=95.94 w=25.00 h=6.67 #ffffff B
+stroke x=133.00 y=95.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=148.76 y=99.97 8pt #1e293b Inter-normal "2,100"
+fill   x=158.00 y=95.94 w=25.00 h=6.67 #ffffff B
+stroke x=158.00 y=95.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=175.36 y=99.97 8pt #1e293b Inter-normal "12%"
+fill   x=183.00 y=95.94 w=15.00 h=6.67 #ffffff B
+stroke x=183.00 y=95.94 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.79 y=99.97 8pt #1e293b Inter-normal "74"
+fill   x=12.00 y=102.61 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=102.61 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=106.64 8pt #1e293b Inter-normal "Fintech Partners"
+fill   x=113.00 y=102.61 w=20.00 h=6.67 #ededf0 B
+stroke x=113.00 y=102.61 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=127.53 y=106.64 8pt #1e293b Inter-normal "28"
+fill   x=133.00 y=102.61 w=25.00 h=6.67 #ededf0 B
+stroke x=133.00 y=102.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=150.73 y=106.64 8pt #1e293b Inter-normal "890"
+fill   x=158.00 y=102.61 w=25.00 h=6.67 #ededf0 B
+stroke x=158.00 y=102.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=176.41 y=106.64 8pt #1e293b Inter-normal "4%"
+fill   x=183.00 y=102.61 w=15.00 h=6.67 #ededf0 B
+stroke x=183.00 y=102.61 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.90 y=106.64 8pt #1e293b Inter-normal "77"
+fill   x=12.00 y=109.28 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=109.28 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=113.31 8pt #1e293b Inter-normal "Government"
+fill   x=113.00 y=109.28 w=20.00 h=6.67 #ffffff B
+stroke x=113.00 y=109.28 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.13 y=113.31 8pt #1e293b Inter-normal "12"
+fill   x=133.00 y=109.28 w=25.00 h=6.67 #ffffff B
+stroke x=133.00 y=109.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=148.76 y=113.31 8pt #1e293b Inter-normal "1,450"
+fill   x=158.00 y=109.28 w=25.00 h=6.67 #ffffff B
+stroke x=158.00 y=109.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.18 y=113.31 8pt #1e293b Inter-normal "—"
+fill   x=183.00 y=109.28 w=15.00 h=6.67 #ffffff B
+stroke x=183.00 y=109.28 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.79 y=113.31 8pt #1e293b Inter-normal "65"
+fill   x=12.00 y=115.94 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=115.94 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=119.98 8pt #1e293b Inter-normal "Non-profit"
+fill   x=113.00 y=115.94 w=20.00 h=6.67 #ededf0 B
+stroke x=113.00 y=115.94 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.26 y=119.98 8pt #1e293b Inter-normal "8"
+fill   x=133.00 y=115.94 w=25.00 h=6.67 #ededf0 B
+stroke x=133.00 y=115.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=150.65 y=119.98 8pt #1e293b Inter-normal "340"
+fill   x=158.00 y=115.94 w=25.00 h=6.67 #ededf0 B
+stroke x=158.00 y=115.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.18 y=119.98 8pt #1e293b Inter-normal "—"
+fill   x=183.00 y=115.94 w=15.00 h=6.67 #ededf0 B
+stroke x=183.00 y=115.94 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.76 y=119.98 8pt #1e293b Inter-normal "83"
+fill   x=12.00 y=122.61 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=122.61 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=126.64 8pt #1e293b Inter-normal "Academic"
+fill   x=113.00 y=122.61 w=20.00 h=6.67 #ffffff B
+stroke x=113.00 y=122.61 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.33 y=126.64 8pt #1e293b Inter-normal "5"
+fill   x=133.00 y=122.61 w=25.00 h=6.67 #ffffff B
+stroke x=133.00 y=122.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=151.35 y=126.64 8pt #1e293b Inter-normal "120"
+fill   x=158.00 y=122.61 w=25.00 h=6.67 #ffffff B
+stroke x=158.00 y=122.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.18 y=126.64 8pt #1e293b Inter-normal "—"
+fill   x=183.00 y=122.61 w=15.00 h=6.67 #ffffff B
+stroke x=183.00 y=122.61 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.74 y=126.64 8pt #1e293b Inter-normal "90"
+fill   x=12.00 y=129.28 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=129.28 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=133.31 8pt #1e293b Inter-normal "Startup Program"
+fill   x=113.00 y=129.28 w=20.00 h=6.67 #ededf0 B
+stroke x=113.00 y=129.28 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.03 y=133.31 8pt #1e293b Inter-normal "41"
+fill   x=133.00 y=129.28 w=25.00 h=6.67 #ededf0 B
+stroke x=133.00 y=129.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.58 y=133.31 8pt #1e293b Inter-normal "85"
+fill   x=158.00 y=129.28 w=25.00 h=6.67 #ededf0 B
+stroke x=158.00 y=129.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.18 y=133.31 8pt #1e293b Inter-normal "—"
+fill   x=183.00 y=129.28 w=15.00 h=6.67 #ededf0 B
+stroke x=183.00 y=129.28 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.13 y=133.31 8pt #1e293b Inter-normal "71"
+fill   x=12.00 y=135.95 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=135.95 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=139.98 8pt #1e293b Inter-normal "Other"
+fill   x=113.00 y=135.95 w=20.00 h=6.67 #ffffff B
+stroke x=113.00 y=135.95 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=128.10 y=139.98 8pt #1e293b Inter-normal "19"
+fill   x=133.00 y=135.95 w=25.00 h=6.67 #ffffff B
+stroke x=133.00 y=135.95 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=151.35 y=139.98 8pt #1e293b Inter-normal "210"
+fill   x=158.00 y=135.95 w=25.00 h=6.67 #ffffff B
+stroke x=158.00 y=135.95 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.18 y=139.98 8pt #1e293b Inter-normal "—"
+fill   x=183.00 y=135.95 w=15.00 h=6.67 #ffffff B
+stroke x=183.00 y=135.95 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.75 y=139.98 8pt #1e293b Inter-normal "69"
+fill   x=12.00 y=142.62 w=101.00 h=6.67 #e0ebf5 B
+stroke x=12.00 y=142.62 w=101.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=14.00 y=146.65 8pt #1e293b Inter-bold "Total"
+fill   x=113.00 y=142.62 w=20.00 h=6.67 #e0ebf5 B
+stroke x=113.00 y=142.62 w=20.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=126.31 y=146.65 8pt #1e293b Inter-bold "719"
+fill   x=133.00 y=142.62 w=25.00 h=6.67 #e0ebf5 B
+stroke x=133.00 y=142.62 w=25.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=146.18 y=146.65 8pt #1e293b Inter-bold "25,595"
+fill   x=158.00 y=142.62 w=25.00 h=6.67 #e0ebf5 B
+stroke x=158.00 y=142.62 w=25.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=173.11 y=146.65 8pt #1e293b Inter-bold "100%"
+fill   x=183.00 y=142.62 w=15.00 h=6.67 #e0ebf5 B
+stroke x=183.00 y=142.62 w=15.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=185.91 y=146.65 8pt #1e293b Inter-bold "75 avg"
+text   x=12.00 y=155.32 8pt #64748b Inter-bold "Assets under management by segment"
+fill   x=35.00 y=158.96 w=22.97 h=45.89 #3673b8 f
+fill   x=14.71 y=188.67 w=22.53 h=16.29 #5487c2 f
+fill   x=12.00 y=175.26 w=10.42 h=17.52 #739ccc f
+fill   x=13.00 y=165.28 w=12.18 h=12.52 #8fb0d9 f
+fill   x=19.16 y=160.81 w=10.24 h=10.81 #adc7e3 f
+fill   x=25.96 y=158.96 w=9.04 h=9.89 #ccdbed f
+text   x=25.92 y=183.10 9pt #1e293b Inter-bold "EUR 25.6bn"
+fill   x=64.00 y=167.97 w=3.00 h=3.00 #3673b8 f
+fill   x=64.00 y=172.64 w=3.00 h=3.00 #5487c2 f
+fill   x=64.00 y=177.30 w=3.00 h=3.00 #739ccc f
+fill   x=64.00 y=181.97 w=3.00 h=3.00 #8fb0d9 f
+fill   x=64.00 y=186.64 w=3.00 h=3.00 #adc7e3 f
+fill   x=64.00 y=191.31 w=3.00 h=3.00 #ccdbed f
+text   x=69.00 y=170.48 8pt #1e293b Inter-normal "Institutional"
+text   x=69.00 y=175.15 8pt #1e293b Inter-normal "Corporate"
+text   x=69.00 y=179.82 8pt #1e293b Inter-normal "Family Office"
+text   x=69.00 y=184.49 8pt #1e293b Inter-normal "Wealth Management"
+text   x=69.00 y=189.16 8pt #1e293b Inter-normal "Government"
+text   x=69.00 y=193.83 8pt #1e293b Inter-normal "Other segments"
+text   x=102.55 y=170.48 8pt #64748b Inter-normal "EUR 12,400M"
+text   x=103.67 y=175.15 8pt #64748b Inter-normal "EUR 4,800M"
+text   x=103.78 y=179.82 8pt #64748b Inter-normal "EUR 3,200M"
+text   x=104.37 y=184.49 8pt #64748b Inter-normal "EUR 2,100M"
+text   x=104.38 y=189.16 8pt #64748b Inter-normal "EUR 1,450M"
+text   x=104.41 y=193.83 8pt #64748b Inter-normal "EUR 1,645M"
+text   x=12.00 y=215.50 10pt #1e293b Inter-bold "Client Satisfaction"
+text   x=12.00 y=221.58 8pt #64748b Inter-bold "Overall NPS"
+fill   x=12.00 y=223.39 w=5.82 h=4.13 #e8edf5 f
+text   x=13.00 y=226.25 9pt #1e293b Inter-bold "75"
+text   x=76.67 y=221.58 8pt #64748b Inter-bold "Retention rate"
+fill   x=76.67 y=223.39 w=12.48 h=4.13 #e8edf5 f
+text   x=77.67 y=226.25 9pt #1e293b Inter-bold "96.8%"
+text   x=141.33 y=221.58 8pt #64748b Inter-bold "Avg. tenure"
+fill   x=141.33 y=223.39 w=16.59 h=4.13 #e8edf5 f
+text   x=142.33 y=226.25 9pt #1e293b Inter-bold "6.2 years"
+text   x=12.00 y=233.55 8pt #64748b Inter-bold "Survey response rate"
+text   x=12.00 y=238.23 10pt #1e293b Inter-normal "84%"
+text   x=12.00 y=243.31 8pt #64748b Inter-normal "Up from 71% in 2024"
+text   x=109.00 y=233.55 8pt #64748b Inter-bold "Top complaint"
+text   x=109.00 y=238.23 10pt #1e293b Inter-normal "Onboarding speed"
+text   x=12.00 y=255.49 10pt #1e293b Inter-bold "Client services"
+text   x=12.00 y=261.82 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=261.82 9pt #1e293b Inter-normal "Dedicated RM per segment"
+text   x=12.00 y=266.95 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=266.95 9pt #1e293b Inter-normal "24/5 support desk"
+text   x=12.00 y=272.07 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=272.07 9pt #1e293b Inter-normal "Quarterly business reviews"
+text   x=109.00 y=255.49 10pt #1e293b Inter-bold "Digital channels"
+text   x=109.00 y=261.82 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=261.82 9pt #1e293b Inter-normal "Client portal (web + mobile)"
+text   x=109.00 y=266.95 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=266.95 9pt #1e293b Inter-normal "API access (REST + FIX)"
+text   x=109.00 y=272.07 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=272.07 9pt #1e293b Inter-normal "Automated reporting"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.41 y=289.39 7pt #64748b Inter-bold tracking=0.18 "7/13"
+
+## page 9 (210.00 x 297.00 mm)
+text   x=12.00 y=22.29 9pt #1e293b Inter-normal "Client feedback can be submitted through the"
+text   x=81.65 y=22.29 9pt #3572b8 Inter-normal "client satisfaction portal"
+stroke x=81.65 y=22.79 w=35.84 h=0.00 #3673b8 line=0.20 S
+text   x=118.38 y=22.29 9pt #1e293b Inter-normal "or by contacting the relationship management team."
+text   x=12.00 y=39.68 14pt #3572b8 Inter-bold "Financial Overview"
+text   x=12.00 y=53.09 10pt #1e293b Inter-bold "Profit & Loss Summary"
+fill   x=12.00 y=57.13 w=80.00 h=6.67 #3673b8 B
+stroke x=12.00 y=57.13 w=80.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=61.17 8pt #ffffff Inter-bold "Line item"
+fill   x=92.00 y=57.13 w=28.00 h=6.67 #3673b8 B
+stroke x=92.00 y=57.13 w=28.00 h=6.67 #6994c9 line=0.30 B
+text   x=101.00 y=61.17 8pt #ffffff Inter-bold "2024 Actual"
+fill   x=120.00 y=57.13 w=28.00 h=6.67 #3673b8 B
+stroke x=120.00 y=57.13 w=28.00 h=6.67 #6994c9 line=0.30 B
+text   x=129.16 y=61.17 8pt #ffffff Inter-bold "2025 Actual"
+fill   x=148.00 y=57.13 w=28.00 h=6.67 #3673b8 B
+stroke x=148.00 y=57.13 w=28.00 h=6.67 #6994c9 line=0.30 B
+text   x=156.14 y=61.17 8pt #ffffff Inter-bold "2026 Budget"
+fill   x=176.00 y=57.13 w=22.00 h=6.67 #3673b8 B
+stroke x=176.00 y=57.13 w=22.00 h=6.67 #6994c9 line=0.30 B
+text   x=183.60 y=61.17 8pt #ffffff Inter-bold "Variance"
+fill   x=12.00 y=63.80 w=80.00 h=6.67 #ededf0 B
+stroke x=12.00 y=63.80 w=80.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=67.84 8pt #1e293b Inter-normal "Revenue"
+fill   x=92.00 y=63.80 w=28.00 h=6.67 #ededf0 B
+stroke x=92.00 y=63.80 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=107.19 y=67.84 8pt #1e293b Inter-normal "142,300"
+fill   x=120.00 y=63.80 w=28.00 h=6.67 #ededf0 B
+stroke x=120.00 y=63.80 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=135.46 y=67.84 8pt #1e293b Inter-normal "175,600"
+fill   x=148.00 y=63.80 w=28.00 h=6.67 #ededf0 B
+stroke x=148.00 y=63.80 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=163.20 y=67.84 8pt #1e293b Inter-normal "210,000"
+fill   x=176.00 y=63.80 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=63.80 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.90 y=67.84 8pt #1e293b Inter-normal "+19.6%"
+fill   x=12.00 y=70.47 w=80.00 h=6.67 #ffffff B
+stroke x=12.00 y=70.47 w=80.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=74.50 8pt #1e293b Inter-normal "Cost of revenue"
+fill   x=92.00 y=70.47 w=28.00 h=6.67 #ffffff B
+stroke x=92.00 y=70.47 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=106.28 y=74.50 8pt #1e293b Inter-normal "(48,200)"
+fill   x=120.00 y=70.47 w=28.00 h=6.67 #ffffff B
+stroke x=120.00 y=70.47 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=134.47 y=74.50 8pt #1e293b Inter-normal "(57,400)"
+fill   x=148.00 y=70.47 w=28.00 h=6.67 #ffffff B
+stroke x=148.00 y=70.47 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=162.36 y=74.50 8pt #1e293b Inter-normal "(65,000)"
+fill   x=176.00 y=70.47 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=70.47 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.94 y=74.50 8pt #1e293b Inter-normal "+13.2%"
+fill   x=12.00 y=77.14 w=80.00 h=6.67 #ededf0 B
+stroke x=12.00 y=77.14 w=80.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=81.17 8pt #1e293b Inter-normal "Gross profit"
+fill   x=92.00 y=77.14 w=28.00 h=6.67 #ededf0 B
+stroke x=92.00 y=77.14 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=108.91 y=81.17 8pt #1e293b Inter-normal "94,100"
+fill   x=120.00 y=77.14 w=28.00 h=6.67 #ededf0 B
+stroke x=120.00 y=77.14 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=135.86 y=81.17 8pt #1e293b Inter-normal "118,200"
+fill   x=148.00 y=77.14 w=28.00 h=6.67 #ededf0 B
+stroke x=148.00 y=77.14 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=163.20 y=81.17 8pt #1e293b Inter-normal "145,000"
+fill   x=176.00 y=77.14 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=77.14 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.51 y=81.17 8pt #1e293b Inter-normal "+22.7%"
+fill   x=12.00 y=83.81 w=80.00 h=6.67 #ffffff B
+stroke x=12.00 y=83.81 w=80.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=87.84 8pt #1e293b Inter-normal "Operating expenses"
+fill   x=92.00 y=83.81 w=28.00 h=6.67 #ffffff B
+stroke x=92.00 y=83.81 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=106.35 y=87.84 8pt #1e293b Inter-normal "(62,800)"
+fill   x=120.00 y=83.81 w=28.00 h=6.67 #ffffff B
+stroke x=120.00 y=83.81 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=135.00 y=87.84 8pt #1e293b Inter-normal "(74,100)"
+fill   x=148.00 y=83.81 w=28.00 h=6.67 #ffffff B
+stroke x=148.00 y=83.81 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=162.30 y=87.84 8pt #1e293b Inter-normal "(88,000)"
+fill   x=176.00 y=83.81 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=83.81 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.91 y=87.84 8pt #1e293b Inter-normal "+18.8%"
+fill   x=12.00 y=90.48 w=80.00 h=6.67 #ededf0 B
+stroke x=12.00 y=90.48 w=80.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=94.51 8pt #1e293b Inter-normal "EBITDA"
+fill   x=92.00 y=90.48 w=28.00 h=6.67 #ededf0 B
+stroke x=92.00 y=90.48 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=108.99 y=94.51 8pt #1e293b Inter-normal "31,300"
+fill   x=120.00 y=90.48 w=28.00 h=6.67 #ededf0 B
+stroke x=120.00 y=90.48 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=136.83 y=94.51 8pt #1e293b Inter-normal "44,100"
+fill   x=148.00 y=90.48 w=28.00 h=6.67 #ededf0 B
+stroke x=148.00 y=90.48 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=164.58 y=94.51 8pt #1e293b Inter-normal "57,000"
+fill   x=176.00 y=90.48 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=90.48 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.34 y=94.51 8pt #1e293b Inter-normal "+29.3%"
+fill   x=12.00 y=97.15 w=80.00 h=6.67 #ffffff B
+stroke x=12.00 y=97.15 w=80.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=101.18 8pt #1e293b Inter-normal "Net income"
+fill   x=92.00 y=97.15 w=28.00 h=6.67 #ffffff B
+stroke x=92.00 y=97.15 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=109.04 y=101.18 8pt #1e293b Inter-normal "22,100"
+fill   x=120.00 y=97.15 w=28.00 h=6.67 #ffffff B
+stroke x=120.00 y=97.15 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=136.99 y=101.18 8pt #1e293b Inter-normal "31,800"
+fill   x=148.00 y=97.15 w=28.00 h=6.67 #ffffff B
+stroke x=148.00 y=97.15 w=28.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=164.88 y=101.18 8pt #1e293b Inter-normal "41,000"
+fill   x=176.00 y=97.15 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=97.15 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.33 y=101.18 8pt #1e293b Inter-normal "+28.9%"
+fill   x=12.00 y=103.82 w=80.00 h=6.67 #e0ebf5 B
+stroke x=12.00 y=103.82 w=80.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=14.00 y=107.85 8pt #1e293b Inter-bold "All amounts in kEUR"
+fill   x=92.00 y=103.82 w=28.00 h=6.67 #e0ebf5 B
+stroke x=92.00 y=103.82 w=28.00 h=6.67 #d6e3f2 line=0.30 B
+fill   x=120.00 y=103.82 w=28.00 h=6.67 #e0ebf5 B
+stroke x=120.00 y=103.82 w=28.00 h=6.67 #d6e3f2 line=0.30 B
+fill   x=148.00 y=103.82 w=28.00 h=6.67 #e0ebf5 B
+stroke x=148.00 y=103.82 w=28.00 h=6.67 #d6e3f2 line=0.30 B
+fill   x=176.00 y=103.82 w=22.00 h=6.67 #e0ebf5 B
+stroke x=176.00 y=103.82 w=22.00 h=6.67 #d6e3f2 line=0.30 B
+text   x=12.00 y=121.03 10pt #1e293b Inter-bold "Revenue outlook"
+text   x=12.00 y=126.85 7pt #94a3b8 Inter-normal "EUR M"
+stroke x=18.58 y=175.78 w=179.42 h=0.00 #e3e8f0 line=0.20 S opacity=0.50
+stroke x=18.58 y=160.28 w=179.42 h=0.00 #e3e8f0 line=0.20 S opacity=0.50
+stroke x=18.58 y=144.78 w=179.42 h=0.00 #e3e8f0 line=0.20 S opacity=0.50
+stroke x=18.58 y=129.28 w=179.42 h=0.00 #e3e8f0 line=0.20 S opacity=0.50
+text   x=15.02 y=192.17 7pt #94a3b8 Inter-normal "0"
+text   x=12.61 y=176.67 7pt #94a3b8 Inter-normal "125"
+text   x=12.05 y=161.17 7pt #94a3b8 Inter-normal "250"
+text   x=12.19 y=145.67 7pt #94a3b8 Inter-normal "375"
+text   x=12.00 y=130.17 7pt #94a3b8 Inter-normal "500"
+fill   x=78.39 y=156.81 w=59.81 h=34.47 #3673b8 f opacity=0.15
+fill   x=18.58 y=138.21 w=179.42 h=35.43 #63738c f opacity=0.15
+stroke x=18.58 y=162.64 w=179.42 h=14.88 #63738c line=0.50 S dash=[1.00 1.00]
+stroke x=18.58 y=148.87 w=179.42 h=24.76 #3673b8 line=0.50 S
+stroke x=18.58 y=191.28 w=179.42 h=0.00 #e3e8f0 line=0.20 S
+text   x=18.58 y=195.06 7pt #94a3b8 Inter-normal "FY2024"
+text   x=73.77 y=195.06 7pt #94a3b8 Inter-normal "FY2026"
+text   x=133.58 y=195.06 7pt #94a3b8 Inter-normal "FY2028"
+text   x=188.72 y=195.06 7pt #94a3b8 Inter-normal "FY2030"
+text   x=101.99 y=199.27 7pt #94a3b8 Inter-normal "Fiscal year"
+fill   x=12.00 y=202.22 w=6.00 h=3.00 #63738c f opacity=0.30
+text   x=20.00 y=204.73 8pt #64748b Inter-normal "Range of scenarios"
+fill   x=51.70 y=202.22 w=6.00 h=3.00 #3673b8 f opacity=0.30
+text   x=59.70 y=204.73 8pt #64748b Inter-normal "Current plan"
+stroke x=82.25 y=203.72 w=6.00 h=0.00 #3673b8 line=0.50 S
+text   x=90.25 y=204.73 8pt #64748b Inter-normal "Revenue (base case)"
+stroke x=124.35 y=203.72 w=6.00 h=0.00 #63738c line=0.50 S dash=[1.00 1.00]
+text   x=132.35 y=204.73 8pt #64748b Inter-normal "Operating costs"
+text   x=12.00 y=216.91 10pt #1e293b Inter-bold "Key Financial Metrics"
+fill   x=12.00 y=219.96 w=36.64 h=4.98 #e8edf5 f
+text   x=13.00 y=223.24 9pt #1e293b Inter-bold "EBITDA margin: 27.1%"
+fill   x=67.00 y=219.96 w=30.61 h=4.98 #3673b8 f
+text   x=68.00 y=223.24 9pt #ffffff Inter-bold "Net margin: 19.5%"
+text   x=12.00 y=232.23 9pt #1e293b Inter-normal "The 2026 budget reflects continued investment in technology and operations while maintaining strong profitability. The"
+text   x=12.00 y=236.36 9pt #1e293b Inter-normal "EBITDA margin improvement is driven by operational leverage from the APAC expansion and reduced per-unit"
+text   x=12.00 y=240.48 9pt #1e293b Inter-normal "infrastructure costs following the cloud migration."
+text   x=12.00 y=248.36 8pt #64748b Inter-bold "ROE"
+fill   x=12.00 y=250.18 w=12.48 h=4.13 #e8edf5 f
+text   x=13.00 y=253.03 9pt #1e293b Inter-bold "24.3%"
+text   x=76.67 y=248.36 8pt #64748b Inter-bold "Debt-to-equity"
+fill   x=76.67 y=250.18 w=9.25 h=4.13 #e8edf5 f
+text   x=77.67 y=253.03 9pt #1e293b Inter-bold "0.32"
+text   x=141.33 y=248.36 8pt #64748b Inter-bold "Cash reserves"
+fill   x=141.33 y=250.18 w=19.02 h=4.13 #e8edf5 f
+text   x=142.33 y=253.03 9pt #1e293b Inter-bold "EUR 67.2M"
+text   x=12.00 y=262.08 7pt #94a3b8 Inter-normal "Source: audited financial statements (independent auditor, March 2026)."
+stroke x=12.00 y=269.51 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.24 y=289.39 7pt #64748b Inter-bold tracking=0.18 "8/13"
+link   x=81.65 y=18.98 w=35.84 h=4.13 url "https://feedback.acme-tech.example"
+
+## page 10 (210.00 x 297.00 mm)
+text   x=12.00 y=22.54 10pt #1e293b Inter-bold "Capital Allocation"
+text   x=12.00 y=28.87 9pt #1e293b Inter-normal "The capital allocation framework prioritizes organic growth investments while maintaining a strong balance sheet. The"
+text   x=12.00 y=33.00 9pt #1e293b Inter-normal "board has approved a dividend payout ratio of 35% of net income for FY2025."
+text   x=12.00 y=41.13 9pt #1e293b Inter-normal "Share buyback programs are not currently planned, as management believes reinvestment in the business offers superior"
+text   x=12.00 y=45.25 9pt #1e293b Inter-normal "returns relative to the cost of capital."
+text   x=12.00 y=53.13 8pt #64748b Inter-bold "Budget Highlights"
+fill   x=12.00 y=55.77 w=27.97 h=4.98 #3673b8 f
+text   x=13.00 y=59.05 9pt #ffffff Inter-bold "CapEx: EUR 42M"
+text   x=12.00 y=77.31 14pt #3572b8 Inter-bold "Office Locations"
+text   x=12.00 y=90.71 10pt #1e293b Inter-bold "European Operations"
+text   x=12.00 y=98.31 14pt #1e293b Inter-bold "London (HQ)"
+text   x=12.00 y=105.72 10pt #64748b Inter-normal "Employees"
+text   x=47.00 y=105.72 10pt #1e293b Inter-normal "640"
+text   x=12.00 y=111.30 10pt #64748b Inter-normal "Functions"
+text   x=47.00 y=111.30 10pt #1e293b Inter-normal "All corporate functions"
+text   x=12.00 y=116.89 10pt #64748b Inter-normal "Capacity"
+text   x=47.00 y=116.89 10pt #1e293b Inter-normal "750 desks"
+text   x=109.00 y=98.31 14pt #1e293b Inter-bold "London"
+text   x=109.00 y=105.72 10pt #64748b Inter-normal "Employees"
+text   x=144.00 y=105.72 10pt #1e293b Inter-normal "215"
+text   x=109.00 y=111.30 10pt #64748b Inter-normal "Functions"
+text   x=144.00 y=111.30 10pt #1e293b Inter-normal "Trading, Sales"
+text   x=109.00 y=116.89 10pt #64748b Inter-normal "Capacity"
+text   x=144.00 y=116.89 10pt #1e293b Inter-normal "280 desks"
+fill   x=12.00 y=130.94 w=93.00 h=23.56 #f2f5fa B
+stroke x=12.00 y=130.94 w=93.00 h=23.56 #d6e3f2 line=0.30 B
+text   x=16.00 y=137.22 9pt #3572b8 Inter-bold "Acme Technologies UK Ltd"
+text   x=16.00 y=141.35 8pt #64748b Inter-normal "London Office"
+text   x=16.00 y=145.48 9pt #1e293b Inter-normal "30 Finsbury Square"
+text   x=16.00 y=149.60 9pt #1e293b Inter-normal "London EC2A 1AG, United Kingdom"
+text   x=12.00 y=165.03 10pt #1e293b Inter-bold "Asia-Pacific Operations"
+fill   x=12.00 y=169.08 w=93.00 h=23.56 #e0ebf5 B
+stroke x=12.00 y=169.08 w=93.00 h=23.56 #adc7e3 line=0.30 B
+text   x=16.00 y=175.36 9pt #3572b8 Inter-bold "Acme Technologies Asia Pte Ltd"
+text   x=16.00 y=179.49 8pt #64748b Inter-normal "APAC Regional Hub"
+text   x=16.00 y=183.62 9pt #1e293b Inter-normal "8 Marina View, Asia Square Tower 1"
+text   x=16.00 y=187.75 9pt #1e293b Inter-normal "Singapore 018960"
+text   x=12.00 y=203.18 10pt #1e293b Inter-bold "Americas Liaison"
+stroke x=12.00 y=207.22 w=93.00 h=23.56 #e3e8f0 line=0.40 S
+text   x=16.00 y=213.51 9pt #3572b8 Inter-bold "Acme Technologies Inc."
+text   x=16.00 y=217.64 8pt #64748b Inter-normal "New York Representative Office"
+text   x=16.00 y=221.76 9pt #1e293b Inter-normal "200 Park Avenue, Suite 1700"
+text   x=16.00 y=225.89 9pt #1e293b Inter-normal "New York, NY 10166, USA"
+text   x=12.00 y=236.81 8pt #64748b Inter-normal "Office occupancy data as of Q1 2026. Contact facilities@acme-tech.example for space allocation requests."
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=192.24 y=289.39 7pt #64748b Inter-bold tracking=0.18 "9/13"
+
+## page 11 (210.00 x 297.00 mm)
+text   x=12.00 y=26.10 24pt #1e293b Inter-bold "Legal Declarations & Attestations"
+text   x=12.00 y=46.56 14pt #3572b8 Inter-bold "Management Declarations"
+stroke x=12.00 y=53.43 w=186.00 h=36.77 #d6e3f2 line=0.40 S
+text   x=16.00 y=59.71 9pt #1e293b Inter-normal "To the best of our knowledge and belief, the information presented in this manual is accurate, complete, and fairly"
+text   x=16.00 y=63.84 9pt #1e293b Inter-normal "represents the operational status of Acme Technologies SA as of the date of publication."
+text   x=16.00 y=69.97 9pt #1e293b Inter-normal "All material risks have been identified and are subject to appropriate monitoring and mitigation measures as described"
+text   x=16.00 y=74.10 9pt #1e293b Inter-normal "in the relevant sections of this document."
+text   x=16.00 y=80.22 9pt #1e293b Inter-normal "The financial data included herein is consistent with the audited financial statements and has been reviewed by the"
+text   x=16.00 y=84.35 9pt #1e293b Inter-normal "Chief Financial Officer."
+text   x=12.00 y=100.73 10pt #1e293b Inter-bold "Director Certifications"
+stroke x=12.00 y=104.17 w=3.50 h=3.50 #3673b8 line=0.28 S
+stroke x=12.87 y=105.92 w=0.70 h=0.70 #3673b8 line=0.50 S
+stroke x=13.58 y=105.15 w=1.16 h=1.47 #3673b8 line=0.50 S
+text   x=17.50 y=107.06 9pt #1e293b Inter-normal "I certify that I have read and understood this manual in its entirety"
+stroke x=12.00 y=110.30 w=3.50 h=3.50 #3673b8 line=0.28 S
+stroke x=12.87 y=112.05 w=0.70 h=0.70 #3673b8 line=0.50 S
+stroke x=13.58 y=111.28 w=1.16 h=1.47 #3673b8 line=0.50 S
+text   x=17.50 y=113.19 9pt #1e293b Inter-normal "I confirm that all information pertaining to my area of responsibility is accurate"
+stroke x=12.00 y=116.43 w=3.50 h=3.50 #63738c line=0.28 S
+text   x=17.50 y=119.32 9pt #1e293b Inter-normal "I acknowledge responsibility for ensuring compliance within my department"
+text   x=12.00 y=131.70 10pt #1e293b Inter-bold "External Auditor Confirmation"
+text   x=12.00 y=138.03 9pt #1e293b Inter-normal "Have the financial statements been audited without qualification?"
+stroke x=162.82 y=135.39 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=163.57 y=136.89 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=164.17 y=136.23 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=167.82 y=138.03 9pt #059669 Inter-bold "Unqualified opinion"
+text   x=12.00 y=146.16 9pt #1e293b Inter-normal "Were any material weaknesses identified in internal controls?"
+stroke x=169.24 y=143.52 w=3.00 h=3.00 #e01c47 line=0.24 S
+stroke x=170.08 y=144.36 w=1.32 h=1.32 #e01c47 line=0.43 S
+stroke x=170.08 y=144.36 w=1.32 h=1.32 #e01c47 line=0.43 S
+text   x=174.24 y=146.16 9pt #e11d48 Inter-bold "None identified"
+text   x=12.00 y=154.29 9pt #1e293b Inter-normal "Is the going concern assumption appropriate?"
+stroke x=176.52 y=151.64 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=177.27 y=153.14 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=177.87 y=152.48 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=181.52 y=154.29 9pt #059669 Inter-bold "Confirmed"
+text   x=12.00 y=162.16 8pt #64748b Inter-italic "This section constitutes a legally binding declaration by the signatories below. Any misrepresentation may result in personal liability under"
+text   x=12.00 y=165.83 8pt #64748b Inter-italic "applicable national and European law."
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=190.93 y=289.39 7pt #64748b Inter-bold tracking=0.18 "10/13"
+
+## page 12 (210.00 x 297.00 mm)
+text   x=12.00 y=26.10 24pt #1e293b Inter-bold "Appendix A — Detailed Reference Data"
+text   x=12.00 y=46.56 14pt #3572b8 Inter-bold "Extended Regulatory Reference"
+text   x=12.00 y=55.71 9pt #1e293a Inter-normal "This"
+text   x=19.42 y=55.71 9pt #1e293a Inter-normal "appendix"
+text   x=34.32 y=55.71 9pt #1e293a Inter-normal "contains"
+text   x=48.10 y=55.71 9pt #1e293a Inter-normal "the"
+text   x=53.92 y=55.71 9pt #1e293a Inter-normal "complete"
+text   x=68.92 y=55.71 9pt #1e293a Inter-normal "regulatory"
+text   x=85.32 y=55.71 9pt #1e293a Inter-normal "reference"
+text   x=101.03 y=55.71 9pt #1e293a Inter-normal "matrix"
+text   x=111.38 y=55.71 9pt #1e293a Inter-normal "covering"
+text   x=125.57 y=55.71 9pt #1e293a Inter-normal "all"
+text   x=129.94 y=55.71 9pt #1e293a Inter-normal "jurisdictions"
+text   x=149.07 y=55.71 9pt #1e293a Inter-normal "in"
+text   x=152.76 y=55.71 9pt #1e293a Inter-normal "which"
+text   x=162.75 y=55.71 9pt #1e293a Inter-normal "Acme"
+text   x=172.44 y=55.71 9pt #1e293a Inter-normal "Technologies"
+text   x=193.77 y=55.71 9pt #1e293a Inter-normal "SA"
+text   x=12.00 y=59.84 9pt #1e293a Inter-normal "or"
+text   x=16.22 y=59.84 9pt #1e293a Inter-normal "any"
+text   x=22.78 y=59.84 9pt #1e293a Inter-normal "of"
+text   x=26.99 y=59.84 9pt #1e293a Inter-normal "its"
+text   x=31.59 y=59.84 9pt #1e293a Inter-normal "subsidiaries"
+text   x=50.64 y=59.84 9pt #1e293a Inter-normal "currently"
+text   x=65.16 y=59.84 9pt #1e293a Inter-normal "operates"
+text   x=79.53 y=59.84 9pt #1e293a Inter-normal "or"
+text   x=83.75 y=59.84 9pt #1e293a Inter-normal "has"
+text   x=90.20 y=59.84 9pt #1e293a Inter-normal "applied"
+text   x=102.33 y=59.84 9pt #1e293a Inter-normal "for"
+text   x=107.73 y=59.84 9pt #1e293a Inter-normal "operating"
+text   x=123.16 y=59.84 9pt #1e293a Inter-normal "licenses."
+text   x=137.47 y=59.84 9pt #1e293a Inter-normal "The"
+text   x=144.37 y=59.84 9pt #1e293a Inter-normal "matrix"
+text   x=154.79 y=59.84 9pt #1e293a Inter-normal "is"
+text   x=158.36 y=59.84 9pt #1e293a Inter-normal "maintained"
+text   x=175.95 y=59.84 9pt #1e293a Inter-normal "by"
+text   x=180.80 y=59.84 9pt #1e293a Inter-normal "the"
+text   x=186.69 y=59.84 9pt #1e293a Inter-normal "Legal"
+text   x=195.96 y=59.84 9pt #1e293a Inter-normal "&"
+text   x=12.00 y=63.97 9pt #1e293a Inter-normal "Compliance"
+text   x=31.22 y=63.97 9pt #1e293a Inter-normal "department"
+text   x=49.93 y=63.97 9pt #1e293a Inter-normal "and"
+text   x=56.94 y=63.97 9pt #1e293a Inter-normal "is"
+text   x=60.79 y=63.97 9pt #1e293a Inter-normal "updated"
+text   x=74.58 y=63.97 9pt #1e293a Inter-normal "on"
+text   x=79.76 y=63.97 9pt #1e293a Inter-normal "a"
+text   x=82.95 y=63.97 9pt #1e293a Inter-normal "quarterly"
+text   x=97.80 y=63.97 9pt #1e293a Inter-normal "basis"
+text   x=107.05 y=63.97 9pt #1e293a Inter-normal "to"
+text   x=111.40 y=63.97 9pt #1e293a Inter-normal "reflect"
+text   x=122.50 y=63.97 9pt #1e293a Inter-normal "changes"
+text   x=136.73 y=63.97 9pt #1e293a Inter-normal "in"
+text   x=140.78 y=63.97 9pt #1e293a Inter-normal "the"
+text   x=146.96 y=63.97 9pt #1e293a Inter-normal "regulatory"
+text   x=163.71 y=63.97 9pt #1e293a Inter-normal "landscape."
+text   x=181.47 y=63.97 9pt #1e293a Inter-normal "Each"
+text   x=190.26 y=63.97 9pt #1e293a Inter-normal "entry"
+text   x=12.00 y=68.10 9pt #1e293a Inter-normal "includes"
+text   x=25.50 y=68.10 9pt #1e293a Inter-normal "the"
+text   x=31.20 y=68.10 9pt #1e293a Inter-normal "applicable"
+text   x=47.49 y=68.10 9pt #1e293a Inter-normal "regulation,"
+text   x=64.35 y=68.10 9pt #1e293a Inter-normal "the"
+text   x=70.04 y=68.10 9pt #1e293a Inter-normal "supervising"
+text   x=88.33 y=68.10 9pt #1e293a Inter-normal "authority,"
+text   x=103.44 y=68.10 9pt #1e293a Inter-normal "the"
+text   x=109.13 y=68.10 9pt #1e293a Inter-normal "current"
+text   x=120.91 y=68.10 9pt #1e293a Inter-normal "compliance"
+text   x=139.14 y=68.10 9pt #1e293a Inter-normal "status,"
+text   x=150.07 y=68.10 9pt #1e293a Inter-normal "the"
+text   x=155.77 y=68.10 9pt #1e293a Inter-normal "date"
+text   x=163.31 y=68.10 9pt #1e293a Inter-normal "of"
+text   x=167.32 y=68.10 9pt #1e293a Inter-normal "the"
+text   x=173.01 y=68.10 9pt #1e293a Inter-normal "last"
+text   x=179.20 y=68.10 9pt #1e293a Inter-normal "assessment,"
+text   x=12.00 y=72.22 9pt #1e293a Inter-normal "and"
+text   x=18.60 y=72.22 9pt #1e293a Inter-normal "the"
+text   x=24.36 y=72.22 9pt #1e293a Inter-normal "name"
+text   x=33.64 y=72.22 9pt #1e293a Inter-normal "of"
+text   x=37.71 y=72.22 9pt #1e293a Inter-normal "the"
+text   x=43.47 y=72.22 9pt #1e293a Inter-normal "internal"
+text   x=55.62 y=72.22 9pt #1e293a Inter-normal "owner"
+text   x=66.04 y=72.22 9pt #1e293a Inter-normal "responsible"
+text   x=84.49 y=72.22 9pt #1e293a Inter-normal "for"
+text   x=89.75 y=72.22 9pt #1e293a Inter-normal "monitoring"
+text   x=106.80 y=72.22 9pt #1e293a Inter-normal "ongoing"
+text   x=120.02 y=72.22 9pt #1e293a Inter-normal "compliance."
+text   x=139.23 y=72.22 9pt #1e293a Inter-normal "This"
+text   x=146.60 y=72.22 9pt #1e293a Inter-normal "comprehensive"
+text   x=170.76 y=72.22 9pt #1e293a Inter-normal "approach"
+text   x=186.00 y=72.22 9pt #1e293a Inter-normal "ensures"
+text   x=12.00 y=76.35 9pt #1e293a Inter-normal "that"
+text   x=18.75 y=76.35 9pt #1e293a Inter-normal "the"
+text   x=24.52 y=76.35 9pt #1e293a Inter-normal "organization"
+text   x=44.13 y=76.35 9pt #1e293a Inter-normal "maintains"
+text   x=59.49 y=76.35 9pt #1e293a Inter-normal "a"
+text   x=62.29 y=76.35 9pt #1e293a Inter-normal "complete"
+text   x=77.25 y=76.35 9pt #1e293a Inter-normal "and"
+text   x=83.86 y=76.35 9pt #1e293a Inter-normal "auditable"
+text   x=98.63 y=76.35 9pt #1e293a Inter-normal "record"
+text   x=109.54 y=76.35 9pt #1e293a Inter-normal "of"
+text   x=113.63 y=76.35 9pt #1e293a Inter-normal "its"
+text   x=118.13 y=76.35 9pt #1e293a Inter-normal "regulatory"
+text   x=134.48 y=76.35 9pt #1e293a Inter-normal "obligations"
+text   x=151.87 y=76.35 9pt #1e293a Inter-normal "across"
+text   x=162.93 y=76.35 9pt #1e293a Inter-normal "all"
+text   x=167.26 y=76.35 9pt #1e293a Inter-normal "markets."
+text   x=181.25 y=76.35 9pt #1e293a Inter-normal "The"
+text   x=188.04 y=76.35 9pt #1e293a Inter-normal "annual"
+text   x=12.00 y=80.48 9pt #1e293a Inter-normal "compliance budget amounts to $1,250,000.00."
+text   x=12.00 y=92.86 10pt #1e293b Inter-bold "Full Regulatory Matrix"
+fill   x=12.00 y=96.91 w=90.00 h=6.67 #3673b8 B
+stroke x=12.00 y=96.91 w=90.00 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=100.94 8pt #ffffff Inter-bold "Regulation"
+fill   x=102.00 y=96.91 w=25.00 h=6.67 #3673b8 B
+stroke x=102.00 y=96.91 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=104.00 y=100.94 8pt #ffffff Inter-bold "Jurisdiction"
+fill   x=127.00 y=96.91 w=25.00 h=6.67 #3673b8 B
+stroke x=127.00 y=96.91 w=25.00 h=6.67 #6994c9 line=0.30 B
+text   x=129.00 y=100.94 8pt #ffffff Inter-bold "Authority"
+fill   x=152.00 y=96.91 w=24.00 h=6.67 #3673b8 B
+stroke x=152.00 y=96.91 w=24.00 h=6.67 #6994c9 line=0.30 B
+text   x=159.56 y=100.94 8pt #ffffff Inter-bold "Status"
+fill   x=176.00 y=96.91 w=22.00 h=6.67 #3673b8 B
+stroke x=176.00 y=96.91 w=22.00 h=6.67 #6994c9 line=0.30 B
+text   x=178.00 y=100.94 8pt #ffffff Inter-bold "Owner"
+fill   x=12.00 y=103.57 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=103.57 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=107.61 8pt #1e293b Inter-normal "MiFID III"
+fill   x=102.00 y=103.57 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=103.57 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=107.61 8pt #1e293b Inter-normal "EU"
+fill   x=127.00 y=103.57 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=103.57 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=107.61 8pt #1e293b Inter-normal "ESMA"
+fill   x=152.00 y=103.57 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=103.57 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=107.61 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=103.57 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=103.57 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=107.61 8pt #1e293b Inter-normal "J. Reeves"
+fill   x=12.00 y=110.24 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=110.24 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=114.28 8pt #1e293b Inter-normal "GDPR"
+fill   x=102.00 y=110.24 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=110.24 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=114.28 8pt #1e293b Inter-normal "EU"
+fill   x=127.00 y=110.24 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=110.24 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=114.28 8pt #1e293b Inter-normal "CNIL"
+fill   x=152.00 y=110.24 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=110.24 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=114.28 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=110.24 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=110.24 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=114.28 8pt #1e293b Inter-normal "L. Bianchi"
+fill   x=12.00 y=116.91 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=116.91 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=120.94 8pt #1e293b Inter-normal "DORA"
+fill   x=102.00 y=116.91 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=116.91 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=120.94 8pt #1e293b Inter-normal "EU"
+fill   x=127.00 y=116.91 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=116.91 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=120.94 8pt #1e293b Inter-normal "ACPR"
+fill   x=152.00 y=116.91 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=116.91 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=156.44 y=120.94 8pt #1e293b Inter-normal "In progress"
+fill   x=176.00 y=116.91 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=116.91 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=120.94 8pt #1e293b Inter-normal "K. Richter"
+fill   x=12.00 y=123.58 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=123.58 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=127.61 8pt #1e293b Inter-normal "EMIR Refit"
+fill   x=102.00 y=123.58 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=123.58 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=127.61 8pt #1e293b Inter-normal "EU"
+fill   x=127.00 y=123.58 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=123.58 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=127.61 8pt #1e293b Inter-normal "ESMA"
+fill   x=152.00 y=123.58 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=123.58 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=127.61 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=123.58 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=123.58 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=127.61 8pt #1e293b Inter-normal "J. Reeves"
+fill   x=12.00 y=130.25 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=130.25 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=134.28 8pt #1e293b Inter-normal "AML 6th Directive"
+fill   x=102.00 y=130.25 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=130.25 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=134.28 8pt #1e293b Inter-normal "EU"
+fill   x=127.00 y=130.25 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=130.25 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=134.28 8pt #1e293b Inter-normal "TRACFIN"
+fill   x=152.00 y=130.25 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=130.25 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=159.16 y=134.28 8pt #1e293b Inter-normal "Review"
+fill   x=176.00 y=130.25 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=130.25 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=134.28 8pt #1e293b Inter-normal "E. Dupont"
+fill   x=12.00 y=136.92 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=136.92 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=140.95 8pt #1e293b Inter-normal "CSRD"
+fill   x=102.00 y=136.92 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=136.92 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=140.95 8pt #1e293b Inter-normal "EU"
+fill   x=127.00 y=136.92 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=136.92 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=140.95 8pt #1e293b Inter-normal "AMF"
+fill   x=152.00 y=136.92 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=136.92 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=158.61 y=140.95 8pt #1e293b Inter-normal "Planned"
+fill   x=176.00 y=136.92 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=136.92 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=140.95 8pt #1e293b Inter-normal "F. Nakamura"
+fill   x=12.00 y=143.59 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=143.59 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=147.62 8pt #1e293b Inter-normal "FCA Handbook"
+fill   x=102.00 y=143.59 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=143.59 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=147.62 8pt #1e293b Inter-normal "UK"
+fill   x=127.00 y=143.59 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=143.59 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=147.62 8pt #1e293b Inter-normal "FCA"
+fill   x=152.00 y=143.59 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=143.59 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=147.62 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=143.59 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=143.59 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=147.62 8pt #1e293b Inter-normal "T. Andersen"
+fill   x=12.00 y=150.26 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=150.26 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=154.29 8pt #1e293b Inter-normal "UK GDPR"
+fill   x=102.00 y=150.26 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=150.26 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=154.29 8pt #1e293b Inter-normal "UK"
+fill   x=127.00 y=150.26 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=150.26 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=154.29 8pt #1e293b Inter-normal "ICO"
+fill   x=152.00 y=150.26 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=150.26 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=154.29 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=150.26 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=150.26 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=154.29 8pt #1e293b Inter-normal "L. Bianchi"
+fill   x=12.00 y=156.93 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=156.93 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=160.96 8pt #1e293b Inter-normal "Senior Managers Regime"
+fill   x=102.00 y=156.93 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=156.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=160.96 8pt #1e293b Inter-normal "UK"
+fill   x=127.00 y=156.93 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=156.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=160.96 8pt #1e293b Inter-normal "FCA"
+fill   x=152.00 y=156.93 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=156.93 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=160.96 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=156.93 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=156.93 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=160.96 8pt #1e293b Inter-normal "T. Andersen"
+fill   x=12.00 y=163.59 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=163.59 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=167.63 8pt #1e293b Inter-normal "MAS SFA"
+fill   x=102.00 y=163.59 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=163.59 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=167.63 8pt #1e293b Inter-normal "Singapore"
+fill   x=127.00 y=163.59 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=163.59 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=167.63 8pt #1e293b Inter-normal "MAS"
+fill   x=152.00 y=163.59 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=163.59 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=167.63 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=163.59 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=163.59 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=167.63 8pt #1e293b Inter-normal "S. Chen"
+fill   x=12.00 y=170.26 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=170.26 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=174.30 8pt #1e293b Inter-normal "PDPA"
+fill   x=102.00 y=170.26 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=170.26 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=174.30 8pt #1e293b Inter-normal "Singapore"
+fill   x=127.00 y=170.26 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=170.26 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=174.30 8pt #1e293b Inter-normal "PDPC"
+fill   x=152.00 y=170.26 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=170.26 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=174.30 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=170.26 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=170.26 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=174.30 8pt #1e293b Inter-normal "S. Chen"
+fill   x=12.00 y=176.93 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=176.93 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=180.96 8pt #1e293b Inter-normal "SEC Rule 15c3-1"
+fill   x=102.00 y=176.93 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=176.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=180.96 8pt #1e293b Inter-normal "USA"
+fill   x=127.00 y=176.93 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=176.93 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=180.96 8pt #1e293b Inter-normal "SEC"
+fill   x=152.00 y=176.93 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=176.93 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.46 y=180.96 8pt #1e293b Inter-normal "N/A"
+fill   x=176.00 y=176.93 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=176.93 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=180.96 8pt #1e293b Inter-normal "R. Ivanov"
+fill   x=12.00 y=183.60 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=183.60 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=187.63 8pt #1e293b Inter-normal "Dodd-Frank"
+fill   x=102.00 y=183.60 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=183.60 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=187.63 8pt #1e293b Inter-normal "USA"
+fill   x=127.00 y=183.60 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=183.60 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=187.63 8pt #1e293b Inter-normal "CFTC"
+fill   x=152.00 y=183.60 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=183.60 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.46 y=187.63 8pt #1e293b Inter-normal "N/A"
+fill   x=176.00 y=183.60 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=183.60 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=187.63 8pt #1e293b Inter-normal "R. Ivanov"
+fill   x=12.00 y=190.27 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=190.27 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=194.30 8pt #1e293b Inter-normal "SOX Compliance"
+fill   x=102.00 y=190.27 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=190.27 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=194.30 8pt #1e293b Inter-normal "USA"
+fill   x=127.00 y=190.27 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=190.27 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=194.30 8pt #1e293b Inter-normal "SEC"
+fill   x=152.00 y=190.27 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=190.27 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.59 y=194.30 8pt #1e293b Inter-normal "Voluntary"
+fill   x=176.00 y=190.27 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=190.27 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=194.30 8pt #1e293b Inter-normal "M. Lawson"
+fill   x=12.00 y=196.94 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=196.94 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=200.97 8pt #1e293b Inter-normal "Swiss FINMA"
+fill   x=102.00 y=196.94 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=196.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=200.97 8pt #1e293b Inter-normal "Switzerland"
+fill   x=127.00 y=196.94 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=196.94 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=200.97 8pt #1e293b Inter-normal "FINMA"
+fill   x=152.00 y=196.94 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=196.94 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=158.61 y=200.97 8pt #1e293b Inter-normal "Planned"
+fill   x=176.00 y=196.94 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=196.94 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=200.97 8pt #1e293b Inter-normal "P. Santos"
+fill   x=12.00 y=203.61 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=203.61 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=207.64 8pt #1e293b Inter-normal "JFSA FIEA"
+fill   x=102.00 y=203.61 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=203.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=207.64 8pt #1e293b Inter-normal "Japan"
+fill   x=127.00 y=203.61 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=203.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=207.64 8pt #1e293b Inter-normal "JFSA"
+fill   x=152.00 y=203.61 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=203.61 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=155.87 y=207.64 8pt #1e293b Inter-normal "Assessment"
+fill   x=176.00 y=203.61 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=203.61 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=207.64 8pt #1e293b Inter-normal "Y. Kim"
+fill   x=12.00 y=210.28 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=210.28 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=214.31 8pt #1e293b Inter-normal "HKMA SFC"
+fill   x=102.00 y=210.28 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=210.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=214.31 8pt #1e293b Inter-normal "Hong Kong"
+fill   x=127.00 y=210.28 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=210.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=214.31 8pt #1e293b Inter-normal "SFC"
+fill   x=152.00 y=210.28 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=210.28 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=158.61 y=214.31 8pt #1e293b Inter-normal "Planned"
+fill   x=176.00 y=210.28 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=210.28 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=214.31 8pt #1e293b Inter-normal "S. Chen"
+fill   x=12.00 y=216.95 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=216.95 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=220.98 8pt #1e293b Inter-normal "ASIC AFS License"
+fill   x=102.00 y=216.95 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=216.95 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=220.98 8pt #1e293b Inter-normal "Australia"
+fill   x=127.00 y=216.95 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=216.95 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=220.98 8pt #1e293b Inter-normal "ASIC"
+fill   x=152.00 y=216.95 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=216.95 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=158.61 y=220.98 8pt #1e293b Inter-normal "Planned"
+fill   x=176.00 y=216.95 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=216.95 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=220.98 8pt #1e293b Inter-normal "D. Patel"
+fill   x=12.00 y=223.61 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=223.61 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=227.65 8pt #1e293b Inter-normal "BaFin KWG"
+fill   x=102.00 y=223.61 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=223.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=227.65 8pt #1e293b Inter-normal "Germany"
+fill   x=127.00 y=223.61 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=223.61 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=227.65 8pt #1e293b Inter-normal "BaFin"
+fill   x=152.00 y=223.61 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=223.61 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=227.65 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=223.61 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=223.61 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=227.65 8pt #1e293b Inter-normal "H. Mueller"
+fill   x=12.00 y=230.28 w=90.00 h=6.67 #ffffff B
+stroke x=12.00 y=230.28 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=234.32 8pt #1e293b Inter-normal "CONSOB TUF"
+fill   x=102.00 y=230.28 w=25.00 h=6.67 #ffffff B
+stroke x=102.00 y=230.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=234.32 8pt #1e293b Inter-normal "Italy"
+fill   x=127.00 y=230.28 w=25.00 h=6.67 #ffffff B
+stroke x=127.00 y=230.28 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=234.32 8pt #1e293b Inter-normal "CONSOB"
+fill   x=152.00 y=230.28 w=24.00 h=6.67 #ffffff B
+stroke x=152.00 y=230.28 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=234.32 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=230.28 w=22.00 h=6.67 #ffffff B
+stroke x=176.00 y=230.28 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=234.32 8pt #1e293b Inter-normal "L. Bianchi"
+fill   x=12.00 y=236.95 w=90.00 h=6.67 #ededf0 B
+stroke x=12.00 y=236.95 w=90.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=240.98 8pt #1e293b Inter-normal "CNMV LMV"
+fill   x=102.00 y=236.95 w=25.00 h=6.67 #ededf0 B
+stroke x=102.00 y=236.95 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=104.00 y=240.98 8pt #1e293b Inter-normal "Spain"
+fill   x=127.00 y=236.95 w=25.00 h=6.67 #ededf0 B
+stroke x=127.00 y=236.95 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=129.00 y=240.98 8pt #1e293b Inter-normal "CNMV"
+fill   x=152.00 y=236.95 w=24.00 h=6.67 #ededf0 B
+stroke x=152.00 y=236.95 w=24.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.25 y=240.98 8pt #1e293b Inter-normal "Compliant"
+fill   x=176.00 y=236.95 w=22.00 h=6.67 #ededf0 B
+stroke x=176.00 y=236.95 w=22.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=178.00 y=240.98 8pt #1e293b Inter-normal "C. Ferreira"
+text   x=12.00 y=249.65 8pt #1e293b Inter-normal "Note: Jurisdictions marked \"N/A\" indicate that Acme Technologies does not currently hold a license in that market but monitors regulatory"
+text   x=12.00 y=253.32 8pt #1e293b Inter-normal "developments for potential future entry. \"Planned\" indicates license applications that are scheduled for submission within the next 12"
+text   x=12.00 y=256.99 8pt #1e293b Inter-normal "months. \"Assessment\" indicates preliminary due diligence is underway. All status information is current as of the publication date of this"
+text   x=12.00 y=260.66 8pt #1e293b Inter-normal "manual and may change based on regulatory developments or strategic decisions by the Executive Committee."
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=191.53 y=289.39 7pt #64748b Inter-bold tracking=0.18 "11/13"
+
+## page 13 (210.00 x 297.00 mm)
+text   x=12.00 y=22.54 10pt #1e293b Inter-bold "Stress Scenario Data"
+fill   x=12.00 y=26.59 w=186.00 h=36.77 #f2f5fa B
+stroke x=12.00 y=26.59 w=186.00 h=36.77 #d6e3f2 line=0.30 B
+text   x=16.00 y=32.87 9pt #3572b8 Inter-bold "Note on stress testing methodology"
+text   x=16.00 y=39.00 9pt #1e293b Inter-normal "The scenarios below are based on the EBA 2025 stress test framework adapted to the specific risk profile of Acme"
+text   x=16.00 y=43.13 9pt #1e293b Inter-normal "Technologies. Results are reviewed by the Risk Committee quarterly."
+text   x=16.00 y=49.25 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=49.25 9pt #1e293b Inter-normal "Baseline scenario: moderate economic growth with stable interest rates"
+text   x=16.00 y=53.38 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=53.38 9pt #1e293b Inter-normal "Adverse scenario: GDP contraction of 3.5% with 200bps rate increase"
+text   x=16.00 y=57.51 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=57.51 9pt #1e293b Inter-normal "Severely adverse: GDP contraction of 6.2% with market stress across asset classes"
+fill   x=12.00 y=67.35 w=186.00 h=36.77 #f2f5fa B
+stroke x=12.00 y=67.35 w=186.00 h=36.77 #d6e3f2 line=0.30 B
+text   x=16.00 y=73.64 9pt #3572b8 Inter-bold "Operational resilience targets"
+text   x=16.00 y=79.76 9pt #1e293b Inter-normal "In accordance with DORA requirements, Acme Technologies has established the following maximum tolerable"
+text   x=16.00 y=83.89 9pt #1e293b Inter-normal "downtime thresholds for critical business services:"
+text   x=16.00 y=90.02 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=90.02 9pt #1e293b Inter-normal "Trading systems: 2 hours maximum (RTO), 15 minutes (RPO)"
+text   x=16.00 y=94.15 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=94.15 9pt #1e293b Inter-normal "Client reporting: 4 hours maximum (RTO), 1 hour (RPO)"
+text   x=16.00 y=98.27 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=98.27 9pt #1e293b Inter-normal "Regulatory reporting: 24 hours maximum (RTO), 4 hours (RPO)"
+text   x=12.00 y=110.40 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=110.40 9pt #1e293b Inter-normal "Complete disaster recovery test executed bi-annually with documented results"
+text   x=12.00 y=115.53 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=115.53 9pt #1e293b Inter-normal "Tabletop exercises conducted quarterly involving all business-critical teams"
+text   x=12.00 y=120.66 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=120.66 9pt #1e293b Inter-normal "Third-party dependency mapping and risk assessment"
+text   x=16.00 y=125.78 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=125.78 9pt #1e293b Inter-normal "Cloud service providers (AWS, Azure) — dual-region deployment with automated failover"
+text   x=16.00 y=130.91 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=130.91 9pt #1e293b Inter-normal "Market data vendors (Bloomberg, Refinitiv) — contractual SLA of 99.95% availability"
+text   x=16.00 y=136.04 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=136.04 9pt #1e293b Inter-normal "Payment processors — redundant routing through two independent clearing networks"
+text   x=12.00 y=142.17 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=142.17 9pt #1e293b Inter-normal "Cyber resilience testing including red team exercises and social engineering assessments"
+text   x=12.00 y=147.29 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=147.29 9pt #1e293b Inter-normal "Physical security review of all office locations including access control and CCTV monitoring"
+text   x=12.00 y=152.42 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=152.42 9pt #1e293b Inter-normal "Communication plan for major incident scenarios"
+text   x=16.00 y=157.55 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=157.55 9pt #1e293b Inter-normal "Internal communication cascade (< 15 minutes to all affected employees)"
+text   x=16.00 y=162.68 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=162.68 9pt #1e293b Inter-normal "Client notification procedures differentiated by incident severity"
+text   x=16.00 y=167.80 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=167.80 9pt #1e293b Inter-normal "Regulatory notification within prescribed timeframes (GDPR 72h, DORA as applicable)"
+text   x=12.00 y=173.93 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=173.93 9pt #1e293b Inter-normal "Insurance coverage review — cyber liability, professional indemnity, directors & officers"
+text   x=12.00 y=179.06 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=179.06 9pt #1e293b Inter-normal "Annual review of business impact analysis for all critical business processes"
+text   x=12.00 y=184.19 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=184.19 9pt #1e293b Inter-normal "Vendor concentration risk monitoring with automatic alerting thresholds"
+text   x=12.00 y=189.31 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=189.31 9pt #1e293b Inter-normal "Cross-training program ensuring no single point of failure for key operational processes"
+text   x=12.00 y=206.71 14pt #3572b8 Inter-bold "Approval & Signatures"
+text   x=12.00 y=220.12 10pt #1e293b Inter-bold "Executive Approval"
+text   x=12.00 y=226.19 8pt #64748b Inter-italic "Signed in London on 15 January 2026"
+stroke x=12.00 y=229.83 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=235.86 8pt #64748b Inter-italic "Chief Executive Officer"
+stroke x=109.00 y=229.83 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=113.00 y=235.86 8pt #64748b Inter-italic "Chief Financial Officer"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=191.04 y=289.39 7pt #64748b Inter-bold tracking=0.18 "12/13"
+
+## page 14 (210.00 x 297.00 mm)
+text   x=12.00 y=23.56 14pt #3572b8 Inter-bold "Board Endorsement"
+text   x=12.00 y=32.45 8pt #64748b Inter-italic "Endorsed at the Board meeting of 20 January 2026"
+stroke x=12.00 y=36.09 w=93.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=42.12 8pt #64748b Inter-italic "Chairperson of the Board"
+text   x=12.00 y=86.63 10pt #1e293b Inter-bold "Compliance Officer Certification"
+text   x=12.00 y=92.71 8pt #64748b Inter-italic "Certified in London on 22 January 2026"
+stroke x=12.00 y=96.34 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=102.38 8pt #64748b Inter-italic "Chief Compliance Officer"
+stroke x=109.00 y=96.34 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=113.00 y=102.38 8pt #64748b Inter-italic "Data Protection Officer"
+text   x=16.56 y=273.36 7pt #64748b Inter-normal "Acme Technologies SA — Operations & Compliance Manual 2026 — Confidential — This document and its contents are the exclusive property of Acme"
+text   x=94.76 y=276.57 7pt #64748b Inter-normal "Technologies SA."
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=191.01 y=289.39 7pt #64748b Inter-bold tracking=0.18 "13/13"

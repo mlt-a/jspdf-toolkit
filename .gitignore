@@ -1,0 +1,9 @@
+node_modules/
+dist/
+output/
+*.pdf
+src/fonts/inter/generated/
+.DS_Store
+
+docs/api/
+coverage/

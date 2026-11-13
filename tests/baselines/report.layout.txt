@@ -1,0 +1,427 @@
+properties title="Annual Report 2025" subject="Activity report and annual review" author="Acme Corp" keywords="report, annual, 2025, review"
+
+## page 1 (210.00 x 297.00 mm)
+image  x=12.00 y=20.00 w=54.05 h=10.00 I0 6a53150d
+fill   x=12.00 y=38.00 w=30.00 h=1.50 #00406b f
+text   x=12.00 y=52.61 28pt #1e293b Inter-bold "Annual Report 2025"
+text   x=12.00 y=64.17 14pt #64748b Inter-normal "Acme Corp — Technology Division"
+fill   x=0.00 y=178.05 w=210.00 h=118.95 #d9e3e8 f
+text   x=25.71 y=152.73 60pt #1e293b Inter-bold angle=-45.00 opacity=0.08 "CONFIDENTIAL"
+
+## page 2 (210.00 x 297.00 mm)
+text   x=12.00 y=26.10 24pt #1e293b Inter-bold "Contents"
+text   x=12.00 y=41.29 9pt #1e293b Inter-normal "Sections and subsections of this report, with the page they start on."
+text   x=12.00 y=49.42 9pt #00416a Inter-bold "1"
+text   x=16.15 y=49.42 9pt #1e293b Inter-bold "Key Figures"
+text   x=196.00 y=49.42 9pt #00416a Inter-bold "2"
+stroke x=36.65 y=49.42 w=157.35 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=55.55 9pt #00416a Inter-bold "2"
+text   x=16.15 y=55.55 9pt #1e293b Inter-bold "Flagship Projects"
+text   x=196.00 y=55.55 9pt #00416a Inter-bold "2"
+stroke x=44.95 y=55.55 w=149.05 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=18.00 y=61.68 9pt #00416a Inter-bold "2.1"
+text   x=25.06 y=61.68 9pt #1e293b Inter-normal "Document Management Platform"
+text   x=196.00 y=61.68 9pt #00416a Inter-bold "2"
+stroke x=76.61 y=61.68 w=117.39 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=18.00 y=67.80 9pt #00416a Inter-bold "2.2"
+text   x=25.06 y=67.80 9pt #1e293b Inter-normal "PDF Generation Tool"
+text   x=196.00 y=67.80 9pt #00416a Inter-bold "2"
+stroke x=58.18 y=67.80 w=135.82 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=73.93 9pt #00416a Inter-bold "3"
+text   x=16.15 y=73.93 9pt #1e293b Inter-bold "Organization"
+text   x=195.95 y=73.93 9pt #00416a Inter-bold "3"
+stroke x=38.18 y=73.93 w=155.77 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=18.00 y=80.06 9pt #00416a Inter-bold "3.1"
+text   x=25.06 y=80.06 9pt #1e293b Inter-normal "Contact Information"
+text   x=195.95 y=80.06 9pt #00416a Inter-bold "3"
+stroke x=56.88 y=80.06 w=137.07 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=86.19 9pt #00416a Inter-bold "4"
+text   x=16.15 y=86.19 9pt #1e293b Inter-bold "2026 Objectives"
+text   x=195.95 y=86.19 9pt #00416a Inter-bold "3"
+stroke x=43.77 y=86.19 w=150.19 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=18.00 y=92.31 9pt #00416a Inter-bold "4.1"
+text   x=25.06 y=92.31 9pt #1e293b Inter-normal "Key Highlights"
+text   x=195.95 y=92.31 9pt #00416a Inter-bold "3"
+stroke x=48.75 y=92.31 w=145.20 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=98.44 9pt #00416a Inter-bold "5"
+text   x=16.15 y=98.44 9pt #1e293b Inter-bold "Project Tracking"
+text   x=195.95 y=98.44 9pt #00416a Inter-bold "3"
+stroke x=43.79 y=98.44 w=150.16 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=104.57 9pt #00416a Inter-bold "6"
+text   x=16.15 y=104.57 9pt #1e293b Inter-bold "Compliance & Commitments"
+text   x=195.85 y=104.57 9pt #00416a Inter-bold "4"
+stroke x=62.10 y=104.57 w=131.75 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=110.70 9pt #00416a Inter-bold "7"
+text   x=16.15 y=110.70 9pt #1e293b Inter-bold "Signatures"
+text   x=195.85 y=110.70 9pt #00416a Inter-bold "4"
+stroke x=35.01 y=110.70 w=158.84 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=193.95 y=289.39 7pt #64748b Inter-bold tracking=0.18 "1/4"
+image  x=102.50 y=286.00 w=5.00 h=5.00 I1 802ff0cf
+text   x=25.71 y=152.73 60pt #1e293b Inter-bold angle=-45.00 opacity=0.08 "CONFIDENTIAL"
+link   x=12.00 y=47.13 w=186.00 h=4.13 page 3 y=125.90
+link   x=12.00 y=53.26 w=186.00 h=4.13 page 3 y=183.70
+link   x=12.00 y=59.39 w=186.00 h=4.13 page 3 y=197.34
+link   x=12.00 y=65.52 w=186.00 h=4.13 page 3 y=256.82
+link   x=12.00 y=71.64 w=186.00 h=4.13 page 4 y=20.00
+link   x=12.00 y=77.77 w=186.00 h=4.13 page 4 y=67.74
+link   x=12.00 y=83.90 w=186.00 h=4.13 page 4 y=114.01
+link   x=12.00 y=90.03 w=186.00 h=4.13 page 4 y=173.67
+link   x=12.00 y=96.15 w=186.00 h=4.13 page 4 y=197.24
+link   x=12.00 y=102.28 w=186.00 h=4.13 page 5 y=64.80
+link   x=12.00 y=108.41 w=186.00 h=4.13 page 5 y=163.98
+
+## page 3 (210.00 x 297.00 mm)
+image  x=12.00 y=20.00 w=54.05 h=10.00 I0 6a53150d
+text   x=12.00 y=52.10 24pt #1e293b Inter-bold "Annual Report 2025"
+fill   x=12.00 y=59.01 w=65.78 h=8.13 #d9e3e8 B
+stroke x=12.00 y=59.01 w=65.78 h=8.13 #d9e3e8 line=0.30 B
+text   x=18.00 y=64.21 9pt #00416a Inter-bold "Acme Corp — Technology Division"
+stroke x=12.00 y=75.13 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=83.42 9pt #1e293b Inter-normal "This report presents the 2025 year-end review, key results, completed projects, and outlook for 2026. It covers all activities"
+text   x=12.00 y=87.55 9pt #1e293b Inter-normal "of the technology division, including product development, infrastructure, and applied research."
+text   x=12.00 y=95.68 9pt #1e293b Inter-normal "The year 2025 was marked by significant growth of our engineering team and the launch of three major products. Our"
+text   x=12.00 y=99.80 9pt #1e293b Inter-normal "approach centered on code quality and developer experience has paid off."
+text   x=12.00 y=107.93 9pt #1e293b Inter-normal "R&D investments represented 42% of the total budget, up 15 points compared to 2024. This strategy has proven successful"
+text   x=12.00 y=112.06 9pt #1e293b Inter-normal "with a customer retention rate reaching 96%."
+text   x=12.00 y=129.46 14pt #00416a Inter-bold "1"
+text   x=18.13 y=129.46 14pt #1e293b Inter-bold "Key Figures"
+stroke x=12.00 y=131.54 w=186.00 h=0.00 #00406b line=0.30 S
+text   x=12.00 y=137.57 8pt #64748b Inter-bold "Revenue"
+fill   x=12.00 y=139.39 w=12.34 h=4.13 #e0e8ed f
+text   x=13.00 y=142.25 9pt #1e293b Inter-bold "€4.2M"
+text   x=76.67 y=137.57 8pt #64748b Inter-bold "Growth"
+fill   x=76.67 y=139.39 w=11.50 h=4.13 #e0e8ed f
+text   x=77.67 y=142.25 9pt #1e293b Inter-bold "+38%"
+text   x=141.33 y=137.57 8pt #64748b Inter-bold "Headcount"
+text   x=141.33 y=142.25 10pt #1e293b Inter-normal "47 employees"
+text   x=12.00 y=149.55 8pt #64748b Inter-bold "Projects delivered"
+text   x=12.00 y=154.23 10pt #1e293b Inter-normal "23"
+text   x=109.00 y=149.55 8pt #64748b Inter-bold "Customer satisfaction"
+text   x=109.00 y=154.23 10pt #1e293b Inter-normal "4.8/5"
+text   x=12.00 y=160.31 8pt #64748b Inter-bold "Headquarters"
+text   x=12.00 y=164.98 10pt #1e293b Inter-normal "London, United Kingdom"
+text   x=12.00 y=170.06 8pt #64748b Inter-normal "Branch offices in Manchester and Edinburgh"
+text   x=12.00 y=187.26 14pt #00416a Inter-bold "2"
+text   x=19.11 y=187.26 14pt #1e293b Inter-bold "Flagship Projects"
+stroke x=12.00 y=189.34 w=186.00 h=0.00 #00406b line=0.30 S
+text   x=12.00 y=199.88 10pt #00416a Inter-bold "2.1"
+text   x=20.92 y=199.88 10pt #1e293b Inter-bold "Document Management Platform"
+text   x=12.00 y=206.21 9pt #1e293b Inter-normal "Complete overhaul of our document management platform with migration to a microservices architecture. The project"
+text   x=12.00 y=210.34 9pt #1e293b Inter-normal "involved a team of 8 developers over a 6-month period."
+fill   x=12.00 y=216.18 w=186.00 h=32.64 #edf2f5 B
+stroke x=12.00 y=216.18 w=186.00 h=32.64 #ccd9e0 line=0.30 B
+text   x=16.00 y=222.47 9pt #00416a Inter-bold "Measured impact"
+text   x=16.00 y=228.60 9pt #1e293b Inter-normal "The new platform reduced processing times by 65% and improved system reliability with 99.97% uptime."
+text   x=16.00 y=234.72 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=234.72 9pt #1e293b Inter-normal "Migration of 2.3 million documents with zero data loss"
+text   x=16.00 y=238.85 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=238.85 9pt #1e293b Inter-normal "40% reduction in infrastructure costs"
+text   x=16.00 y=242.98 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=242.98 9pt #1e293b Inter-normal "REST API v3 with full OpenAPI documentation"
+text   x=12.00 y=259.36 10pt #00416a Inter-bold "2.2"
+text   x=21.62 y=259.36 10pt #1e293b Inter-bold "PDF Generation Tool"
+text   x=12.00 y=265.69 9pt #1e293b Inter-normal "Development of an open-source PDF generation library with theme management, font handling, tables, and complex"
+text   x=12.00 y=269.82 9pt #1e293b Inter-normal "layouts. Used in production by 12 clients to generate over 50,000 documents per month."
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=193.46 y=289.39 7pt #64748b Inter-bold tracking=0.18 "2/4"
+image  x=102.50 y=286.00 w=5.00 h=5.00 I1 802ff0cf
+text   x=25.71 y=152.73 60pt #1e293b Inter-bold angle=-45.00 opacity=0.08 "CONFIDENTIAL"
+
+## page 4 (210.00 x 297.00 mm)
+text   x=12.00 y=23.56 14pt #00416a Inter-bold "3"
+text   x=19.19 y=23.56 14pt #1e293b Inter-bold "Organization"
+stroke x=12.00 y=25.64 w=186.00 h=0.00 #00406b line=0.30 S
+text   x=12.00 y=36.18 10pt #1e293b Inter-bold "Product Team"
+text   x=12.00 y=42.51 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=42.51 9pt #1e293b Inter-normal "12 full-stack developers"
+text   x=12.00 y=47.64 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=47.64 9pt #1e293b Inter-normal "3 UX/UI designers"
+text   x=12.00 y=52.77 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=52.77 9pt #1e293b Inter-normal "2 product managers"
+text   x=12.00 y=57.90 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=57.90 9pt #1e293b Inter-normal "1 tech lead"
+text   x=109.00 y=36.18 10pt #1e293b Inter-bold "Infrastructure Team"
+text   x=109.00 y=42.51 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=42.51 9pt #1e293b Inter-normal "5 DevOps engineers"
+text   x=109.00 y=47.64 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=47.64 9pt #1e293b Inter-normal "3 SREs"
+text   x=109.00 y=52.77 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=52.77 9pt #1e293b Inter-normal "2 cloud architects"
+text   x=109.00 y=57.90 9pt #1e293b Inter-normal "•"
+text   x=112.00 y=57.90 9pt #1e293b Inter-normal "1 security lead"
+text   x=12.00 y=70.28 10pt #00416a Inter-bold "3.1"
+text   x=20.98 y=70.28 10pt #1e293b Inter-bold "Contact Information"
+stroke x=12.00 y=74.32 w=93.00 h=27.69 #ccd9e0 line=0.40 S
+text   x=16.00 y=80.61 9pt #00416a Inter-bold "Acme Corp"
+text   x=16.00 y=84.74 8pt #64748b Inter-normal "Technology Division"
+text   x=16.00 y=88.87 9pt #1e293b Inter-normal "42 Innovation Avenue"
+text   x=16.00 y=92.99 9pt #1e293b Inter-normal "London WC2B 6TP, United Kingdom"
+text   x=16.00 y=97.12 9pt #1e293b Inter-normal "contact@acme.example"
+text   x=12.00 y=117.57 14pt #00416a Inter-bold "4"
+text   x=19.34 y=117.57 14pt #1e293b Inter-bold "2026 Objectives"
+stroke x=12.00 y=119.65 w=186.00 h=0.00 #00406b line=0.30 S
+text   x=12.00 y=125.94 9pt #1e293b Inter-normal "1."
+text   x=17.00 y=125.94 9pt #1e293b Inter-normal "Launch v2 of the document management platform"
+text   x=16.00 y=131.07 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=131.07 9pt #1e293b Inter-normal "AI integration for automatic classification"
+text   x=16.00 y=136.19 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=136.19 9pt #1e293b Inter-normal "Multi-language support (EN, FR, DE, ES)"
+text   x=12.00 y=142.32 9pt #1e293b Inter-normal "2."
+text   x=17.00 y=142.32 9pt #1e293b Inter-normal "Reach €5M in annual revenue"
+text   x=12.00 y=147.45 9pt #1e293b Inter-normal "3."
+text   x=17.00 y=147.45 9pt #1e293b Inter-normal "Hire 15 additional team members"
+text   x=12.00 y=152.58 9pt #1e293b Inter-normal "4."
+text   x=17.00 y=152.58 9pt #1e293b Inter-normal "Expand the SaaS offering"
+text   x=16.00 y=157.70 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=157.70 9pt #1e293b Inter-normal "Subscription and billing module"
+text   x=16.00 y=162.83 9pt #1e293b Inter-normal "-"
+text   x=19.00 y=162.83 9pt #1e293b Inter-normal "Self-service client portal"
+text   x=12.00 y=176.21 10pt #00416a Inter-bold "4.1"
+text   x=21.08 y=176.21 10pt #1e293b Inter-bold "Key Highlights"
+fill   x=12.00 y=179.26 w=23.71 h=4.98 #e0e8ed f
+text   x=13.00 y=182.54 9pt #1e293b Inter-bold "Growth +38%"
+fill   x=62.00 y=179.26 w=27.30 h=4.98 #00406b f
+text   x=63.00 y=182.54 9pt #ffffff Inter-bold "Target achieved"
+text   x=12.00 y=200.80 14pt #00416a Inter-bold "5"
+text   x=19.07 y=200.80 14pt #1e293b Inter-bold "Project Tracking"
+stroke x=12.00 y=202.89 w=186.00 h=0.00 #00406b line=0.30 S
+fill   x=12.00 y=206.89 w=101.00 h=6.67 #00406b B
+stroke x=12.00 y=206.89 w=101.00 h=6.67 #40708f line=0.30 B
+text   x=14.00 y=210.92 8pt #ffffff Inter-bold "Project"
+fill   x=113.00 y=206.89 w=35.00 h=6.67 #00406b B
+stroke x=113.00 y=206.89 w=35.00 h=6.67 #40708f line=0.30 B
+text   x=115.00 y=210.92 8pt #ffffff Inter-bold "Lead"
+fill   x=148.00 y=206.89 w=25.00 h=6.67 #00406b B
+stroke x=148.00 y=206.89 w=25.00 h=6.67 #40708f line=0.30 B
+text   x=156.06 y=210.92 8pt #ffffff Inter-bold "Status"
+fill   x=173.00 y=206.89 w=25.00 h=6.67 #00406b B
+stroke x=173.00 y=206.89 w=25.00 h=6.67 #40708f line=0.30 B
+text   x=186.10 y=210.92 8pt #ffffff Inter-bold "Budget"
+fill   x=12.00 y=213.55 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=213.55 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=217.59 8pt #1e293b Inter-normal "Document platform v2"
+fill   x=113.00 y=213.55 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=213.55 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=217.59 8pt #1e293b Inter-normal "A. Carter"
+fill   x=148.00 y=213.55 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=213.55 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.94 y=217.59 8pt #1e293b Inter-normal "In progress"
+fill   x=173.00 y=213.55 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=213.55 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.29 y=217.59 8pt #1e293b Inter-normal "€450k"
+fill   x=12.00 y=220.22 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=220.22 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=224.26 8pt #1e293b Inter-normal "Public API overhaul"
+fill   x=113.00 y=220.22 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=220.22 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=224.26 8pt #1e293b Inter-normal "S. Brooks"
+fill   x=148.00 y=220.22 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=220.22 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=153.21 y=224.26 8pt #1e293b Inter-normal "Completed"
+fill   x=173.00 y=220.22 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=220.22 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.92 y=224.26 8pt #1e293b Inter-normal "€120k"
+fill   x=12.00 y=226.89 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=226.89 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=230.92 8pt #1e293b Inter-normal "Cloud migration AWS → GCP"
+fill   x=113.00 y=226.89 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=226.89 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=230.92 8pt #1e293b Inter-normal "L. Hayes"
+fill   x=148.00 y=226.89 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=226.89 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.94 y=230.92 8pt #1e293b Inter-normal "In progress"
+fill   x=173.00 y=226.89 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=226.89 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.32 y=230.92 8pt #1e293b Inter-normal "€280k"
+fill   x=12.00 y=233.56 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=233.56 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=237.59 8pt #1e293b Inter-normal "ISO 27001 security audit"
+fill   x=113.00 y=233.56 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=233.56 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=237.59 8pt #1e293b Inter-normal "M. Bennett"
+fill   x=148.00 y=233.56 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=233.56 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=155.11 y=237.59 8pt #1e293b Inter-normal "Planned"
+fill   x=173.00 y=233.56 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=233.56 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.15 y=237.59 8pt #1e293b Inter-normal "€85k"
+fill   x=12.00 y=240.23 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=240.23 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=244.26 8pt #1e293b Inter-normal "SaaS billing module"
+fill   x=113.00 y=240.23 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=240.23 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=244.26 8pt #1e293b Inter-normal "C. Mitchell"
+fill   x=148.00 y=240.23 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=240.23 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.94 y=244.26 8pt #1e293b Inter-normal "In progress"
+fill   x=173.00 y=240.23 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=240.23 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.29 y=244.26 8pt #1e293b Inter-normal "€200k"
+fill   x=12.00 y=246.90 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=246.90 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=250.93 8pt #1e293b Inter-normal "Internal LLM integration"
+fill   x=113.00 y=246.90 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=246.90 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=250.93 8pt #1e293b Inter-normal "P. Walker"
+fill   x=148.00 y=246.90 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=246.90 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.67 y=250.93 8pt #1e293b Inter-normal "R&D"
+fill   x=173.00 y=246.90 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=246.90 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.97 y=250.93 8pt #1e293b Inter-normal "€150k"
+fill   x=12.00 y=253.57 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=253.57 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=257.60 8pt #1e293b Inter-normal "Mobile app v3"
+fill   x=113.00 y=253.57 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=253.57 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=257.60 8pt #1e293b Inter-normal "J. Turner"
+fill   x=148.00 y=253.57 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=253.57 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.94 y=257.60 8pt #1e293b Inter-normal "In progress"
+fill   x=173.00 y=253.57 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=253.57 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.33 y=257.60 8pt #1e293b Inter-normal "€320k"
+fill   x=12.00 y=260.24 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=260.24 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=264.27 8pt #1e293b Inter-normal "Partner portal"
+fill   x=113.00 y=260.24 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=260.24 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=264.27 8pt #1e293b Inter-normal "N. Collins"
+fill   x=148.00 y=260.24 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=260.24 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=155.11 y=264.27 8pt #1e293b Inter-normal "Planned"
+fill   x=173.00 y=260.24 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=260.24 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.15 y=264.27 8pt #1e293b Inter-normal "€175k"
+fill   x=12.00 y=266.91 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=266.91 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=270.94 8pt #1e293b Inter-normal "Data pipeline refactoring"
+fill   x=113.00 y=266.91 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=266.91 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=270.94 8pt #1e293b Inter-normal "R. Garcia"
+fill   x=148.00 y=266.91 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=266.91 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=153.21 y=270.94 8pt #1e293b Inter-normal "Completed"
+fill   x=173.00 y=266.91 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=266.91 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.15 y=270.94 8pt #1e293b Inter-normal "€95k"
+fill   x=12.00 y=273.57 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=273.57 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=277.61 8pt #1e293b Inter-normal "Analytics dashboard v2"
+fill   x=113.00 y=273.57 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=273.57 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=277.61 8pt #1e293b Inter-normal "E. Parker"
+fill   x=148.00 y=273.57 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=273.57 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=152.94 y=277.61 8pt #1e293b Inter-normal "In progress"
+fill   x=173.00 y=273.57 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=273.57 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=188.50 y=277.61 8pt #1e293b Inter-normal "€110k"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=193.42 y=289.39 7pt #64748b Inter-bold tracking=0.18 "3/4"
+image  x=102.50 y=286.00 w=5.00 h=5.00 I1 802ff0cf
+text   x=25.71 y=152.73 60pt #1e293b Inter-bold angle=-45.00 opacity=0.08 "CONFIDENTIAL"
+
+## page 5 (210.00 x 297.00 mm)
+text   x=12.00 y=22.29 9pt #1e293b Inter-bold "Project Tracking (continued)"
+fill   x=12.00 y=26.13 w=101.00 h=6.67 #00406b B
+stroke x=12.00 y=26.13 w=101.00 h=6.67 #40708f line=0.30 B
+text   x=14.00 y=30.16 8pt #ffffff Inter-bold "Project"
+fill   x=113.00 y=26.13 w=35.00 h=6.67 #00406b B
+stroke x=113.00 y=26.13 w=35.00 h=6.67 #40708f line=0.30 B
+text   x=115.00 y=30.16 8pt #ffffff Inter-bold "Lead"
+fill   x=148.00 y=26.13 w=25.00 h=6.67 #00406b B
+stroke x=148.00 y=26.13 w=25.00 h=6.67 #40708f line=0.30 B
+text   x=156.06 y=30.16 8pt #ffffff Inter-bold "Status"
+fill   x=173.00 y=26.13 w=25.00 h=6.67 #00406b B
+stroke x=173.00 y=26.13 w=25.00 h=6.67 #40708f line=0.30 B
+text   x=186.10 y=30.16 8pt #ffffff Inter-bold "Budget"
+fill   x=12.00 y=32.80 w=101.00 h=6.67 #ededf0 B
+stroke x=12.00 y=32.80 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=36.83 8pt #1e293b Inter-normal "Customer support chatbot"
+fill   x=113.00 y=32.80 w=35.00 h=6.67 #ededf0 B
+stroke x=113.00 y=32.80 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=36.83 8pt #1e293b Inter-normal "V. Hughes"
+fill   x=148.00 y=32.80 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=32.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.67 y=36.83 8pt #1e293b Inter-normal "R&D"
+fill   x=173.00 y=32.80 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=32.80 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=187.90 y=36.83 8pt #1e293b Inter-normal "€130k"
+fill   x=12.00 y=39.47 w=101.00 h=6.67 #ffffff B
+stroke x=12.00 y=39.47 w=101.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=43.50 8pt #1e293b Inter-normal "Onboarding revamp"
+fill   x=113.00 y=39.47 w=35.00 h=6.67 #ffffff B
+stroke x=113.00 y=39.47 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=115.00 y=43.50 8pt #1e293b Inter-normal "D. Foster"
+fill   x=148.00 y=39.47 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=39.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=153.21 y=43.50 8pt #1e293b Inter-normal "Completed"
+fill   x=173.00 y=39.47 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=39.47 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=189.04 y=43.50 8pt #1e293b Inter-normal "€60k"
+fill   x=12.00 y=46.13 w=101.00 h=6.67 #d9e3e8 B
+stroke x=12.00 y=46.13 w=101.00 h=6.67 #ccd9e0 line=0.30 B
+text   x=14.00 y=50.17 8pt #1e293b Inter-bold "12 projects"
+fill   x=113.00 y=46.13 w=35.00 h=6.67 #d9e3e8 B
+stroke x=113.00 y=46.13 w=35.00 h=6.67 #ccd9e0 line=0.30 B
+fill   x=148.00 y=46.13 w=25.00 h=6.67 #d9e3e8 B
+stroke x=148.00 y=46.13 w=25.00 h=6.67 #ccd9e0 line=0.30 B
+fill   x=173.00 y=46.13 w=25.00 h=6.67 #d9e3e8 B
+stroke x=173.00 y=46.13 w=25.00 h=6.67 #ccd9e0 line=0.30 B
+text   x=185.10 y=50.17 8pt #1e293b Inter-bold "€2,175k"
+text   x=12.00 y=68.36 14pt #00416a Inter-bold "6"
+text   x=19.21 y=68.36 14pt #1e293b Inter-bold "Compliance & Commitments"
+stroke x=12.00 y=70.45 w=186.00 h=0.00 #00406b line=0.30 S
+text   x=12.00 y=76.73 9pt #1e293b Inter-normal "GDPR policy up to date?"
+stroke x=187.01 y=74.09 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=187.76 y=75.59 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=188.36 y=74.93 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=192.01 y=76.73 9pt #059669 Inter-bold "Yes"
+text   x=12.00 y=84.86 9pt #1e293b Inter-normal "Annual security audit completed?"
+stroke x=187.01 y=82.22 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=187.76 y=83.72 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=188.36 y=83.06 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=192.01 y=84.86 9pt #059669 Inter-bold "Yes"
+text   x=12.00 y=92.99 9pt #1e293b Inter-normal "ISO 27001 certification obtained?"
+stroke x=175.39 y=90.34 w=3.00 h=3.00 #e01c47 line=0.24 S
+stroke x=176.23 y=91.18 w=1.32 h=1.32 #e01c47 line=0.43 S
+stroke x=176.23 y=91.18 w=1.32 h=1.32 #e01c47 line=0.43 S
+text   x=180.39 y=92.99 9pt #e11d48 Inter-bold "In progress"
+stroke x=12.00 y=98.22 w=3.50 h=3.50 #00406b line=0.28 S
+stroke x=12.87 y=99.97 w=0.70 h=0.70 #00406b line=0.50 S
+stroke x=13.58 y=99.20 w=1.16 h=1.47 #00406b line=0.50 S
+text   x=17.50 y=101.11 9pt #1e293b Inter-normal "GDPR compliance"
+stroke x=12.00 y=104.35 w=3.50 h=3.50 #00406b line=0.28 S
+stroke x=12.87 y=106.10 w=0.70 h=0.70 #00406b line=0.50 S
+stroke x=13.58 y=105.33 w=1.16 h=1.47 #00406b line=0.50 S
+text   x=17.50 y=107.24 9pt #1e293b Inter-normal "Business continuity plan"
+stroke x=12.00 y=110.48 w=3.50 h=3.50 #00406b line=0.28 S
+stroke x=12.87 y=112.23 w=0.70 h=0.70 #00406b line=0.50 S
+stroke x=13.58 y=111.46 w=1.16 h=1.47 #00406b line=0.50 S
+text   x=17.50 y=113.37 9pt #1e293b Inter-normal "Cyber risk insurance"
+stroke x=12.00 y=116.60 w=3.50 h=3.50 #e01c47 line=0.28 S
+stroke x=12.98 y=117.58 w=1.54 h=1.54 #e01c47 line=0.50 S
+stroke x=12.98 y=117.58 w=1.54 h=1.54 #e01c47 line=0.50 S
+text   x=17.50 y=119.50 9pt #1e293b Inter-normal "ISO 27001 certification"
+fill   x=12.00 y=125.34 w=186.00 h=32.64 #ffffff B
+stroke x=12.00 y=125.34 w=186.00 h=32.64 #e3e8f0 line=0.40 B
+text   x=16.00 y=131.62 9pt #1e293b Inter-normal "I, the undersigned, certify that the information contained in this report is accurate and complete to the best of my"
+text   x=16.00 y=135.75 9pt #1e293b Inter-normal "knowledge."
+text   x=16.00 y=141.88 9pt #1e293b Inter-normal "I attest that the financial data has been validated by the accounting department and complies with applicable"
+text   x=16.00 y=146.01 9pt #1e293b Inter-normal "standards."
+text   x=16.00 y=152.13 9pt #1e293b Inter-normal "I commit to implementing the corrective actions identified within the specified deadlines."
+text   x=12.00 y=167.53 14pt #00416a Inter-bold "7"
+text   x=18.87 y=167.53 14pt #1e293b Inter-bold "Signatures"
+stroke x=12.00 y=169.62 w=186.00 h=0.00 #00406b line=0.30 S
+text   x=12.00 y=175.65 8pt #64748b Inter-italic "Signed in London on April 9, 2026"
+stroke x=12.00 y=179.29 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=185.32 8pt #64748b Inter-italic "Chief Technology Officer"
+stroke x=109.00 y=179.29 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=113.00 y=185.32 8pt #64748b Inter-italic "Chief Executive Officer"
+text   x=67.22 y=276.57 7pt #64748b Inter-normal "Acme Corp — Confidential document — Reproduction prohibited"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=193.34 y=289.39 7pt #64748b Inter-bold tracking=0.18 "4/4"
+image  x=102.50 y=286.00 w=5.00 h=5.00 I1 802ff0cf
+text   x=25.71 y=152.73 60pt #1e293b Inter-bold angle=-45.00 opacity=0.08 "CONFIDENTIAL"

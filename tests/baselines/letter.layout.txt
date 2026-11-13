@@ -1,0 +1,134 @@
+properties title="Order confirmation — Ref. AC-2026-0417" subject="Order confirmation letter" author="Acme Corp" keywords="letter, order confirmation"
+
+## page 1 (215.90 x 279.40 mm)
+image  x=12.00 y=20.00 w=59.46 h=11.00 I0 487e9b4d
+text   x=111.95 y=22.03 8pt #1e293b Inter-normal "12 Harbour Road, Bristol BS1 4RW"
+text   x=111.95 y=25.70 8pt #1e293b Inter-normal "+44 117 496 0123"
+text   x=111.95 y=29.37 8pt #1e293b Inter-normal "sales@acme.example"
+text   x=111.95 y=33.04 8pt #1e293b Inter-normal "www.acme.example"
+stroke x=12.00 y=40.68 w=191.90 h=0.00 #3673b8 line=0.30 S
+stroke x=12.00 y=46.68 w=80.00 h=23.56 #d6e3f2 line=0.40 S
+text   x=16.00 y=52.96 9pt #3572b8 Inter-bold "Ms. Jane Smith"
+text   x=16.00 y=57.09 9pt #1e293b Inter-normal "TechStart Inc."
+text   x=16.00 y=61.22 9pt #1e293b Inter-normal "45 Innovation Drive"
+text   x=16.00 y=65.34 9pt #1e293b Inter-normal "San Francisco, CA 94105"
+text   x=12.00 y=76.77 8pt #64748b Inter-bold "Date:"
+text   x=21.33 y=76.77 10pt #1e293b Inter-normal "November 13, 2026"
+text   x=12.00 y=82.36 8pt #64748b Inter-bold "Our reference:"
+text   x=34.26 y=82.36 10pt #1e293b Inter-normal "AC-2026-0417"
+text   x=12.00 y=87.95 8pt #64748b Inter-bold "Your order:"
+text   x=29.80 y=87.95 10pt #1e293b Inter-normal "PO-88213"
+text   x=12.00 y=100.53 10pt #1e293b Inter-bold "Subject: confirmation of your order and delivery schedule"
+text   x=12.00 y=106.86 9pt #1e293b Inter-normal "Dear Ms. Smith,"
+text   x=12.00 y=114.99 9pt #1e293b Inter-normal "Thank you for choosing Acme Corp. We are pleased to confirm that your order"
+text   x=131.02 y=114.99 9pt #1e293b Inter-bold "PO-88213"
+text   x=147.45 y=114.99 9pt #1e293b Inter-normal "has been accepted and that"
+text   x=12.00 y=119.12 9pt #1e293b Inter-normal "production will start on"
+text   x=47.25 y=119.12 9pt #1e293b Inter-bold "November 23, 2026"
+text   x=78.32 y=119.12 9pt #1e293b Inter-normal ". This letter sets out what you can expect from us over the coming weeks."
+text   x=12.00 y=127.25 9pt #1e293b Inter-normal "Your team asked for a"
+text   x=46.10 y=127.25 9pt #1e293b Inter-italic "phased"
+text   x=58.22 y=127.25 9pt #1e293b Inter-normal "roll-out across three sites. We have planned it so that each site is live before the next one"
+text   x=12.00 y=131.37 9pt #1e293b Inter-normal "begins, which keeps the disruption to your daily operations to a minimum. The summary below shows the order as we"
+text   x=12.00 y=135.50 9pt #1e293b Inter-normal "understood it."
+text   x=12.00 y=143.37 8pt #64748b Inter-bold "Equipment"
+text   x=12.00 y=148.05 10pt #1e293b Inter-normal "24 workstations"
+text   x=78.63 y=143.37 8pt #64748b Inter-bold "Sites"
+text   x=78.63 y=148.05 10pt #1e293b Inter-normal "3 offices"
+text   x=145.27 y=143.37 8pt #64748b Inter-bold "Order total"
+fill   x=145.27 y=145.19 w=21.04 h=4.13 #e8edf5 f
+text   x=146.27 y=148.05 9pt #1e293b Inter-bold "$48,600.00"
+fill   x=12.00 y=155.32 w=38.09 h=6.67 #3673b8 B
+stroke x=12.00 y=155.32 w=38.09 h=6.67 #6994c9 line=0.30 B
+text   x=14.00 y=159.35 8pt #ffffff Inter-bold "Phase"
+fill   x=50.09 y=155.32 w=59.29 h=6.67 #3673b8 B
+stroke x=50.09 y=155.32 w=59.29 h=6.67 #6994c9 line=0.30 B
+text   x=52.09 y=159.35 8pt #ffffff Inter-bold "Site"
+fill   x=109.38 y=155.32 w=74.52 h=6.67 #3673b8 B
+stroke x=109.38 y=155.32 w=74.52 h=6.67 #6994c9 line=0.30 B
+text   x=111.38 y=159.35 8pt #ffffff Inter-bold "Delivery"
+fill   x=183.90 y=155.32 w=20.00 h=6.67 #3673b8 B
+stroke x=183.90 y=155.32 w=20.00 h=6.67 #6994c9 line=0.30 B
+text   x=194.70 y=159.35 8pt #ffffff Inter-bold "Units"
+fill   x=12.00 y=161.99 w=38.09 h=6.67 #ededf0 B
+stroke x=12.00 y=161.99 w=38.09 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=166.02 8pt #1e293b Inter-normal "Phase 1"
+fill   x=50.09 y=161.99 w=59.29 h=6.67 #ededf0 B
+stroke x=50.09 y=161.99 w=59.29 h=6.67 #e3e8f0 line=0.30 B
+text   x=52.09 y=166.02 8pt #1e293b Inter-normal "San Francisco"
+fill   x=109.38 y=161.99 w=74.52 h=6.67 #ededf0 B
+stroke x=109.38 y=161.99 w=74.52 h=6.67 #e3e8f0 line=0.30 B
+text   x=111.38 y=166.02 8pt #1e293b Inter-normal "December 7, 2026"
+fill   x=183.90 y=161.99 w=20.00 h=6.67 #ededf0 B
+stroke x=183.90 y=161.99 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=198.97 y=166.02 8pt #1e293b Inter-normal "10"
+fill   x=12.00 y=168.66 w=38.09 h=6.67 #ffffff B
+stroke x=12.00 y=168.66 w=38.09 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=172.69 8pt #1e293b Inter-normal "Phase 2"
+fill   x=50.09 y=168.66 w=59.29 h=6.67 #ffffff B
+stroke x=50.09 y=168.66 w=59.29 h=6.67 #e3e8f0 line=0.30 B
+text   x=52.09 y=172.69 8pt #1e293b Inter-normal "Austin"
+fill   x=109.38 y=168.66 w=74.52 h=6.67 #ffffff B
+stroke x=109.38 y=168.66 w=74.52 h=6.67 #e3e8f0 line=0.30 B
+text   x=111.38 y=172.69 8pt #1e293b Inter-normal "January 18, 2027"
+fill   x=183.90 y=168.66 w=20.00 h=6.67 #ffffff B
+stroke x=183.90 y=168.66 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=200.15 y=172.69 8pt #1e293b Inter-normal "8"
+fill   x=12.00 y=175.33 w=38.09 h=6.67 #ededf0 B
+stroke x=12.00 y=175.33 w=38.09 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=179.36 8pt #1e293b Inter-normal "Phase 3"
+fill   x=50.09 y=175.33 w=59.29 h=6.67 #ededf0 B
+stroke x=50.09 y=175.33 w=59.29 h=6.67 #e3e8f0 line=0.30 B
+text   x=52.09 y=179.36 8pt #1e293b Inter-normal "Seattle"
+fill   x=109.38 y=175.33 w=74.52 h=6.67 #ededf0 B
+stroke x=109.38 y=175.33 w=74.52 h=6.67 #e3e8f0 line=0.30 B
+text   x=111.38 y=179.36 8pt #1e293b Inter-normal "February 22, 2027"
+fill   x=183.90 y=175.33 w=20.00 h=6.67 #ededf0 B
+stroke x=183.90 y=175.33 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=200.15 y=179.36 8pt #1e293b Inter-normal "6"
+text   x=12.00 y=188.28 9pt #1e293b Inter-normal "Before each delivery, our installation team will need the following from you:"
+text   x=12.00 y=196.41 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=196.41 9pt #1e293b Inter-normal "a named contact on site, available on the delivery day"
+text   x=12.00 y=201.54 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=201.54 9pt #1e293b Inter-normal "access to the server room during the installation window"
+text   x=12.00 y=206.67 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=206.67 9pt #1e293b Inter-normal "the network details for the new workstations, sent at least ten days ahead"
+fill   x=12.00 y=212.51 w=191.90 h=16.26 #e0ebf5 f
+clip   x=12.00 y=212.51 w=191.90 h=16.26 W
+fill   x=12.00 y=212.51 w=1.20 h=16.26 #3673b8 f
+text   x=19.20 y=218.79 9pt #1e293b Inter-normal "Delivery dates are firm once the network details have been received. A delay on your side moves the following phases"
+text   x=19.20 y=222.92 9pt #1e293b Inter-normal "by the same number of days."
+text   x=12.00 y=235.05 9pt #1e293b Inter-normal "You can follow every shipment from your customer account at"
+text   x=106.62 y=235.05 9pt #3572b8 Inter-normal "acme.example/orders"
+stroke x=106.62 y=235.55 w=32.77 h=0.00 #3673b8 line=0.20 S
+text   x=139.38 y=235.05 9pt #1e293b Inter-normal ", and our support team answers any"
+text   x=12.00 y=239.18 9pt #1e293b Inter-normal "question on the same day."
+text   x=12.00 y=247.30 9pt #1e293b Inter-normal "Our standard warranty covers"
+text   x=57.79 y=247.30 9pt #1e293b Inter-bold "three years"
+text   x=76.37 y=247.30 9pt #1e293b Inter-normal "of parts and labour on every workstation. For your order we have added on-site"
+text   x=12.00 y=251.43 9pt #1e293b Inter-normal "support during the first"
+text   x=47.38 y=251.43 9pt #1e293b Inter-italic "ninety days"
+text   x=64.81 y=251.43 9pt #1e293b Inter-normal ", so that your teams are never left waiting for a replacement."
+stroke x=12.00 y=266.40 w=191.90 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=271.79 7pt #64748b Inter-bold tracking=0.18 "ACME CORP · REGISTERED IN ENGLAND AND WALES NO. 01234567"
+text   x=187.58 y=271.79 7pt #64748b Inter-bold tracking=0.18 "PAGE 1 OF 2"
+link   x=106.62 y=231.75 w=32.77 h=4.13 url "https://acme.example/orders"
+
+## page 2 (215.90 x 279.40 mm)
+text   x=24.00 y=22.29 9pt #1e293b Inter-italic "“Acme Corp will repair or replace any defective unit within two working days of the report, at no charge to the"
+text   x=24.00 y=26.41 9pt #1e293b Inter-italic "customer.”"
+text   x=41.45 y=26.41 9pt #1e293b Inter-normal "Terms and conditions of sale, section 7.2"
+text   x=12.00 y=34.54 9pt #1e293b Inter-normal "Invoices are issued at the end of each phase and are payable within"
+text   x=114.77 y=34.54 9pt #1e293b Inter-bold "30 days"
+text   x=127.25 y=34.54 9pt #1e293b Inter-normal ". Should your accounts team need a purchase"
+text   x=12.00 y=38.67 9pt #1e293b Inter-normal "order number or a different billing address, please let us know before the first shipment."
+text   x=12.00 y=46.80 9pt #1e293b Inter-normal "We value this first project with TechStart and look forward to a long collaboration. Please sign and return the enclosed order"
+text   x=12.00 y=50.92 9pt #1e293b Inter-normal "form so that we can release the first shipment."
+text   x=12.00 y=59.05 9pt #1e293b Inter-normal "Yours sincerely,"
+stroke x=12.00 y=64.89 w=95.95 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=70.92 8pt #64748b Inter-italic "Daniel Moore"
+text   x=16.00 y=74.59 8pt #94a3b8 Inter-normal "Head of Sales, Acme Corp"
+text   x=12.00 y=100.92 8pt #1e293b Inter-normal "Enclosures: order form (2 pages), delivery schedule, terms and conditions of sale"
+stroke x=12.00 y=266.40 w=191.90 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=271.79 7pt #64748b Inter-bold tracking=0.18 "ACME CORP · REGISTERED IN ENGLAND AND WALES NO. 01234567"
+text   x=187.09 y=271.79 7pt #64748b Inter-bold tracking=0.18 "PAGE 2 OF 2"

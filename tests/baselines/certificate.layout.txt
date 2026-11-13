@@ -1,0 +1,168 @@
+properties title="Certificate of Completion — Amelia Hart" subject="Certificate of completion and transcript" author="Acme Corp" keywords="certificate, training, transcript"
+
+## page 1 (297.00 x 210.00 mm)
+image  x=25.00 y=15.00 w=54.05 h=10.00 I0 10069cce
+text   x=25.00 y=47.10 24pt #1e293b Inter-bold "Certificate of Completion"
+stroke x=25.00 y=49.96 w=247.00 h=0.00 #7a69ad line=0.30 S
+text   x=25.00 y=59.99 8pt #63748a Inter-italic "Acme Corp certifies that"
+text   x=25.00 y=77.18 14pt #7b68ae Inter-bold "Amelia Hart"
+text   x=25.00 y=86.08 8pt #63748a Inter-italic "has successfully completed the professional program"
+text   x=25.00 y=98.26 10pt #1e293b Inter-bold "Data Analysis for Decision Makers"
+text   x=25.00 y=104.59 9pt #1e293b Inter-normal "48 hours of instruction and assessment, completed with an overall score of 91 out of 100."
+text   x=25.00 y=112.46 8pt #64748b Inter-bold "Date of issue"
+text   x=25.00 y=117.14 10pt #1e293b Inter-normal "November 13, 2026"
+text   x=110.00 y=112.46 8pt #64748b Inter-bold "Certificate No."
+text   x=110.00 y=117.14 10pt #1e293b Inter-normal "AA-2026-04817"
+text   x=195.00 y=112.46 8pt #64748b Inter-bold "Valid until"
+text   x=195.00 y=117.14 10pt #1e293b Inter-normal "November 12, 2029"
+fill   x=25.00 y=123.19 w=48.01 h=8.13 #ebe8f2 B
+stroke x=25.00 y=123.19 w=48.01 h=8.13 #ebe8f2 line=0.30 B
+text   x=31.00 y=128.39 9pt #7b68ae Inter-bold "Passed with distinction"
+text   x=25.00 y=137.35 8pt #64748b Inter-italic "Issued in London on November 13, 2026"
+stroke x=25.00 y=140.98 w=119.50 h=30.00 #e3e8f0 line=0.30 S
+text   x=29.00 y=147.01 8pt #64748b Inter-italic "Director of Studies"
+text   x=29.00 y=150.68 8pt #94a3b8 Inter-normal "Dr. Helen Marsh"
+stroke x=152.50 y=140.98 w=119.50 h=30.00 #e3e8f0 line=0.30 S
+text   x=156.50 y=147.01 8pt #64748b Inter-italic "Chief Executive Officer"
+text   x=156.50 y=150.68 8pt #94a3b8 Inter-normal "Thomas Reed, Acme Corp"
+stroke x=25.00 y=197.00 w=247.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=268.06 y=202.39 7pt #64748b Inter-bold tracking=0.18 "1/2"
+
+## page 2 (297.00 x 210.00 mm)
+text   x=25.00 y=21.10 24pt #1e293b Inter-bold "Transcript of results — Amelia Hart"
+stroke x=25.00 y=23.96 w=247.00 h=0.00 #7a69ad line=0.30 S
+fill   x=25.00 y=31.96 w=162.00 h=6.67 #7a69ad B
+stroke x=25.00 y=31.96 w=162.00 h=6.67 #9c8fc2 line=0.30 B
+text   x=27.00 y=35.99 8pt #ffffff Inter-bold "Module"
+fill   x=187.00 y=31.96 w=25.00 h=6.67 #7a69ad B
+stroke x=187.00 y=31.96 w=25.00 h=6.67 #9c8fc2 line=0.30 B
+text   x=195.34 y=35.99 8pt #ffffff Inter-bold "Hours"
+fill   x=212.00 y=31.96 w=25.00 h=6.67 #7a69ad B
+stroke x=212.00 y=31.96 w=25.00 h=6.67 #9c8fc2 line=0.30 B
+text   x=220.32 y=35.99 8pt #ffffff Inter-bold "Grade"
+fill   x=237.00 y=31.96 w=35.00 h=6.67 #7a69ad B
+stroke x=237.00 y=31.96 w=35.00 h=6.67 #9c8fc2 line=0.30 B
+text   x=250.05 y=35.99 8pt #ffffff Inter-bold "Status"
+fill   x=25.00 y=38.63 w=162.00 h=6.67 #ededf0 B
+stroke x=25.00 y=38.63 w=162.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=27.00 y=42.66 8pt #1e293b Inter-normal "1. Foundations of data literacy"
+fill   x=187.00 y=38.63 w=25.00 h=6.67 #ededf0 B
+stroke x=187.00 y=38.63 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=198.63 y=42.66 8pt #1e293b Inter-normal "8"
+fill   x=212.00 y=38.63 w=25.00 h=6.67 #ededf0 B
+stroke x=212.00 y=38.63 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=222.75 y=42.66 8pt #1e293b Inter-normal "88"
+fill   x=237.00 y=38.63 w=35.00 h=6.67 #ededf0 B
+stroke x=237.00 y=38.63 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=249.63 y=42.66 8pt #1e293b Inter-normal "Passed"
+fill   x=25.00 y=45.30 w=162.00 h=6.67 #ffffff B
+stroke x=25.00 y=45.30 w=162.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=27.00 y=49.33 8pt #1e293b Inter-normal "2. Collecting and cleaning data"
+fill   x=187.00 y=45.30 w=25.00 h=6.67 #ffffff B
+stroke x=187.00 y=45.30 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=198.04 y=49.33 8pt #1e293b Inter-normal "10"
+fill   x=212.00 y=45.30 w=25.00 h=6.67 #ffffff B
+stroke x=212.00 y=45.30 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=222.73 y=49.33 8pt #1e293b Inter-normal "90"
+fill   x=237.00 y=45.30 w=35.00 h=6.67 #ffffff B
+stroke x=237.00 y=45.30 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=249.63 y=49.33 8pt #1e293b Inter-normal "Passed"
+fill   x=25.00 y=51.97 w=162.00 h=6.67 #ededf0 B
+stroke x=25.00 y=51.97 w=162.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=27.00 y=56.00 8pt #1e293b Inter-normal "3. Descriptive statistics"
+fill   x=187.00 y=51.97 w=25.00 h=6.67 #ededf0 B
+stroke x=187.00 y=51.97 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=198.04 y=56.00 8pt #1e293b Inter-normal "10"
+fill   x=212.00 y=51.97 w=25.00 h=6.67 #ededf0 B
+stroke x=212.00 y=51.97 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=222.75 y=56.00 8pt #1e293b Inter-normal "93"
+fill   x=237.00 y=51.97 w=35.00 h=6.67 #ededf0 B
+stroke x=237.00 y=51.97 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=249.63 y=56.00 8pt #1e293b Inter-normal "Passed"
+fill   x=25.00 y=58.63 w=162.00 h=6.67 #ffffff B
+stroke x=25.00 y=58.63 w=162.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=27.00 y=62.67 8pt #1e293b Inter-normal "4. Data visualization"
+fill   x=187.00 y=58.63 w=25.00 h=6.67 #ffffff B
+stroke x=187.00 y=58.63 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=198.04 y=62.67 8pt #1e293b Inter-normal "10"
+fill   x=212.00 y=58.63 w=25.00 h=6.67 #ffffff B
+stroke x=212.00 y=58.63 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=222.79 y=62.67 8pt #1e293b Inter-normal "95"
+fill   x=237.00 y=58.63 w=35.00 h=6.67 #ffffff B
+stroke x=237.00 y=58.63 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=249.63 y=62.67 8pt #1e293b Inter-normal "Passed"
+fill   x=25.00 y=65.30 w=162.00 h=6.67 #ededf0 B
+stroke x=25.00 y=65.30 w=162.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=27.00 y=69.34 8pt #1e293b Inter-normal "5. Final assessment"
+fill   x=187.00 y=65.30 w=25.00 h=6.67 #ededf0 B
+stroke x=187.00 y=65.30 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=198.04 y=69.34 8pt #1e293b Inter-normal "10"
+fill   x=212.00 y=65.30 w=25.00 h=6.67 #ededf0 B
+stroke x=212.00 y=65.30 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=223.05 y=69.34 8pt #1e293b Inter-normal "91"
+fill   x=237.00 y=65.30 w=35.00 h=6.67 #ededf0 B
+stroke x=237.00 y=65.30 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=249.63 y=69.34 8pt #1e293b Inter-normal "Passed"
+fill   x=25.00 y=71.97 w=162.00 h=6.67 #ebe8f2 B
+stroke x=25.00 y=71.97 w=162.00 h=6.67 #e6e0f0 line=0.30 B
+text   x=27.00 y=76.00 8pt #1e293b Inter-bold "TOTAL"
+fill   x=187.00 y=71.97 w=25.00 h=6.67 #ebe8f2 B
+stroke x=187.00 y=71.97 w=25.00 h=6.67 #e6e0f0 line=0.30 B
+text   x=197.63 y=76.00 8pt #1e293b Inter-bold "48"
+fill   x=212.00 y=71.97 w=25.00 h=6.67 #ebe8f2 B
+stroke x=212.00 y=71.97 w=25.00 h=6.67 #e6e0f0 line=0.30 B
+text   x=219.61 y=76.00 8pt #1e293b Inter-bold "91 avg."
+fill   x=237.00 y=71.97 w=35.00 h=6.67 #ebe8f2 B
+stroke x=237.00 y=71.97 w=35.00 h=6.67 #e6e0f0 line=0.30 B
+text   x=246.94 y=76.00 8pt #1e293b Inter-bold "Completed"
+text   x=25.00 y=84.67 8pt #64748b Inter-bold "Hours by topic"
+fill   x=48.00 y=88.31 w=19.92 h=15.87 #7a69ad f
+fill   x=58.08 y=99.81 w=12.91 h=27.76 #9485bd f
+fill   x=36.50 y=121.39 w=27.76 h=12.91 #ada1cc f
+fill   x=25.02 y=105.36 w=15.85 h=25.87 #c4bddb f
+fill   x=25.78 y=88.31 w=22.22 h=19.31 #ded9eb f
+text   x=44.53 y=112.45 9pt #1e293b Inter-bold "48 h"
+fill   x=77.00 y=99.65 w=3.00 h=3.00 #7a69ad f
+fill   x=77.00 y=104.32 w=3.00 h=3.00 #9485bd f
+fill   x=77.00 y=108.99 w=3.00 h=3.00 #ada1cc f
+fill   x=77.00 y=113.66 w=3.00 h=3.00 #c4bddb f
+fill   x=77.00 y=118.33 w=3.00 h=3.00 #ded9eb f
+text   x=82.00 y=102.17 8pt #1e293b Inter-normal "Foundations"
+text   x=82.00 y=106.84 8pt #1e293b Inter-normal "Data cleaning"
+text   x=82.00 y=111.51 8pt #1e293b Inter-normal "Statistics"
+text   x=82.00 y=116.18 8pt #1e293b Inter-normal "Visualization"
+text   x=82.00 y=120.85 8pt #1e293b Inter-normal "Assessment"
+text   x=106.32 y=102.17 8pt #64748b Inter-normal "17%"
+text   x=106.20 y=106.84 8pt #64748b Inter-normal "21%"
+text   x=106.20 y=111.51 8pt #64748b Inter-normal "21%"
+text   x=106.20 y=116.18 8pt #64748b Inter-normal "21%"
+text   x=106.20 y=120.85 8pt #64748b Inter-normal "21%"
+text   x=152.50 y=84.67 8pt #64748b Inter-bold "Grade by module"
+fill   x=155.50 y=91.40 w=14.55 h=38.91 #7a69ad f
+fill   x=176.05 y=90.52 w=14.55 h=39.79 #7a69ad f
+fill   x=196.60 y=89.19 w=14.55 h=41.12 #7a69ad f
+fill   x=217.15 y=88.31 w=14.55 h=42.00 #7a69ad f
+fill   x=237.70 y=90.08 w=14.55 h=40.23 #7a69ad f
+stroke x=152.50 y=130.31 w=102.75 h=0.00 #e3e8f0 line=0.20 S
+stroke x=152.50 y=99.36 w=102.75 h=0.00 #1f293b line=0.20 S dash=[1.00 1.00]
+text   x=256.25 y=100.25 7pt #94a3b8 Inter-normal "Pass mark 70"
+text   x=160.93 y=134.34 8pt #64748b Inter-normal "M1"
+text   x=181.19 y=134.34 8pt #64748b Inter-normal "M2"
+text   x=201.73 y=134.34 8pt #64748b Inter-normal "M3"
+text   x=222.24 y=134.34 8pt #64748b Inter-normal "M4"
+text   x=242.86 y=134.34 8pt #64748b Inter-normal "M5"
+text   x=161.03 y=138.01 8pt #1e293b Inter-normal "88"
+text   x=181.56 y=138.01 8pt #1e293b Inter-normal "90"
+text   x=202.13 y=138.01 8pt #1e293b Inter-normal "93"
+text   x=222.71 y=138.01 8pt #1e293b Inter-normal "95"
+text   x=243.53 y=138.01 8pt #1e293b Inter-normal "91"
+text   x=25.00 y=150.19 10pt #1e293b Inter-bold "Skills acquired"
+image  x=25.00 y=153.88 w=3.00 h=3.00 I1 c26d7e83
+text   x=30.00 y=156.52 9pt #1e293b Inter-normal "Clean and prepare data from several sources"
+image  x=25.00 y=159.00 w=3.00 h=3.00 I1 c26d7e83
+text   x=30.00 y=161.65 9pt #1e293b Inter-normal "Summarize a dataset with the right statistics"
+image  x=25.00 y=164.13 w=3.00 h=3.00 I1 c26d7e83
+text   x=30.00 y=166.77 9pt #1e293b Inter-normal "Build clear charts for a decision meeting"
+text   x=95.49 y=189.57 7pt #64748b Inter-normal "Acme Corp — 12 Queen Street, London — Accredited by the Professional Training Council."
+stroke x=25.00 y=197.00 w=247.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=267.57 y=202.39 7pt #64748b Inter-bold tracking=0.18 "2/2"

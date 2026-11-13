@@ -1,0 +1,129 @@
+properties title="Invoice INV-2026-042" subject="Client invoice" author="Acme Corp" keywords="invoice, billing"
+
+## page 1 (210.00 x 297.00 mm)
+text   x=12.00 y=26.10 24pt #1e293b Inter-bold "ACME CORPORATION"
+stroke x=12.00 y=39.01 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=48.56 14pt #1e293b Inter-bold "Invoice"
+text   x=12.00 y=55.97 10pt #64748b Inter-normal "Invoice No."
+text   x=47.00 y=55.97 10pt #1e293b Inter-normal "INV-2026-042"
+text   x=12.00 y=61.55 10pt #64748b Inter-normal "Date"
+text   x=47.00 y=61.55 10pt #1e293b Inter-normal "April 9, 2026"
+text   x=12.00 y=67.14 10pt #64748b Inter-normal "Due date"
+text   x=47.00 y=67.14 10pt #1e293b Inter-normal "May 9, 2026"
+text   x=12.00 y=72.73 10pt #64748b Inter-normal "Payment method"
+text   x=47.00 y=72.73 10pt #1e293b Inter-normal "Wire transfer"
+text   x=109.00 y=48.56 14pt #1e293b Inter-bold "Client"
+text   x=109.00 y=55.97 10pt #64748b Inter-normal "Company"
+text   x=144.00 y=55.97 10pt #1e293b Inter-normal "TechStart Inc."
+text   x=109.00 y=61.55 10pt #64748b Inter-normal "Contact"
+text   x=144.00 y=61.55 10pt #1e293b Inter-normal "Jane Smith"
+text   x=109.00 y=67.14 10pt #64748b Inter-normal "Address"
+text   x=144.00 y=67.14 10pt #1e293b Inter-normal "45 Innovation Drive"
+text   x=109.00 y=72.73 10pt #64748b Inter-normal "City"
+text   x=144.00 y=72.73 10pt #1e293b Inter-normal "San Francisco, CA 94105"
+text   x=12.00 y=90.33 14pt #cb7054 Inter-bold "Service details"
+fill   x=12.00 y=97.19 w=121.00 h=6.67 #cc7054 B
+stroke x=12.00 y=97.19 w=121.00 h=6.67 #d99480 line=0.30 B
+text   x=14.00 y=101.22 8pt #ffffff Inter-bold "Description"
+fill   x=133.00 y=97.19 w=15.00 h=6.67 #cc7054 B
+stroke x=133.00 y=97.19 w=15.00 h=6.67 #d99480 line=0.30 B
+text   x=138.04 y=101.22 8pt #ffffff Inter-bold "Qty"
+fill   x=148.00 y=97.19 w=25.00 h=6.67 #cc7054 B
+stroke x=148.00 y=97.19 w=25.00 h=6.67 #d99480 line=0.30 B
+text   x=157.63 y=101.22 8pt #ffffff Inter-bold "Unit Price"
+fill   x=173.00 y=97.19 w=25.00 h=6.67 #cc7054 B
+stroke x=173.00 y=97.19 w=25.00 h=6.67 #d99480 line=0.30 B
+text   x=188.95 y=101.22 8pt #ffffff Inter-bold "Total"
+fill   x=12.00 y=103.86 w=121.00 h=6.67 #ededf0 B
+stroke x=12.00 y=103.86 w=121.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=107.89 8pt #1e293b Inter-normal "Web application development — Sprint 1"
+fill   x=133.00 y=103.86 w=15.00 h=6.67 #ededf0 B
+stroke x=133.00 y=103.86 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=139.04 y=107.89 8pt #1e293b Inter-normal "10"
+fill   x=148.00 y=103.86 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=103.86 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=159.54 y=107.89 8pt #1e293b Inter-normal "€650.00"
+fill   x=173.00 y=103.86 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=103.86 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=181.95 y=107.89 8pt #1e293b Inter-normal "€6,500.00"
+fill   x=12.00 y=110.53 w=121.00 h=6.67 #ffffff B
+stroke x=12.00 y=110.53 w=121.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=114.56 8pt #1e293b Inter-normal "Web application development — Sprint 2"
+fill   x=133.00 y=110.53 w=15.00 h=6.67 #ffffff B
+stroke x=133.00 y=110.53 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=139.07 y=114.56 8pt #1e293b Inter-normal "12"
+fill   x=148.00 y=110.53 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=110.53 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=159.54 y=114.56 8pt #1e293b Inter-normal "€650.00"
+fill   x=173.00 y=110.53 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=110.53 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=182.03 y=114.56 8pt #1e293b Inter-normal "€7,800.00"
+fill   x=12.00 y=117.20 w=121.00 h=6.67 #ededf0 B
+stroke x=12.00 y=117.20 w=121.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=121.23 8pt #1e293b Inter-normal "UX/UI Design — Mockups"
+fill   x=133.00 y=117.20 w=15.00 h=6.67 #ededf0 B
+stroke x=133.00 y=117.20 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=139.66 y=121.23 8pt #1e293b Inter-normal "5"
+fill   x=148.00 y=117.20 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=117.20 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=159.62 y=121.23 8pt #1e293b Inter-normal "€550.00"
+fill   x=173.00 y=117.20 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=117.20 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=182.16 y=121.23 8pt #1e293b Inter-normal "€2,750.00"
+fill   x=12.00 y=123.87 w=121.00 h=6.67 #ffffff B
+stroke x=12.00 y=123.87 w=121.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=127.90 8pt #1e293b Inter-normal "Security audit"
+fill   x=133.00 y=123.87 w=15.00 h=6.67 #ffffff B
+stroke x=133.00 y=123.87 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=139.63 y=127.90 8pt #1e293b Inter-normal "3"
+fill   x=148.00 y=123.87 w=25.00 h=6.67 #ffffff B
+stroke x=148.00 y=123.87 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=159.44 y=127.90 8pt #1e293b Inter-normal "€800.00"
+fill   x=173.00 y=123.87 w=25.00 h=6.67 #ffffff B
+stroke x=173.00 y=123.87 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=181.83 y=127.90 8pt #1e293b Inter-normal "€2,400.00"
+fill   x=12.00 y=130.54 w=121.00 h=6.67 #ededf0 B
+stroke x=12.00 y=130.54 w=121.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=134.57 8pt #1e293b Inter-normal "Team training"
+fill   x=133.00 y=130.54 w=15.00 h=6.67 #ededf0 B
+stroke x=133.00 y=130.54 w=15.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=139.64 y=134.57 8pt #1e293b Inter-normal "2"
+fill   x=148.00 y=130.54 w=25.00 h=6.67 #ededf0 B
+stroke x=148.00 y=130.54 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=157.50 y=134.57 8pt #1e293b Inter-normal "€1,200.00"
+fill   x=173.00 y=130.54 w=25.00 h=6.67 #ededf0 B
+stroke x=173.00 y=130.54 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=181.83 y=134.57 8pt #1e293b Inter-normal "€2,400.00"
+fill   x=12.00 y=137.21 w=121.00 h=6.67 #f7ebe6 B
+stroke x=12.00 y=137.21 w=121.00 h=6.67 #f5e3de line=0.30 B
+fill   x=133.00 y=137.21 w=15.00 h=6.67 #f7ebe6 B
+stroke x=133.00 y=137.21 w=15.00 h=6.67 #f5e3de line=0.30 B
+fill   x=148.00 y=137.21 w=25.00 h=6.67 #f7ebe6 B
+stroke x=148.00 y=137.21 w=25.00 h=6.67 #f5e3de line=0.30 B
+text   x=155.58 y=141.24 8pt #1e293b Inter-bold "SUBTOTAL"
+fill   x=173.00 y=137.21 w=25.00 h=6.67 #f7ebe6 B
+stroke x=173.00 y=137.21 w=25.00 h=6.67 #f5e3de line=0.30 B
+text   x=179.89 y=141.24 8pt #1e293b Inter-bold "€21,850.00"
+text   x=12.00 y=149.91 8pt #64748b Inter-bold "Subtotal"
+text   x=12.00 y=154.58 10pt #1e293b Inter-normal "€21,850.00"
+text   x=76.67 y=149.91 8pt #64748b Inter-bold "VAT (20%)"
+text   x=76.67 y=154.58 10pt #1e293b Inter-normal "€4,370.00"
+text   x=141.33 y=149.91 8pt #64748b Inter-bold "Total"
+fill   x=141.33 y=151.73 w=20.78 h=4.13 #faedeb f
+text   x=142.33 y=154.58 9pt #1e293b Inter-bold "€26,220.00"
+text   x=12.00 y=173.41 14pt #cb7054 Inter-bold "Payment terms"
+text   x=12.00 y=182.56 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=182.56 9pt #1e293b Inter-normal "Payment by wire transfer within 30 days"
+text   x=12.00 y=187.69 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=187.69 9pt #1e293b Inter-normal "IBAN: FR76 1234 5678 9012 3456 7890 123 — BIC: ACMEFRP0"
+text   x=12.00 y=192.81 9pt #1e293b Inter-normal "•"
+text   x=15.00 y=192.81 9pt #1e293b Inter-normal "Late payment: annual rate of 10% on the total amount, plus a fixed recovery fee of €40.00"
+text   x=12.00 y=210.21 14pt #cb7054 Inter-bold "Approval"
+text   x=12.00 y=219.11 8pt #64748b Inter-italic "Signed in London on April 9, 2026"
+stroke x=12.00 y=222.75 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=228.78 8pt #64748b Inter-italic "Service provider signature"
+stroke x=109.00 y=222.75 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=113.00 y=228.78 8pt #64748b Inter-italic "Client signature (approved)"
+text   x=48.18 y=276.57 7pt #64748b Inter-normal "Acme Corporation Ltd — Company No. 12345678 — VAT GB123456789 — Share capital €50,000"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=194.55 y=289.39 7pt #64748b Inter-bold tracking=0.18 "1/1"

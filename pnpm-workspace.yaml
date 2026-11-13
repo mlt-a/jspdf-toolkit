@@ -1,0 +1,10 @@
+allowBuilds:
+  core-js: false
+  esbuild: false
+overrides:
+  # Fixes advisories in the version jspdf resolves.
+  dompurify: '>=3.4.17'
+  # Fixes advisories in the version oxfmt resolves.
+  tinypool: '>=2.2.0'
+  # Fixes an advisory in the version tsup, tsx and vite resolve.
+  esbuild: '>=0.28.1'

@@ -1,0 +1,106 @@
+{
+  "name": "@mlt-a/jspdf-toolkit",
+  "version": "0.1.0",
+  "description": "Themed PDF generation for jsPDF: a fluent, typed API with a single-color design system.",
+  "keywords": [
+    "invoice",
+    "jspdf",
+    "pdf",
+    "pdf-generation",
+    "report",
+    "theme",
+    "typescript"
+  ],
+  "homepage": "https://github.com/mlt-a/jspdf-toolkit#readme",
+  "bugs": {
+    "url": "https://github.com/mlt-a/jspdf-toolkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Antoine Millet",
+    "url": "https://github.com/mlt-a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlt-a/jspdf-toolkit.git"
+  },
+  "files": [
+    "dist",
+    "assets/fonts/inter/OFL.txt"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
+    },
+    "./fonts/inter": {
+      "types": "./dist/fonts/inter.d.ts",
+      "default": "./dist/fonts/inter.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pnpm fonts:generate && tsup",
+    "type-check": "tsc --noEmit && tsc -p tests",
+    "fonts:generate": "node scripts/generate-inter.mjs",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt --write .",
+    "fmt:check": "oxfmt --check .",
+    "example:invoice": "tsx src/examples/run-examples.ts invoice",
+    "example:report": "tsx src/examples/run-examples.ts report",
+    "example:showcase": "tsx src/examples/run-examples.ts showcase",
+    "example:stress-test": "tsx src/examples/run-examples.ts stress-test",
+    "example:registration-form": "tsx src/examples/run-examples.ts registration-form",
+    "example:contract": "tsx src/examples/run-examples.ts contract",
+    "example:letter": "tsx src/examples/run-examples.ts letter",
+    "example:certificate": "tsx src/examples/run-examples.ts certificate",
+    "example:all": "tsx src/examples/run-examples.ts",
+    "docs:api": "typedoc",
+    "docs:previews": "node scripts/render-previews.mjs",
+    "docs:components": "pnpm build && node scripts/docs-components.mjs",
+    "assets:images": "node scripts/render-assets.mjs",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check:browser": "esbuild dist/index.js --bundle --platform=browser --external:jspdf --outfile=/dev/null",
+    "check:readme": "node scripts/check-readme.mjs",
+    "check:docs": "node scripts/docs-components.mjs --check",
+    "check:pdf": "node scripts/pdf-baselines.mjs",
+    "check:pdf:update": "node scripts/pdf-baselines.mjs --update",
+    "check:layout:update": "vitest run tests/unit/examples-layout.test.ts --update",
+    "check:all": "pnpm type-check && pnpm lint && pnpm fmt:check && pnpm build && pnpm check:readme && pnpm check:docs && pnpm check:browser && pnpm test && pnpm check:pdf && pnpm docs:api",
+    "prepare": "node scripts/generate-inter.mjs && ([ -e .git ] && h=$(git rev-parse --git-path hooks) && cp hooks/pre-push \"$h/pre-push\" && chmod +x \"$h/pre-push\" || true)",
+    "prepublishOnly": "pnpm type-check && pnpm lint && pnpm build && pnpm test"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.9",
+    "@vitest/coverage-v8": "^5.1.0",
+    "esbuild": "^0.28.2",
+    "jspdf": "^4.2.1",
+    "oxfmt": "^0.44.0",
+    "oxlint": "^1.89.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.15",
+    "typedoc": "^0.28.20",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
+  },
+  "peerDependencies": {
+    "jspdf": "^4.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@11.5.2"
+}

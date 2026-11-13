@@ -1,0 +1,169 @@
+properties title="Registration form — Acme Summit 2026" subject="Conference registration" author="Acme Corp" keywords="registration, conference, form"
+
+## page 1 (210.00 x 297.00 mm)
+image  x=12.00 y=20.00 w=54.05 h=10.00 I0 942b6f61
+text   x=12.00 y=52.10 24pt #1e293b Inter-bold "Acme Summit 2026"
+fill   x=12.00 y=59.01 w=39.02 h=8.13 #e0ede8 B
+stroke x=12.00 y=59.01 w=39.02 h=8.13 #e0ede8 line=0.30 B
+text   x=18.00 y=64.21 9pt #2e8b6e Inter-bold "Registration form"
+text   x=12.00 y=77.42 9pt #1e293b Inter-normal "Complete this form and return it to registrations@acme.example before September 30, 2026. Fields already filled in come"
+text   x=12.00 y=81.55 9pt #1e293b Inter-normal "from your Acme account: check them and correct them if needed."
+stroke x=12.00 y=89.39 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=104.95 14pt #2e8b6e Inter-bold "1. Attendee"
+text   x=12.00 y=113.84 8pt #64748b Inter-bold "First name"
+text   x=12.00 y=118.52 10pt #1e293b Inter-normal "Jane"
+text   x=109.00 y=113.84 8pt #64748b Inter-bold "Last name"
+text   x=109.00 y=118.52 10pt #1e293b Inter-normal "Smith"
+text   x=12.00 y=124.60 8pt #64748b Inter-bold "Job title"
+text   x=12.00 y=129.27 10pt #1e293b Inter-normal ""
+text   x=109.00 y=124.60 8pt #64748b Inter-bold "Company"
+text   x=109.00 y=129.27 10pt #1e293b Inter-normal "TechStart Inc."
+text   x=12.00 y=135.35 8pt #64748b Inter-bold "Email"
+text   x=12.00 y=140.03 10pt #1e293b Inter-normal "jane.smith@techstart.example"
+text   x=109.00 y=135.35 8pt #64748b Inter-bold "Phone"
+text   x=109.00 y=140.03 10pt #1e293b Inter-normal ""
+stroke x=12.00 y=146.07 w=186.00 h=23.56 #d6e8e3 line=0.40 S
+text   x=16.00 y=152.36 9pt #2e8b6e Inter-bold "TechStart Inc."
+text   x=16.00 y=156.49 8pt #64748b Inter-normal "Accounts payable"
+text   x=16.00 y=160.62 9pt #1e293b Inter-normal "45 Innovation Drive"
+text   x=16.00 y=164.74 9pt #1e293b Inter-normal "San Francisco, CA 94105"
+text   x=12.00 y=185.19 14pt #2e8b6e Inter-bold "2. Choose your pass"
+stroke x=12.00 y=191.45 w=3.50 h=3.50 #2e8c6e line=0.28 S
+stroke x=12.87 y=193.20 w=0.70 h=0.70 #2e8c6e line=0.50 S
+stroke x=13.58 y=192.43 w=1.16 h=1.47 #2e8c6e line=0.50 S
+text   x=17.50 y=194.34 9pt #1e293b Inter-normal "Standard pass: two days, all talks and workshops"
+stroke x=12.00 y=197.57 w=3.50 h=3.50 #63738c line=0.28 S
+text   x=17.50 y=200.47 9pt #1e293b Inter-normal "Student pass: two days, proof of enrolment required"
+stroke x=12.00 y=203.70 w=3.50 h=3.50 #63738c line=0.28 S
+text   x=17.50 y=206.59 9pt #1e293b Inter-normal "Workshop pass: Day 2 only, one workshop of your choice"
+stroke x=12.00 y=209.83 w=3.50 h=3.50 #63738c line=0.28 S
+text   x=17.50 y=212.72 9pt #1e293b Inter-normal "Online pass: live stream and recordings"
+text   x=12.00 y=220.85 9pt #1e293b Inter-normal "Will you attend the gala dinner on October 14?"
+stroke x=187.01 y=218.21 w=3.00 h=3.00 #059669 line=0.24 S
+stroke x=187.76 y=219.71 w=0.60 h=0.60 #059669 line=0.43 S
+stroke x=188.36 y=219.05 w=0.99 h=1.26 #059669 line=0.43 S
+text   x=192.01 y=220.85 9pt #059669 Inter-bold "Yes"
+text   x=12.00 y=228.98 9pt #1e293b Inter-normal "Do you have dietary requirements?"
+stroke x=195.00 y=226.33 w=3.00 h=3.00 #63738c line=0.24 S
+text   x=12.00 y=237.10 9pt #1e293b Inter-normal "Do you need step-free access?"
+stroke x=188.63 y=234.46 w=3.00 h=3.00 #e01c47 line=0.24 S
+stroke x=189.47 y=235.30 w=1.32 h=1.32 #e01c47 line=0.43 S
+stroke x=189.47 y=235.30 w=1.32 h=1.32 #e01c47 line=0.43 S
+text   x=193.63 y=237.10 9pt #e11d48 Inter-bold "No"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=289.39 7pt #64748b Inter-bold tracking=0.18 "ACME SUMMIT 2026 — REGISTRATION FORM"
+text   x=181.68 y=289.39 7pt #64748b Inter-bold tracking=0.18 "PAGE 1 OF 2"
+
+## page 2 (210.00 x 297.00 mm)
+text   x=12.00 y=23.56 14pt #2e8b6e Inter-bold "3. Fees"
+fill   x=12.00 y=30.42 w=116.00 h=6.67 #2e8c6e B
+stroke x=12.00 y=30.42 w=116.00 h=6.67 #61a891 line=0.30 B
+text   x=14.00 y=34.45 8pt #ffffff Inter-bold "Item"
+fill   x=128.00 y=30.42 w=35.00 h=6.67 #2e8c6e B
+stroke x=128.00 y=30.42 w=35.00 h=6.67 #61a891 line=0.30 B
+text   x=143.65 y=34.45 8pt #ffffff Inter-bold "Until Aug. 31"
+fill   x=163.00 y=30.42 w=35.00 h=6.67 #2e8c6e B
+stroke x=163.00 y=30.42 w=35.00 h=6.67 #61a891 line=0.30 B
+text   x=179.05 y=34.45 8pt #ffffff Inter-bold "From Sept. 1"
+fill   x=12.00 y=37.09 w=116.00 h=6.67 #ededf0 B
+stroke x=12.00 y=37.09 w=116.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=41.12 8pt #1e293b Inter-normal "Standard pass"
+fill   x=128.00 y=37.09 w=35.00 h=6.67 #ededf0 B
+stroke x=128.00 y=37.09 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=149.47 y=41.12 8pt #1e293b Inter-normal "€390.00"
+fill   x=163.00 y=37.09 w=35.00 h=6.67 #ededf0 B
+stroke x=163.00 y=37.09 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.39 y=41.12 8pt #1e293b Inter-normal "€490.00"
+fill   x=12.00 y=43.76 w=116.00 h=6.67 #ffffff B
+stroke x=12.00 y=43.76 w=116.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=47.79 8pt #1e293b Inter-normal "Student pass"
+fill   x=128.00 y=43.76 w=35.00 h=6.67 #ffffff B
+stroke x=128.00 y=43.76 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=150.10 y=47.79 8pt #1e293b Inter-normal "€120.00"
+fill   x=163.00 y=43.76 w=35.00 h=6.67 #ffffff B
+stroke x=163.00 y=43.76 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=185.14 y=47.79 8pt #1e293b Inter-normal "€150.00"
+fill   x=12.00 y=50.43 w=116.00 h=6.67 #ededf0 B
+stroke x=12.00 y=50.43 w=116.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=54.46 8pt #1e293b Inter-normal "Workshop pass"
+fill   x=128.00 y=50.43 w=35.00 h=6.67 #ededf0 B
+stroke x=128.00 y=50.43 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=149.52 y=54.46 8pt #1e293b Inter-normal "€220.00"
+fill   x=163.00 y=50.43 w=35.00 h=6.67 #ededf0 B
+stroke x=163.00 y=50.43 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=184.50 y=54.46 8pt #1e293b Inter-normal "€280.00"
+fill   x=12.00 y=57.10 w=116.00 h=6.67 #ffffff B
+stroke x=12.00 y=57.10 w=116.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=61.13 8pt #1e293b Inter-normal "Online pass"
+fill   x=128.00 y=57.10 w=35.00 h=6.67 #ffffff B
+stroke x=128.00 y=57.10 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=151.22 y=61.13 8pt #1e293b Inter-normal "€90.00"
+fill   x=163.00 y=57.10 w=35.00 h=6.67 #ffffff B
+stroke x=163.00 y=57.10 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=186.22 y=61.13 8pt #1e293b Inter-normal "€90.00"
+fill   x=12.00 y=63.77 w=116.00 h=6.67 #ededf0 B
+stroke x=12.00 y=63.77 w=116.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=67.80 8pt #1e293b Inter-normal "Gala dinner"
+fill   x=128.00 y=63.77 w=35.00 h=6.67 #ededf0 B
+stroke x=128.00 y=63.77 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=151.48 y=67.80 8pt #1e293b Inter-normal "€75.00"
+fill   x=163.00 y=63.77 w=35.00 h=6.67 #ededf0 B
+stroke x=163.00 y=63.77 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=186.48 y=67.80 8pt #1e293b Inter-normal "€75.00"
+fill   x=12.00 y=70.43 w=116.00 h=6.67 #e0ede8 B
+stroke x=12.00 y=70.43 w=116.00 h=6.67 #d6e8e3 line=0.30 B
+text   x=14.00 y=74.47 8pt #1e293b Inter-bold "Prices exclude VAT"
+fill   x=128.00 y=70.43 w=35.00 h=6.67 #e0ede8 B
+stroke x=128.00 y=70.43 w=35.00 h=6.67 #d6e8e3 line=0.30 B
+fill   x=163.00 y=70.43 w=35.00 h=6.67 #e0ede8 B
+stroke x=163.00 y=70.43 w=35.00 h=6.67 #d6e8e3 line=0.30 B
+text   x=12.00 y=83.39 9pt #64748b Inter-normal "Selected pass"
+text   x=175.65 y=83.39 9pt #1e293b Inter-bold "Standard pass"
+stroke x=35.13 y=83.39 w=138.52 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=88.52 9pt #64748b Inter-normal "Gala dinner"
+text   x=186.66 y=88.52 9pt #1e293b Inter-bold "€75.00"
+stroke x=31.11 y=88.52 w=153.56 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=93.64 9pt #64748b Inter-normal "Total (excl. VAT)"
+fill   x=182.30 y=90.79 w=15.70 h=4.13 #e6f2ed f
+text   x=183.30 y=93.64 9pt #1e293b Inter-bold "€465.00"
+stroke x=39.16 y=93.64 w=141.14 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=111.04 14pt #2e8b6e Inter-bold "4. Before you send it"
+fill   x=12.00 y=117.91 w=186.00 h=32.64 #f0f7f5 B
+stroke x=12.00 y=117.91 w=186.00 h=32.64 #d6e8e3 line=0.30 B
+text   x=16.00 y=124.19 9pt #2e8b6e Inter-bold "Good to know"
+text   x=16.00 y=130.32 9pt #1e293b Inter-normal "Registrations are confirmed once the payment has been received."
+text   x=16.00 y=136.45 9pt #1e293b Inter-bold "•"
+text   x=19.00 y=136.45 9pt #1e293b Inter-bold "Payment:"
+text   x=34.69 y=136.45 9pt #1e293b Inter-normal "bank transfer within 14 days of the confirmation email"
+text   x=16.00 y=140.57 9pt #1e293b Inter-bold "•"
+text   x=19.00 y=140.57 9pt #1e293b Inter-bold "Cancellation:"
+text   x=40.39 y=140.57 9pt #1e293b Inter-normal "free until September 15, refunded at 50% after that date"
+text   x=16.00 y=144.70 9pt #1e293b Inter-bold "•"
+text   x=19.00 y=144.70 9pt #1e293b Inter-bold "Substitution:"
+text   x=39.90 y=144.70 9pt #1e293b Inter-normal "a colleague may take your place at no cost"
+text   x=12.00 y=166.10 14pt #2e8b6e Inter-bold "5. Consent"
+fill   x=12.00 y=172.96 w=186.00 h=30.51 #ffffff B
+stroke x=12.00 y=172.96 w=186.00 h=30.51 #e3e8f0 line=0.40 B
+text   x=16.00 y=179.25 9pt #1e293b Inter-normal "By signing this form, the attendee declares that:"
+text   x=16.00 y=185.38 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=185.38 9pt #1e293b Inter-normal "I confirm that the information given above is"
+fill   x=86.02 y=182.52 w=15.75 h=4.13 #2e8c6e f
+text   x=87.02 y=185.38 9pt #ffffff Inter-bold "accurate"
+text   x=102.66 y=185.38 9pt #1e293b Inter-normal "and complete."
+text   x=16.00 y=191.50 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=191.50 9pt #1e293b Inter-normal "I"
+fill   x=20.75 y=188.65 w=12.64 h=4.13 #2e8c6e f
+text   x=21.75 y=191.50 9pt #ffffff Inter-bold "accept"
+text   x=34.27 y=191.50 9pt #1e293b Inter-normal "the general terms of sale and the code of conduct of the event."
+text   x=16.00 y=197.63 9pt #1e293b Inter-normal "•"
+text   x=19.00 y=197.63 9pt #1e293b Inter-normal "I agree that Acme Corp may send me news about future events (optional)."
+text   x=12.00 y=219.03 14pt #2e8b6e Inter-bold "Signature"
+text   x=12.00 y=227.93 8pt #64748b Inter-italic "Signed in ____________________ on ____ / ____ / ________"
+stroke x=12.00 y=231.56 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=16.00 y=237.60 8pt #64748b Inter-italic "Attendee signature"
+text   x=16.00 y=241.26 8pt #94a3b8 Inter-normal "Jane Smith"
+stroke x=109.00 y=231.56 w=89.00 h=30.00 #e3e8f0 line=0.30 S
+text   x=113.00 y=237.60 8pt #64748b Inter-italic "Acme Corp stamp"
+stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
+text   x=12.00 y=289.39 7pt #64748b Inter-bold tracking=0.18 "ACME SUMMIT 2026 — REGISTRATION FORM"
+text   x=181.19 y=289.39 7pt #64748b Inter-bold tracking=0.18 "PAGE 2 OF 2"
