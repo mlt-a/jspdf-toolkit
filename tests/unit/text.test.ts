@@ -809,17 +809,22 @@ describe('fitWithEllipsis', () => {
     ['a word', 'Total'],
     ['words and spaces', 'Equities   and other listed securities'],
     ['a long paragraph', LONG.repeat(4)],
-  ])('cuts %s where a search one character at a time does', (_, value) => {
-    const doc = makeDoc();
-    setTextStyle(doc, 'body');
-    for (const width of [-1, 0, 1, 2.5, 7, 18, 40, 95, 300, 5000]) {
-      for (const charSpace of [0, 0.4]) {
-        expect(fitWithEllipsis(doc, value, width, charSpace), `${width} mm, ${charSpace}`).toBe(
-          oneByOne(doc, value, width, charSpace),
-        );
+  ])(
+    'cuts %s where a search one character at a time does',
+    (_, value) => {
+      const doc = makeDoc();
+      setTextStyle(doc, 'body');
+      for (const width of [-1, 0, 1, 2.5, 7, 18, 40, 95, 300, 5000]) {
+        for (const charSpace of [0, 0.4]) {
+          expect(fitWithEllipsis(doc, value, width, charSpace), `${width} mm, ${charSpace}`).toBe(
+            oneByOne(doc, value, width, charSpace),
+          );
+        }
       }
-    }
-  });
+    },
+    // The reference search measures every start of the text: seconds for the long paragraph on a loaded runner.
+    30_000,
+  );
 
   it('keeps a text that fits, and gives nothing when even the ellipsis is wider', () => {
     const doc = makeDoc();
