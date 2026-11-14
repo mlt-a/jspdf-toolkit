@@ -138,6 +138,34 @@ Exported for custom code:
   glyphs, `padding` around them: with `y` at `padding` above the top of a text line, its text sits on that line.
 - **Scales**: `SPACING`, `LINE_WIDTH`, `RADIUS`, `PT_TO_MM`, `ascentMm`; the document rhythm is `theme.spacing`, complete on every
   theme.
+- **Pages**: `doc.pageReference()` names the current page as it ends up in the PDF (see
+  [where a page ends up](#where-a-page-ends-up)).
+
+## Where a page ends up
+
+`doc.pageReference()` follows the current page until the PDF is written. Once the document is finalized, its `page` is
+the physical page the content ends up on, covers included, and its `label` the number of that page in `pageLabels`
+(absent on a cover). A table of contents inserts pages when `finalize()` fills it, an empty one is removed: a page number
+read while drawing can be wrong by then, a reference is not. It is what a component that hands positions to another
+system (an e-signature anchor, an index, a link map) keeps next to its coordinates.
+
+```ts
+import { PDFDocument, type PageReference } from '@mlt-a/jspdf-toolkit';
+
+const doc = new PDFDocument();
+doc.tableOfContents();
+doc.heading('Appendix').paragraph('Figures for the year.');
+const appendix: PageReference = doc.pageReference();
+doc.finalize();
+console.log(appendix.page, appendix.label);
+```
+
+- **Throws** a `PdfToolkitError` when read before `finalize()`, for a reference taken in a measuring pass of
+  `keepTogether` (that pass is drawn again: keep the reference of the last call), and for a page deleted since.
+- **Follows** every move of its page: the continuation pages of a table of contents, the empty table page `finalize()`
+  removes, a `doc.doc.insertPage`, `doc.doc.movePage` or `doc.doc.deletePage`. It works in a column, an `inset`, and the `draw` of a
+  custom cover or running header and footer.
+- **Keeps nothing in the document**: a reference you drop is freed with it.
 
 ## Options of the building blocks
 

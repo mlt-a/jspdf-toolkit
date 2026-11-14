@@ -22,7 +22,9 @@ doc.keepTogether(() => {
 ```
 
 - A group taller than a page breaks across pages as it would without `keepTogether`.
-- The callback runs up to three times (two measuring passes, then the real one): keep it free of side effects.
+- The callback runs up to three times (two measuring passes, then the real one): keep it free of side effects. A
+  [`pageReference()`](custom-components.md#where-a-page-ends-up) taken in a measuring pass throws when read: keep the
+  one of the last call.
 - A heading already stays with the block that follows it: `keepTogether` is for longer groups.
 - Wrap [columns](columns.md) in it when they may reach the bottom of the page.
 

@@ -4,6 +4,7 @@ export type { DocumentOptions, AddPageOptions, BackgroundOptions, EnsureSpaceOpt
 export type { InsetOptions } from './core/inset';
 export type { Margins } from './core/page-layout';
 export type { PageFormat } from './core/page-format';
+export type { PageReference } from './core/page-references';
 export type { DrawingContext } from './core/context';
 
 // === Theme ===

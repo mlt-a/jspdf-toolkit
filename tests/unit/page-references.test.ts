@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import { PageReferences, type TocEntry } from '../../src/core/page-references';
+import type { PDFDocument } from '../../src/core/document';
+import { PdfToolkitError } from '../../src/core/errors';
+import { PageReferences, type PageReference, type TocEntry } from '../../src/core/page-references';
+import { LONG, leaveRoom, makeDoc, pageStream } from './helpers';
 
 const entry = (page: number, label = `Heading on ${page}`): TocEntry => ({ level: 1, label, page, y: 30 });
 
@@ -125,5 +128,221 @@ describe('PageReferences', () => {
     expect(refs.backCover).toBeUndefined();
     expect(refs.tableOfContents).toBeNull();
     expect(refs.tocEntries.map((e) => e.page)).toEqual([1]);
+  });
+});
+
+/** Writes `text` where the flow stands, then takes a reference to its page: the text shows which page it names. */
+function marked(doc: PDFDocument, text: string): PageReference {
+  doc.doc.text(text, doc.margins.left, doc.getYPos() + 5);
+  return doc.pageReference();
+}
+
+const shows = (doc: PDFDocument, page: number, text: string) => pageStream(doc, page).includes(`(${text})`);
+
+/** Headings for the table of contents to list, over a few pages: enough of them make it overflow its page. */
+function sections(doc: PDFDocument, count: number): void {
+  for (let index = 1; index <= count; index++) doc.heading(`Section ${index}`, { level: 'h2' }).paragraph('Text.');
+}
+
+/** Reads a reference as a whole, or the error it throws. */
+const read = (ref: PageReference) => ({ page: ref.page, label: ref.label });
+
+describe('pageReference', () => {
+  it('names the page it was taken on and its number, in a document without a table of contents', () => {
+    const doc = makeDoc();
+    const first = marked(doc, 'first');
+    doc.addPage();
+    const second = marked(doc, 'second');
+    doc.finalize();
+    expect([read(first), read(second)]).toEqual([
+      { page: 1, label: 1 },
+      { page: 2, label: 2 },
+    ]);
+    expect(shows(doc, 2, 'second')).toBe(true);
+  });
+
+  it('throws when read before finalize(), page and label alike', () => {
+    const doc = makeDoc();
+    const ref = doc.pageReference();
+    expect(() => ref.page).toThrow(PdfToolkitError);
+    expect(() => ref.label).toThrow(/^Page reference read before finalize\(\): pages may still move/);
+    doc.toBuffer();
+    expect(read(ref)).toEqual({ page: 1, label: 1 });
+  });
+
+  it('follows the pages a table of contents inserts when it is filled, and keeps the pages before it', () => {
+    const doc = makeDoc();
+    const before = marked(doc, 'before');
+    doc.addPage().tableOfContents();
+    sections(doc, 120);
+    const takenOn = doc.pageNumber;
+    const after = marked(doc, 'after');
+    const pagesBefore = doc.doc.getNumberOfPages();
+    doc.finalize();
+    const inserted = doc.doc.getNumberOfPages() - pagesBefore;
+    // Over more than one continuation page.
+    expect(inserted).toBeGreaterThanOrEqual(2);
+    expect(after.page).toBe(takenOn + inserted);
+    expect(shows(doc, after.page, 'after')).toBe(true);
+    expect(after.label).toBe(doc.pageLabels.get(after.page));
+    expect(read(before)).toEqual({ page: 1, label: 1 });
+  });
+
+  it('stays on its page after a table of contents that fits on the page it reserved', () => {
+    const doc = makeDoc();
+    doc.tableOfContents();
+    sections(doc, 3);
+    const takenOn = doc.pageNumber;
+    const pagesBefore = doc.doc.getNumberOfPages();
+    const after = marked(doc, 'after');
+    doc.finalize();
+    expect(doc.doc.getNumberOfPages()).toBe(pagesBefore);
+    expect(read(after)).toEqual({ page: takenOn, label: takenOn });
+  });
+
+  it('names the cover and the back cover, with no number, taken in their draw', () => {
+    const doc = makeDoc();
+    let cover: PageReference | undefined;
+    let backCover: PageReference | undefined;
+    doc.cover('Report', { variant: 'custom', draw: (ctx) => void (cover = ctx.pageReference()) });
+    doc.tableOfContents();
+    sections(doc, 120);
+    const content = marked(doc, 'content');
+    doc.backCover({ variant: 'custom', draw: (ctx) => void (backCover = ctx.pageReference()) });
+    doc.finalize();
+    const last = doc.doc.getNumberOfPages();
+    expect(read(cover!)).toEqual({ page: 1, label: undefined });
+    expect(read(backCover!)).toEqual({ page: last, label: undefined });
+    expect(read(content)).toEqual({ page: last - 1, label: last - 2 });
+    expect(shows(doc, content.page, 'content')).toBe(true);
+  });
+
+  it('follows the empty table of contents page finalize() removes, and throws for a reference on it', () => {
+    const doc = makeDoc();
+    const onTable = doc.pageReference();
+    doc.tableOfContents();
+    doc.paragraph('No heading to list.');
+    const after = marked(doc, 'after');
+    doc.finalize();
+    expect(doc.warnings).toContain('Table of contents has no heading within depth 2: its page was removed');
+    expect(read(after)).toEqual({ page: 1, label: 1 });
+    expect(shows(doc, 1, 'after')).toBe(true);
+    expect(() => onTable.page).toThrow(
+      new PdfToolkitError('Page reference taken on page 1: that page was deleted since'),
+    );
+  });
+
+  it('in a keepTogether replayed: the references of the measuring passes throw, the last one names its page', () => {
+    const doc = leaveRoom(makeDoc(), 10);
+    doc.tableOfContents();
+    sections(doc, 120);
+    leaveRoom(doc, 10);
+    const refs: PageReference[] = [];
+    doc.keepTogether(() => {
+      doc.paragraph(LONG);
+      refs.push(marked(doc, 'kept'));
+    });
+    const takenOn = doc.pageNumber;
+    const pagesBefore = doc.doc.getNumberOfPages();
+    doc.finalize();
+    // Measured where it stands, then on a page of its own, then drawn.
+    expect(refs).toHaveLength(3);
+    for (const scratch of refs.slice(0, 2)) {
+      expect(() => scratch.page).toThrow(/^Page reference taken while keepTogether\(\) measured its block/);
+    }
+    expect(refs[2].page).toBe(takenOn + doc.doc.getNumberOfPages() - pagesBefore);
+    expect(shows(doc, refs[2].page, 'kept')).toBe(true);
+  });
+
+  it('names the page of each column, the one a column broke onto included', () => {
+    const doc = makeDoc();
+    doc.tableOfContents();
+    sections(doc, 120);
+    leaveRoom(doc, 20);
+    const takenOn = doc.pageNumber;
+    let left: PageReference | undefined;
+    let right: PageReference | undefined;
+    doc.columns([
+      () => void (left = marked(doc, 'left')),
+      () => {
+        doc.paragraph(LONG.repeat(2));
+        right = marked(doc, 'right');
+      },
+    ]);
+    const pagesBefore = doc.doc.getNumberOfPages();
+    doc.finalize();
+    const inserted = doc.doc.getNumberOfPages() - pagesBefore;
+    expect([left!.page, right!.page]).toEqual([takenOn + inserted, takenOn + 1 + inserted]);
+    expect(shows(doc, left!.page, 'left') && shows(doc, right!.page, 'right')).toBe(true);
+  });
+
+  it('names the page of an inset, past a table of contents that grew', () => {
+    const doc = makeDoc();
+    doc.tableOfContents();
+    sections(doc, 120);
+    const takenOn = doc.pageNumber;
+    let inset: PageReference | undefined;
+    doc.inset({ left: 20 }, () => void (inset = marked(doc, 'inset')));
+    const pagesBefore = doc.doc.getNumberOfPages();
+    doc.finalize();
+    expect(inset!.page).toBe(takenOn + doc.doc.getNumberOfPages() - pagesBefore);
+    expect(shows(doc, inset!.page, 'inset')).toBe(true);
+  });
+
+  it('reads in the draw of a custom running header, on the page it draws', () => {
+    const doc = makeDoc();
+    const seen: Array<{ page: number; label: number | undefined }> = [];
+    const expected: Array<{ page: number; label: number | undefined }> = [];
+    doc.pageHeader({
+      variant: 'custom',
+      draw: (ctx, numbers) => {
+        seen.push(read(ctx.pageReference()));
+        expected.push({ page: ctx.doc.getCurrentPageInfo().pageNumber, label: numbers.page });
+      },
+    });
+    doc.cover('Report', { variant: 'wave' });
+    doc.tableOfContents();
+    sections(doc, 120);
+    doc.finalize();
+    expect(seen).toEqual(expected);
+    expect(seen.at(-1)!.page).toBe(doc.doc.getNumberOfPages());
+  });
+
+  it('follows pages raw jsPDF code moves, and throws for a page it deletes', () => {
+    const doc = makeDoc();
+    doc.addPage().addPage();
+    const moved = marked(doc, 'moved');
+    doc.doc.setPage(2);
+    const deleted = doc.pageReference();
+    doc.doc.movePage(3, 1);
+    doc.doc.deletePage(3);
+    doc.finalize();
+    expect(read(moved)).toEqual({ page: 1, label: 1 });
+    expect(shows(doc, 1, 'moved')).toBe(true);
+    expect(() => deleted.label).toThrow(/^Page reference taken on page 2: that page was deleted since$/);
+  });
+
+  it('gives no number to a page added after finalize(), which gets no footer', () => {
+    const doc = makeDoc();
+    doc.finalize();
+    doc.addPage();
+    expect(read(doc.pageReference())).toEqual({ page: 2, label: undefined });
+  });
+
+  it('throws for a page a cover that failed added: the page is deleted with the cover', () => {
+    const doc = makeDoc();
+    let ref: PageReference | undefined;
+    expect(() =>
+      doc.cover('Report', {
+        variant: 'custom',
+        draw: (ctx) => {
+          ctx.addPage();
+          ref = ctx.pageReference();
+          throw new Error('cover failed');
+        },
+      }),
+    ).toThrow('cover failed');
+    doc.finalize();
+    expect(() => ref!.page).toThrow(/^Page reference taken on page 2: that page was deleted since$/);
   });
 });

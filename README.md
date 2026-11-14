@@ -399,6 +399,7 @@ Each method returns the document, so calls chain. `o?` is the optional options o
 | `margins`, `contentWidth`, `measure`, `firstPageTop`                | Read-only margins and widths of the page or column.           | [Document options](#document-options)                            |
 | `addWarning(message)`                                               | Records a warning from a custom component (returns nothing).  | [Custom components](#low-level-primitives-and-custom-components) |
 | `warnings`, `coverPage`, `backCoverPage`, `pageLabels`              | Read-only state: problems met, cover pages, page numbers.     | [Finalize, export…](#finalize-export-warnings-and-errors)        |
+| `pageReference()`                                                   | The current page, as it ends up in the PDF once finalized.    | [Finalize, export…](#finalize-export-warnings-and-errors)        |
 
 ### Spacing
 
@@ -670,6 +671,8 @@ doc.signatureZone(
 - Options: `height` (30, growing to hold the label, sublabel and image), `gap` (8, `SPACING.xlarge`), `caption` (line
   above, in italics), `spaceAfter`.
 - `renderAnchor(ctx, bounds, anchorKey)` is called on every box with an `anchorKey` and no `image`, after it is drawn.
+  `ctx.pageReference()` taken there gives the page the box ends up on in the PDF, once finalized: see
+  [where the pages end up](#where-the-pages-end-up).
 
 ### Charts
 
@@ -1064,6 +1067,38 @@ const blob = doc.toBlob(); // Blob
 for (const warning of doc.warnings) console.warn(warning);
 ```
 
+### Where the pages end up
+
+`finalize()` can still move pages: a table of contents inserts the pages its entries need, and an empty one is removed.
+`doc.pageReference()` names the current page wherever it ends up: once the document is finalized, its `page` is the
+physical page of the PDF (covers included) and its `label` the number its footer prints. Take it where you know a
+position, an e-signature anchor for instance, and keep your coordinates next to it.
+
+```ts
+import { PDFDocument, type PageReference, type SignatureBoxBounds } from '@mlt-a/jspdf-toolkit';
+
+const doc = new PDFDocument();
+doc.tableOfContents();
+doc.heading('Terms').paragraph('The client accepts the terms above.');
+// Keyed: inside keepTogether the zone is drawn more than once, the last call is the real one.
+const anchors = new Map<string, { page: PageReference; box: SignatureBoxBounds }>();
+doc.keepTogether(() => {
+  doc.signatureZone([{ label: 'Client', anchorKey: 'client' }], {
+    renderAnchor: (ctx, box, key) => {
+      anchors.set(key, { page: ctx.pageReference(), box });
+    },
+  });
+});
+doc.finalize();
+const MM_TO_PT = 72 / 25.4;
+const { page, box } = anchors.get('client')!;
+console.log(page.page, box.x * MM_TO_PT, box.y * MM_TO_PT); // physical page, top-left corner in points
+```
+
+Reading a reference throws a `PdfToolkitError` before `finalize()`, for one taken in a measuring pass of
+`keepTogether`, and for a page deleted since. It follows `doc.doc.insertPage`, `doc.doc.movePage` and `doc.doc.deletePage` too. The
+document keeps nothing per reference.
+
 The rule: **invalid configuration throws, a problem with an asset warns.** A wrong option is a bug in the calling code,
 so it fails at once; an unreadable image should not lose a whole document, so it is skipped and reported. Every error
 extends `PdfToolkitError`:
@@ -1073,6 +1108,7 @@ extends `PdfToolkitError`:
 | `InvalidColorError`  | A color that is not `#RGB` or `#RRGGBB`. Carries `value` and, for a theme color, `token`.                                                                                                                                                                                                                                                 |
 | `InvalidOptionError` | An invalid document option, a position, size or space that is not a finite number (`x`, `width`, `height`, `spaceAfter`, `gap`…), a width that leaves no room for text, an unknown cover layout, a content item that is not an object or lacks a required field, an option of another variant, a theme font family that is not available. |
 | `AssetLoadError`     | A file that `loadImageFromPath` or `loadFontFromPath` cannot read; image data a `loadImageFrom*` loader cannot decode, or whose type it does not recognize without `mimeType`.                                                                                                                                                            |
+| `PdfToolkitError`    | Itself, for a `pageReference()` read before `finalize()`, taken in a measuring pass of `keepTogether`, or whose page was deleted.                                                                                                                                                                                                         |
 
 What a block checks, before it draws anything and from `compute*Height` too:
 
@@ -1183,6 +1219,8 @@ Exported building blocks for custom code:
   its glyphs, `padding` around them: with `y` at `padding` above the top of a text line, its text sits on that line.
 - Scales: `SPACING`, `LINE_WIDTH`, `RADIUS`, `PT_TO_MM`, `ascentMm`; the document rhythm is `theme.spacing`, complete on every theme
   (`createTheme().spacing.block`).
+- Pages: `doc.pageReference()`, the current page as it ends up in the PDF (see
+  [where the pages end up](#where-the-pages-end-up)).
 
 The reading column (the `measure` document option) applies to the `compute*` functions as it does to the drawing.
 
@@ -1200,7 +1238,7 @@ The types of `@mlt-a/jspdf-toolkit`, by area:
 
 | Area                 | Types                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Document             | `DocumentOptions`, `AddPageOptions`, `BackgroundOptions`, `EnsureSpaceOptions`, `InsetOptions`, `Margins`, `PageFormat`, `DrawingContext`                                                                                                                                                                                                                                                                                           |
+| Document             | `DocumentOptions`, `AddPageOptions`, `BackgroundOptions`, `EnsureSpaceOptions`, `InsetOptions`, `Margins`, `PageFormat`, `PageReference`, `DrawingContext`                                                                                                                                                                                                                                                                          |
 | Theme                | `Theme`, `ResolvedTheme`, `ThemeOverrides`, `ColorPalette`, `ColorInput`, `Typography`, `ResolvedTypography`, `TypographySizes`, `TextLevelStyle`, `Spacing`, `SpacingOverrides`, `HeadingSpacing`, `ThemeAssets`, `CoverConfig`, `ChromeTokens`, `PresetThemeName`                                                                                                                                                                 |
 | Fonts and images     | `FontFallbacks`, `FontSource`, `FontStyle`, `LoadFontOptions`, `LoadImageOptions`                                                                                                                                                                                                                                                                                                                                                   |
 | Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`, `DrawTextOptions`                                                                                                                                                                                                     |

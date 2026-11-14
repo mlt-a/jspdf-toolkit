@@ -1,10 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { BOX, SIGNATURE } from '../../src/core/constants';
+import type { PDFDocument } from '../../src/core/document';
 import { InvalidOptionError } from '../../src/core/errors';
+import type { PageReference } from '../../src/core/page-references';
 import { computeSignatureZoneHeight, drawSignatureZone } from '../../src/drawing/signatures';
+import type { SignatureBoxBounds } from '../../src/drawing/signatures';
 import { measureTextLevel } from '../../src/drawing/text';
-import { PNG, TALL_PNG, WIDE_PNG, makeDoc, recordTexts } from './helpers';
+import { PNG, TALL_PNG, WIDE_PNG, leaveRoom, makeDoc, recordTexts, strokedShapes } from './helpers';
 
 describe('drawSignatureZone', () => {
   it('grows the box so the image area stays at least 14 mm', () => {
@@ -157,6 +160,33 @@ describe('signature anchors', () => {
     );
     expect(renderAnchor).toHaveBeenCalledTimes(1);
     expect(renderAnchor.mock.calls[0][2]).toBe('to-sign');
+  });
+
+  it('gives renderAnchor the page the box ends up on, past a table of contents that grows at finalize()', () => {
+    const doc = makeDoc();
+    doc.cover('Agreement', { variant: 'wave' }).tableOfContents();
+    for (let index = 1; index <= 120; index++) doc.heading(`Clause ${index}`, { level: 'h2' }).paragraph('Text.');
+    const anchors = new Map<string, { page: PageReference; box: SignatureBoxBounds }>();
+    const renderAnchor = vi.fn((ctx: PDFDocument, box: SignatureBoxBounds, key: string) => {
+      anchors.set(key, { page: ctx.pageReference(), box });
+    });
+    // Measured twice, then drawn: the last call is the one kept.
+    leaveRoom(doc, 10).keepTogether(() => {
+      doc.signatureZone([{ label: 'Client', anchorKey: 'client' }], { renderAnchor });
+    });
+    const drawnOn = doc.pageNumber;
+    const pagesBefore = doc.doc.getNumberOfPages();
+    doc.toBuffer();
+    expect(renderAnchor).toHaveBeenCalledTimes(3);
+    const { page, box } = anchors.get('client')!;
+    expect(doc.doc.getNumberOfPages()).toBeGreaterThan(pagesBefore);
+    expect(page.page).toBe(drawnOn + doc.doc.getNumberOfPages() - pagesBefore);
+    expect(page.label).toBe(page.page - 1);
+    const outline = strokedShapes(doc, page.page).find(
+      (shape) => Math.abs(shape.x - box.x) < 0.01 && Math.abs(shape.y - box.y) < 0.01,
+    );
+    expect(outline?.width).toBeCloseTo(box.width, 2);
+    expect(outline?.height).toBeCloseTo(box.height, 2);
   });
 });
 

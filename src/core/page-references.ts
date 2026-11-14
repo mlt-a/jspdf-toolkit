@@ -23,6 +23,23 @@ export interface TableOfContentsAnchor {
 }
 
 /**
+ * A page of the document, followed until the PDF is written: pages inserted, removed or moved before it (the
+ * continuation pages of a table of contents, an empty table page dropped, raw jsPDF `insertPage`, `movePage` or
+ * `deletePage`) do not lose it. Returned by `doc.pageReference()`; read it once the document is finalized. Reading it
+ * throws a `PdfToolkitError` before `finalize()`, when it was taken while `keepTogether` measured its block, and when
+ * its page was deleted since.
+ */
+export interface PageReference {
+  /** Physical page of the PDF, from 1, covers included: the page an e-signature provider counts. */
+  readonly page: number;
+  /**
+   * Number `pageLabels` gave the page when the document was finalized, the one its footer prints: absent on the cover,
+   * the back cover and a page added after `finalize()`.
+   */
+  readonly label: number | undefined;
+}
+
+/**
  * Physical page numbers the document stores, moved together when pages are inserted or removed. Written only
  * through the methods below, so no caller can leave a reference stale; read through the getters.
  * @internal

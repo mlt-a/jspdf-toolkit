@@ -8,6 +8,15 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- `doc.pageReference()` names the current page as it ends up in the PDF. Once the document is finalized, its `page` is
+  the physical page (covers included), the one an e-signature provider counts, and its `label` the number its footer
+  prints (absent on a cover, the back cover and a page added after `finalize()`). It follows every move of the page:
+  the continuation pages a table of contents inserts when it is filled, the empty table page `finalize()` removes, a
+  `doc.doc.insertPage`, `doc.doc.movePage` or `doc.doc.deletePage`. Take it in `renderAnchor` to place a signature on the right page
+  past a table of contents that grew, in a custom component, in a column, or in the `draw` of a custom cover or running
+  header. Reading it throws a `PdfToolkitError` before `finalize()`, for a reference taken in a measuring pass of
+  `keepTogether` (keep the one of the last call), and for a page deleted since. The document keeps nothing per
+  reference. Type `PageReference`.
 - `fontFallbacks` document option declares the faces a family lacks on purpose: `{ Brand: ['italic', 'bolditalic'] }`.
   Text asked in such a face is drawn in the same fallback as before (italic upright, bold italic bold, bold regular)
   without the warning in `doc.warnings`, in text levels, rich text and `setFont` alike. Each face is judged on its own:

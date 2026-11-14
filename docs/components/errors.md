@@ -16,6 +16,7 @@ Every error extends `PdfToolkitError`:
 | `InvalidColorError`  | A color that is neither a palette token nor `#RGB` or `#RRGGBB`. Carries `value` and, for a theme color, `token`.                                                                                                                                                                                                                         |
 | `InvalidOptionError` | An invalid document option, a position, size or space that is not a finite number (`x`, `width`, `height`, `spaceAfter`, `gap`…), a width that leaves no room for text, an unknown cover layout, a content item that is not an object or lacks a required field, an option of another variant, a theme font family that is not available. |
 | `AssetLoadError`     | A file that `loadImageFromPath` or `loadFontFromPath` cannot read; image data a `loadImageFrom*` loader cannot decode, or whose type it does not recognize without `mimeType`.                                                                                                                                                            |
+| `PdfToolkitError`    | Itself, for a `pageReference()` read before `finalize()`, taken in a measuring pass of `keepTogether`, or whose page was deleted.                                                                                                                                                                                                         |
 
 ```ts
 import {

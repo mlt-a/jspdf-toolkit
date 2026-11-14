@@ -62,7 +62,8 @@ export interface SignatureZoneOptions {
   spaceAfter?: number;
   /**
    * Called on every box that declares an `anchorKey` and has no `image`, after the box is drawn: place an e-signature
-   * anchor there. A box that already carries a signature image gets no anchor.
+   * anchor there. A box that already carries a signature image gets no anchor. `ctx.pageReference()` gives the page the
+   * box ends up on once the document is finalized.
    */
   renderAnchor?: (ctx: DrawingContext, box: SignatureBoxBounds, anchorKey: string) => void;
 }

@@ -41,6 +41,51 @@ doc.signatureZone([{ label: 'The client', sublabel: 'Jane Smith, CEO', anchorKey
 });
 ```
 
+## The page of the anchor
+
+An e-signature provider places the signature on the finished PDF, by page and position. The page a box is drawn on is
+not always its page in the PDF: a table of contents filled by `finalize()` inserts pages before the content that comes
+after it. Take `ctx.pageReference()` in `renderAnchor` and read its `page` once the document is finalized: it is the
+physical page of the PDF, covers included. Its `label` is the number its footer prints.
+
+```ts
+import { PDFDocument, type PageReference, type SignatureBoxBounds } from '@mlt-a/jspdf-toolkit';
+
+const doc = new PDFDocument();
+doc.cover('Service agreement', { variant: 'wave' });
+doc.tableOfContents();
+doc.heading('Terms').paragraph('The client accepts the terms above.');
+
+// Keyed: keepTogether draws the zone more than once, and the last call is the real one.
+const anchors = new Map<string, { page: PageReference; box: SignatureBoxBounds }>();
+doc.keepTogether(() => {
+  doc.signatureZone([{ label: 'The client', sublabel: 'Jane Smith, CEO', anchorKey: 'client' }], {
+    renderAnchor: (ctx, box, key) => {
+      anchors.set(key, { page: ctx.pageReference(), box });
+    },
+  });
+});
+
+// Finalizes the document: the pages are final from here.
+const pdf = doc.toBuffer();
+
+// Points, from the top left of the page, as the box is in mm.
+const MM_TO_PT = 72 / 25.4;
+const places = [...anchors].map(([key, { page, box }]) => ({
+  key,
+  page: page.page,
+  left: box.x * MM_TO_PT,
+  top: box.y * MM_TO_PT,
+  width: box.width * MM_TO_PT,
+  height: box.height * MM_TO_PT,
+}));
+console.log(pdf.byteLength, places);
+```
+
+A provider that measures from the bottom of the page takes `(doc.pageHeight - box.y - box.height) * MM_TO_PT`. Reading
+`page` before `finalize()` throws a `PdfToolkitError`, and so does a reference taken in a measuring pass of
+`keepTogether`: the map above keeps the last one.
+
 ## A signature image
 
 `image` draws a scanned signature in the box: a name given to `registerImage`, or image data.
@@ -73,13 +118,13 @@ doc.signatureZone([{ label: 'The supplier', sublabel: 'John Doe', image: 'signat
 
 <!-- options: SignatureZoneOptions -->
 
-| Option         | Type                                                                        | Default               | Description                                                                                                                                                                                  |
-| -------------- | --------------------------------------------------------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `height`       | `number`                                                                    | 30                    | Height (mm) of every box; grows to hold the label, sublabel and image.                                                                                                                       |
-| `gap`          | `number`                                                                    | `SPACING.xlarge`      | Space (mm) between the two boxes: 0 or more.                                                                                                                                                 |
-| `caption`      | `string`                                                                    |                       | Line above the boxes, in italics, e.g. the place and date of signature. Not drawn without a box.                                                                                             |
-| `spaceAfter`   | `number`                                                                    | `theme.spacing.block` | Space (mm) under the boxes.                                                                                                                                                                  |
-| `renderAnchor` | `(ctx: DrawingContext, box: SignatureBoxBounds, anchorKey: string) => void` |                       | Called on every box that declares an `anchorKey` and has no `image`, after the box is drawn: place an e-signature anchor there. A box that already carries a signature image gets no anchor. |
+| Option         | Type                                                                        | Default               | Description                                                                                                                                                                                                                                                                          |
+| -------------- | --------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `height`       | `number`                                                                    | 30                    | Height (mm) of every box; grows to hold the label, sublabel and image.                                                                                                                                                                                                               |
+| `gap`          | `number`                                                                    | `SPACING.xlarge`      | Space (mm) between the two boxes: 0 or more.                                                                                                                                                                                                                                         |
+| `caption`      | `string`                                                                    |                       | Line above the boxes, in italics, e.g. the place and date of signature. Not drawn without a box.                                                                                                                                                                                     |
+| `spaceAfter`   | `number`                                                                    | `theme.spacing.block` | Space (mm) under the boxes.                                                                                                                                                                                                                                                          |
+| `renderAnchor` | `(ctx: DrawingContext, box: SignatureBoxBounds, anchorKey: string) => void` |                       | Called on every box that declares an `anchorKey` and has no `image`, after the box is drawn: place an e-signature anchor there. A box that already carries a signature image gets no anchor. `ctx.pageReference()` gives the page the box ends up on once the document is finalized. |
 
 <!-- /options -->
 
@@ -107,6 +152,7 @@ doc.signatureZone([{ label: 'The supplier', sublabel: 'John Doe', image: 'signat
   grows to hold it when `height` is too small. `imageOffsetX` and `imageOffsetY` move it.
 - **Warns** when an `image` is neither a registered name nor readable image data: the box is drawn without it.
 - **Anchors**: `renderAnchor` is called for every box with an `anchorKey` and no `image`, after the box is drawn.
+  `ctx.pageReference()` gives the page the box ends up on, once the document is finalized.
 - **Across pages**: the zone, its caption included, is never split. One
   [taller than a page](flow-control.md#taller-than-a-page) overflows it, with a warning.
 - **In a column**: the boxes share the reading column of the column.

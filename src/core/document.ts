@@ -81,6 +81,7 @@ import { CHROME } from './constants';
 import {
   InvalidOptionError,
   POSITIVE,
+  PdfToolkitError,
   checkedFunction,
   checkedNumber,
   checkedObject,
@@ -99,6 +100,7 @@ import type { PageFormat } from './page-format';
 import { PageLayout, resolveMargins } from './page-layout';
 import type { Margins } from './page-layout';
 import { PageReferences } from './page-references';
+import type { PageReference } from './page-references';
 
 /** Options of the `PDFDocument` constructor. All optional. */
 export interface DocumentOptions {
@@ -450,6 +452,8 @@ export class PDFDocument {
   readonly expectedFaces: ExpectedFaces;
   /** @internal Covers, table of contents entries and anchor, kept right when pages move. */
   readonly pageRefs = new PageReferences();
+  // The number of each page in `pageLabels` when `finalize()` ran, by jsPDF page object: what `pageReference` reads.
+  private finalLabels: WeakMap<object, number> | null = null;
   // Headings that wait for the next block, to move to the next page with it: see `heading`.
   private pendingHeadings: PendingHeading[] = [];
   // Drawn on every new page after the theme background color, but not on designed pages. A later
@@ -1034,8 +1038,8 @@ export class PDFDocument {
    * makes it fit; a block taller than a page is drawn with normal pagination. Then the callback is invoked again for
    * real. Measuring from the current position keeps the space before a heading, which a page top would collapse.
    * Headings waiting for the next block are part of the block. Cover marks, warnings and table of contents entries
-   * written while measuring are rolled back; any other side effect of the callback (counters, external mutations,
-   * array pushes, etc.) must be idempotent.
+   * written while measuring are rolled back, and a `pageReference` taken while measuring throws when read; any other
+   * side effect of the callback (counters, external mutations, array pushes, etc.) must be idempotent.
    *
    * @group Flow control
    *
@@ -1433,6 +1437,71 @@ export class PDFDocument {
   get pageLabels(): Map<number, number> {
     const pages = this.pageRefs.numberedPages(this.doc.getNumberOfPages());
     return new Map(pages.map((page, index) => [page, index + 1]));
+  }
+
+  /**
+   * The current page, followed until the PDF is written: once the document is finalized, `page` reads the physical
+   * page it ends up on (covers included) and `label` its number in `pageLabels`, whatever pages a table of contents
+   * inserted before it or removed. Take it where a position is known (in `renderAnchor`, a custom component, the
+   * `draw` of a custom cover or header) and keep the coordinates next to it: they do not change with the page. The
+   * document keeps nothing per reference. Reading it throws a `PdfToolkitError` before `finalize()`, for a reference
+   * taken while `keepTogether` measured its block (keep the one of the last call), and for a page deleted since.
+   *
+   * @group Layout
+   *
+   * @example
+   * ```ts
+   * import { PDFDocument } from '@mlt-a/jspdf-toolkit';
+   *
+   * const doc = new PDFDocument();
+   * doc.tableOfContents();
+   * doc.heading('Terms').paragraph('Signed below.');
+   * const signedOn = doc.pageReference();
+   * doc.finalize();
+   * signedOn.page; // 2, or later when the table of contents takes more than one page
+   * signedOn.label; // 2: the number its footer prints
+   * ```
+   */
+  pageReference(): PageReference {
+    const { pageNumber, pageContext } = this.doc.getCurrentPageInfo();
+    const measured = this.measuring > 0;
+    const resolve = () => this.resolvePage(pageContext as object, pageNumber, measured);
+    return Object.freeze({
+      get page() {
+        return resolve().page;
+      },
+      get label() {
+        return resolve().label;
+      },
+    });
+  }
+
+  // jsPDF keeps one object per page and moves it with the page, through every insertion, move and deletion: the
+  // identity a reference follows, where a page number would need shifting.
+  private pageIdentity(page: number): object {
+    return this.doc.getPageInfo(page).pageContext as object;
+  }
+
+  private resolvePage(
+    identity: object,
+    takenOn: number,
+    measured: boolean,
+  ): { page: number; label: number | undefined } {
+    if (measured) {
+      throw new PdfToolkitError(
+        'Page reference taken while keepTogether() measured its block: that page is deleted and the block drawn again; ' +
+          'keep the reference of the last call',
+      );
+    }
+    if (this.finalLabels === null) {
+      throw new PdfToolkitError(
+        'Page reference read before finalize(): pages may still move; read it after finalize() or an export',
+      );
+    }
+    for (let page = 1; page <= this.doc.getNumberOfPages(); page++) {
+      if (this.pageIdentity(page) === identity) return { page, label: this.finalLabels.get(identity) };
+    }
+    throw new PdfToolkitError(`Page reference taken on page ${takenOn}: that page was deleted since`);
   }
 
   // === Page insertion ===
@@ -2368,6 +2437,8 @@ export class PDFDocument {
       this.state = 'finalized';
       if (this.footerOptions === null) this.warnShortFooter('The default page footer');
       const labels = this.pageLabels;
+      // Before the header and footer: their `draw` may read a page reference.
+      this.finalLabels = new WeakMap([...labels].map(([page, label]) => [this.pageIdentity(page), label]));
       if (this.footerOptions !== false) drawPageFooter(this, this.footerOptions ?? DEFAULT_PAGE_FOOTER, labels);
       if (this.headerOptions !== null) drawPageHeader(this, this.headerOptions, labels);
       // Last, so nothing covers them.
