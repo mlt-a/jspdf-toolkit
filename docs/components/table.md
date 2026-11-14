@@ -62,6 +62,35 @@ doc.table(
 );
 ```
 
+## A sheet to fill in by hand
+
+`minRowHeight` gives every body row at least that height (mm), whatever its cells hold: an empty row stays tall enough
+to write in once printed. The text stays at the top of the cell, and a row taller than the minimum keeps its own height.
+The head and the foot row keep the height of their text.
+
+<!-- preview: table-register -->
+
+![A register with empty rows](../images/components/table-register.png)
+
+```ts
+doc.table(
+  [
+    { name: 'Ada Lovelace', arrival: '09:00' },
+    { name: '', arrival: '' },
+    { name: '', arrival: '' },
+  ],
+  {
+    columns: [
+      { header: 'Name', key: 'name' },
+      { header: 'Arrival', key: 'arrival', width: 30 },
+      { header: 'Signature', key: 'signature', width: 60 },
+    ],
+    minRowHeight: 14,
+    alternateRowFill: false,
+  },
+);
+```
+
 ## A column
 
 <!-- options: TableColumn -->
@@ -89,6 +118,7 @@ doc.table(
 | `continuationTitle` | `string`                                                  |                       | Bold line drawn above the table on each page it continues on, e.g. `'Orders (continued)'`.                                                                                                                                                                                                                                                                                             |
 | `footRow`           | `TableCell[]`                                             |                       | Closing row, one cell per column, in bold on the `tint` fill. It stays with the last body row.                                                                                                                                                                                                                                                                                         |
 | `cellStyle`         | `(cell: TableCellContext) => TableCellStyle \| undefined` |                       | Styles cells one by one, e.g. a negative amount in the error color: `({ section, text }) => (section === 'body' && text.startsWith('-') ? { color: 'error' } : undefined)`. Asked about every cell drawn: head (unless `showHead: 'never'`), body and foot. It may be called more than once for the same cell (`keepTogether` measures before it draws): keep it free of side effects. |
+| `minRowHeight`      | `number`                                                  | none                  | Least height (mm) of each body row, for a table meant to be filled in by hand once printed (a register, an attendance sheet): an empty or short row keeps this height, and the text stays at the top of the cell. A taller row keeps its own height. The head and the foot row are not affected. A finite number from 0 to the page height, else `InvalidOptionError`.                 |
 | `spaceAfter`        | `number`                                                  | `theme.spacing.block` | Space (mm) under the table.                                                                                                                                                                                                                                                                                                                                                            |
 
 <!-- /options -->
@@ -124,9 +154,10 @@ and returns:
 
 ## Rules
 
-- **Throws** an `InvalidOptionError` for no column and a column `width` that is neither `'auto'` nor above 0, besides
-  the checks every block makes (see [errors](errors.md#what-a-block-checks)); an `InvalidColorError` for a color
-  `cellStyle` returns that is invalid. A table without a row draws its head row.
+- **Throws** an `InvalidOptionError` for no column, a column `width` that is neither `'auto'` nor above 0 and a
+  `minRowHeight` that is not a finite number from 0 to the page height, besides the checks every block makes (see
+  [errors](errors.md#what-a-block-checks)); an `InvalidColorError` for a color `cellStyle` returns that is invalid. A
+  table without a row draws its head row.
 - **Warns** when the widths of the columns add up to more than the available width: they are scaled down to fit.
 - **Width**: the table spans the available width, unless every column has a fixed `width`: it is then as wide as their
   sum. A column without `width` is sized from its content and shares what the fixed ones leave.

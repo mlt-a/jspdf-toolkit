@@ -179,6 +179,40 @@ describe('table widths', () => {
     expect(linesOf(texts)).toEqual(expect.arrayContaining(['Total', '$2,750.00', 'Yes', 'OK']));
   });
 
+  it('breaks a URL longer than a fixed-width cell after its separators, never past the cell', () => {
+    const url = 'https://www.example-registry.org/documents/annual_report-2026/summary.pdf';
+    const width = 40;
+    const { doc, cells, texts } = drawn([{ link: url }], {
+      columns: [{ header: 'Link', key: 'link', width }],
+      showHead: 'never',
+    });
+    const lines = texts.find((call) => call.lines.join('') === url)!;
+    expect(lines.lines.length).toBeGreaterThan(1);
+    // Every line fits inside the padding of the cell, and the cell grows to hold them.
+    for (const w of lines.widths)
+      expect(w).toBeLessThanOrEqual(width - TABLE.cellPadding.left - TABLE.cellPadding.right);
+    expect(cells[0].width).toBeCloseTo(width, 3);
+    expect(cells[0].height).toBeCloseTo(
+      lines.lines.length * lineHeight(doc) + TABLE.cellPadding.top + TABLE.cellPadding.bottom,
+      3,
+    );
+    // Cut after a separator, down to the character only for a segment that is wider than the cell.
+    for (const line of lines.lines.slice(0, -1)) expect(line).toMatch(/[/.\-_@]$/);
+  });
+
+  it('cuts a segment wider than a fixed-width cell by character, still inside the cell', () => {
+    const token = 'abcdefghijklmnopqrstuvwxyz0123456789'.repeat(2);
+    const width = 30;
+    const { texts } = drawn([{ link: token }], {
+      columns: [{ header: 'Link', key: 'link', width }],
+      showHead: 'never',
+    });
+    const call = texts.find((entry) => entry.lines.join('') === token)!;
+    expect(call.lines.length).toBeGreaterThan(1);
+    for (const w of call.widths)
+      expect(w).toBeLessThanOrEqual(width - TABLE.cellPadding.left - TABLE.cellPadding.right);
+  });
+
   it('scales columns wider than the content down to it, with a warning', () => {
     const { doc, cells } = drawn([{ a: 'x', b: 'y', c: 'z' }], {
       columns: [
@@ -229,6 +263,27 @@ describe('table options validation', () => {
     const doc = makeDoc();
     expect(() => doc.table(data, options)).toThrow(InvalidOptionError);
     expect(() => doc.table(data, options)).toThrow(/at least one column/);
+  });
+
+  it.each([
+    ['NaN', Number.NaN],
+    ['negative', -1],
+    ['Infinity', Number.POSITIVE_INFINITY],
+    ['taller than the page', 1000],
+    ['a string', '12'],
+    ['null', null],
+  ])('throws on a minRowHeight of %s', (_label, minRowHeight) => {
+    const doc = makeDoc();
+    const run = () => doc.table(rowsOf(1), { columns, minRowHeight: minRowHeight as number });
+    expect(run).toThrow(InvalidOptionError);
+    expect(run).toThrow(/Invalid table minRowHeight \(mm\)/);
+  });
+
+  it('accepts a minRowHeight of 0, the page height and none', () => {
+    const doc = makeDoc();
+    for (const minRowHeight of [undefined, 0, 12, doc.pageHeight]) {
+      expect(() => doc.table(rowsOf(1), { columns, minRowHeight })).not.toThrow();
+    }
   });
 
   it("accepts a positive finite number, 'auto' and no width", () => {
@@ -645,6 +700,102 @@ describe('table whose first row is taller than a page', () => {
     expect(doc.doc.getNumberOfPages()).toBe(1);
     expect(texts.every((call) => call.page === 1)).toBe(true);
     expect(doc.warnings).toHaveLength(1);
+  });
+});
+
+describe('table minRowHeight', () => {
+  const MIN = 15;
+
+  it('gives an empty or short body row the minimum, and a taller row its own height', () => {
+    const { doc, cells } = drawn([{ item: '', value: null }, { item: 'Short', value: 1 }, tallRow(6)], {
+      columns,
+      showHead: 'never',
+      minRowHeight: MIN,
+    });
+    const [empty, short, tall] = byRow(cells);
+    for (const cell of [...empty, ...short]) expect(cell.height).toBeCloseTo(MIN, 3);
+    for (const cell of tall) expect(cell.height).toBeCloseTo(rowHeight(6, doc), 3);
+    expect(rowHeight(6, doc)).toBeGreaterThan(MIN);
+  });
+
+  it('keeps the text at the top of the row, as without the option', () => {
+    const plain = drawn([{ item: 'Short', value: 1 }], { columns, showHead: 'never' });
+    const tall = drawn([{ item: 'Short', value: 1 }], { columns, showHead: 'never', minRowHeight: MIN });
+    expect(textOf(tall.texts, 'Short').y).toBeCloseTo(textOf(plain.texts, 'Short').y, 6);
+  });
+
+  it('leaves the head and the foot row as tall as their text', () => {
+    const { doc, cells } = drawn(rowsOf(2), { columns, footRow: ['Total', 1], minRowHeight: MIN });
+    const [head, first, second, foot] = byRow(cells);
+    expect(head[0].height).toBeCloseTo(oneLineRow(doc), 3);
+    expect(first[0].height).toBeCloseTo(MIN, 3);
+    expect(second[0].height).toBeCloseTo(MIN, 3);
+    expect(foot[0].height).toBeCloseTo(oneLineRow(doc), 3);
+  });
+
+  it('advances the position by the minimum of each row', () => {
+    const doc = makeDoc();
+    const before = doc.getYPos();
+    doc.table(rowsOf(3), { columns, showHead: 'never', minRowHeight: MIN, spaceAfter: 0 });
+    expect(doc.getYPos() - before).toBeCloseTo(3 * MIN, 3);
+  });
+
+  it('takes 0 as no minimum', () => {
+    const plain = drawn(rowsOf(2), { columns });
+    const zero = drawn(rowsOf(2), { columns, minRowHeight: 0 });
+    expect(zero.cells).toEqual(plain.cells);
+  });
+
+  it('breaks the page on the taller rows, with the head repeated', () => {
+    const rows = Math.floor(usableHeight(makeDoc()) / MIN) + 2;
+    const { doc, cells, texts } = drawn(rowsOf(rows), { columns, minRowHeight: MIN });
+    const bottom = doc.layout.bottom(doc.pageHeight);
+    expect(doc.doc.getNumberOfPages()).toBe(2);
+    for (const cell of cells) expect(cell.y + cell.height).toBeLessThanOrEqual(bottom + 1e-6);
+    // Fewer rows fit a page than with one-line rows, the head is drawn on both.
+    expect(rows).toBeLessThan(120);
+    expect(texts.filter((call) => call.lines[0] === 'Item')).toHaveLength(2);
+    expect(cells.filter((cell) => cell.page === 2 && cell.height === MIN).length).toBeGreaterThan(0);
+  });
+
+  it('counts the raised height for the room a row needs: the row that no longer fits moves whole', () => {
+    // Room for one row of the minimum and a little more: two rows of text height fit in it, two of the minimum do not.
+    const room = (doc: PDFDocument) => leaveRoom(doc, MIN + 1);
+    const options = { columns, showHead: 'never' } as const;
+    const probe = makeDoc();
+    expect(2 * oneLineRow(probe)).toBeLessThan(MIN + 1);
+    expect(drawn(rowsOf(2), options, room).doc.doc.getNumberOfPages()).toBe(1);
+    const { doc, cells } = drawn(rowsOf(2), { ...options, minRowHeight: MIN }, room);
+    expect(doc.doc.getNumberOfPages()).toBe(2);
+    expect(cells.filter((cell) => cell.page === 1)).toHaveLength(columns.length);
+    expect(cells.filter((cell) => cell.page === 2)).toHaveLength(columns.length);
+  });
+
+  it('keeps the head with the first row, which has the minimum height', () => {
+    const { cells } = drawn(rowsOf(2), { columns, minRowHeight: MIN }, (d) => leaveRoom(d, oneLineRow(d) + MIN - 1));
+    // The head does not stay alone on the first page.
+    expect(cells.filter((cell) => cell.page === 1)).toHaveLength(0);
+  });
+
+  it('keeps the last row with the foot, both measured with the minimum', () => {
+    const { cells } = drawn(rowsOf(1), { columns, footRow: ['Total', 1], minRowHeight: MIN }, (d) =>
+      leaveRoom(d, oneLineRow(d) + MIN + 1),
+    );
+    // Head, last row and foot do not fit together: all move.
+    expect(cells.filter((cell) => cell.page === 1)).toHaveLength(0);
+    expect(cells.filter((cell) => cell.page === 2)).toHaveLength(3 * columns.length);
+  });
+
+  it('measures the same in keepTogether', () => {
+    const doc = makeDoc();
+    doc.keepTogether(() => doc.table(rowsOf(3), { columns, showHead: 'never', minRowHeight: MIN, spaceAfter: 0 }));
+    expect(cellsOf(doc).every((cell) => cell.height === MIN)).toBe(true);
+  });
+
+  it('warns once for a row, taller than a page, that the minimum makes', () => {
+    const doc = makeDoc();
+    doc.table(rowsOf(1), { columns, minRowHeight: doc.pageHeight });
+    expect(doc.warnings.filter((warning) => /taller than the usable page height/.test(warning))).toHaveLength(1);
   });
 });
 

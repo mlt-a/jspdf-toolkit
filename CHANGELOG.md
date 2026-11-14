@@ -16,6 +16,9 @@ All notable changes to this project are documented here. The format follows
   `PageNumbers`.
 - `addWarning(message)` is public on the document: a custom component records a warning in `doc.warnings`, deduplicated
   and printed in `debug` mode like the built-in ones. A message that is not a string throws an `InvalidOptionError`.
+- `table` takes `minRowHeight` (mm): every body row is at least that tall, empty or short ones included, for a sheet
+  filled in by hand once printed. The text stays at the top of the row; the head and the foot row are not affected.
+  A value that is not a finite number from 0 to the page height throws an `InvalidOptionError`.
 
 ### Changed
 

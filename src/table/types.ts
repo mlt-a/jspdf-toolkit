@@ -76,6 +76,13 @@ export interface TableOptions {
    * for the same cell (`keepTogether` measures before it draws): keep it free of side effects.
    */
   cellStyle?: (cell: TableCellContext) => TableCellStyle | undefined;
+  /**
+   * Least height (mm) of each body row, for a table meant to be filled in by hand once printed (a register, an
+   * attendance sheet): an empty or short row keeps this height, and the text stays at the top of the cell. A taller
+   * row keeps its own height. The head and the foot row are not affected. A finite number from 0 to the page height,
+   * else `InvalidOptionError`. Default: none.
+   */
+  minRowHeight?: number;
   /** Space (mm) under the table. Default: `theme.spacing.block`. */
   spaceAfter?: number;
 }

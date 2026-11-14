@@ -13,6 +13,7 @@ import {
   optionalBoolean,
   optionalChoice,
   optionalFunction,
+  optionalNumber,
   optionalText,
 } from '../core/errors';
 import { withDrawingState } from '../drawing/drawing-state';
@@ -65,6 +66,8 @@ interface StyledRow {
   lineColor: string;
   /** Moves to the next page with the row under it. */
   keepWithNext: boolean;
+  /** Least height (mm) of the row, whatever its cells hold; 0 for none. */
+  minHeight: number;
 }
 
 interface RowLayout {
@@ -103,12 +106,14 @@ function checkedCellStyle(style: TableCellStyle | undefined, cell: TableCellCont
 }
 
 /** Checks the options and fills in their defaults. */
-function resolveTableOptions(options: TableOptions): ResolvedTableOptions {
+function resolveTableOptions(ctx: DrawingContext, options: TableOptions): ResolvedTableOptions {
   const { showHead = 'everyPage', alternateRowFill = true, ...rest } = checkedObject('table options', options);
   checkedChoice('table showHead', showHead, SHOW_HEAD);
   optionalBoolean('table alternateRowFill', alternateRowFill);
   optionalText('table continuationTitle', rest.continuationTitle);
   optionalFunction('table cellStyle', rest.cellStyle);
+  // A row taller than the page cannot be drawn whole: the page height is the limit of what is meant.
+  optionalNumber('table minRowHeight (mm)', rest.minRowHeight, { min: 0, max: ctx.pageHeight });
   checkedObjects('table columns', rest.columns, (column, index) => {
     checkedText(() => `table columns[${index}] header`, column.header);
     checkedText(() => `table columns[${index}] key`, column.key);
@@ -205,7 +210,9 @@ function rowStyler(
     // The head stays with the first row, the last body row with the foot.
     const keepWithNext =
       section === 'head' || (section === 'body' && options.footRow !== undefined && rowIndex === bodyRowCount - 1);
-    return { cells, lineColor: base.lineColor, keepWithNext };
+    // Only the rows of `data` are meant to be filled in by hand: the head and the foot stay as tall as their text.
+    const minHeight = section === 'body' ? (options.minRowHeight ?? 0) : 0;
+    return { cells, lineColor: base.lineColor, keepWithNext, minHeight };
   };
 }
 
@@ -265,7 +272,8 @@ function wrapRow(ctx: DrawingContext, row: StyledRow, widths: number[], metrics:
     return { ...cell, lines: wrap(ctx, cell.text, textWidth) };
   });
   const lineCount = cells.reduce((most, cell) => Math.max(most, cell.lines.length), 1);
-  const height = lineCount * metrics.lineHeight + top + bottom;
+  // The text stays at the top of a row made taller than its content: the room left under it is for writing by hand.
+  const height = Math.max(lineCount * metrics.lineHeight + top + bottom, row.minHeight);
   return { cells, lineColor: row.lineColor, keepWithNext: row.keepWithNext, height };
 }
 
@@ -307,10 +315,11 @@ function heightKeptWith(rows: RowLayout[], index: number): number {
 /**
  * Draws a table, as wide as the content or as its fixed columns (see `TableColumn.width`). Rows never split: a row
  * that does not fit goes to the next page, under the continuation title and the head row. The foot row stays with
- * the last body row. Throws `InvalidOptionError` on a table without columns or with an invalid column width.
+ * the last body row. Throws `InvalidOptionError` on a table without columns, with an invalid column width or with an
+ * invalid `minRowHeight`.
  */
 export function drawTable(ctx: DrawingContext, data: TableRow[], tableOptions: TableOptions): number {
-  const options = resolveTableOptions(tableOptions);
+  const options = resolveTableOptions(ctx, tableOptions);
   checkedObjects('table data', data);
   const { columns, footRow, continuationTitle } = options;
   const spaceAfter = ctx.resolveSpaceAfter(tableOptions.spaceAfter);

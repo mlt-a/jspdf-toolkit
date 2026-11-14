@@ -752,7 +752,8 @@ doc.table(
 `table(data, options)`: `data` holds one record per row, read by each column `key`. A value is a string or a number;
 `null` and `undefined` leave the cell empty. The table is drawn by the toolkit itself: it spans the content width,
 unless every column has a fixed `width`, in which case it is as wide as their sum. Rows never split across pages, the
-head row is repeated, the foot row stays with the last body row.
+head row is repeated, the foot row stays with the last body row. `minRowHeight` gives each body row a least height, for
+a sheet filled in by hand once printed.
 
 | Option              | Meaning                                                                                                                                                                                                                                          |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -762,6 +763,7 @@ head row is repeated, the foot row stays with the last body row.
 | `alternateRowFill`  | Zebra stripes from `zebraFill`. Default `true`.                                                                                                                                                                                                  |
 | `continuationTitle` | Text drawn above the table on each page it continues on.                                                                                                                                                                                         |
 | `cellStyle`         | `(cell) => style`: styles one cell. `cell` is `{ section, rowIndex, columnIndex, column, text, row? }`; return `{ color?, fill?, bold?, italic?, align? }`. It may run more than once per cell (`keepTogether` measures first): no side effects. |
+| `minRowHeight`      | Least height (mm) of each body row, empty or short ones included; the text stays at the top. A finite number from 0 to the page height. The head and the foot row are not affected.                                                              |
 | `spaceAfter`        | Default: `theme.spacing.block`.                                                                                                                                                                                                                  |
 
 ### Columns and flow control

@@ -1455,6 +1455,12 @@ const OPTIONAL_DATA: Case[] = [
     (d, v) => d.table([{ a: 'one' }], { ...TABLE, continuationTitle: v as never }),
     (d, v) => d.table([], { ...TABLE, continuationTitle: v as never }),
   ),
+  ...option(
+    'table minRowHeight',
+    [-1, 1000, ...NOT_FINITE],
+    (d, v) => d.table([{ a: 'one' }], { ...TABLE, minRowHeight: v as never }),
+    (d, v) => d.table([], { ...TABLE, minRowHeight: v as never }),
+  ),
   ...option('table cellStyle', NOT_FUNCTION, (d, v) => d.table([{ a: 'one' }], { ...TABLE, cellStyle: v as never })),
   ...option('table column align', NOT_CHOICE, (d, v) =>
     d.table([{ a: 'one' }], { columns: [{ ...TABLE.columns[0], align: v as never }] }),
