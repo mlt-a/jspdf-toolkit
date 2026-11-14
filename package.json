@@ -1,6 +1,6 @@
 {
   "name": "@mlt-a/jspdf-toolkit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Themed PDF generation for jsPDF: a fluent, typed API with a single-color design system.",
   "keywords": [
     "invoice",
