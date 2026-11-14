@@ -7,6 +7,7 @@ import { InvalidColorError, InvalidOptionError } from '../../src/core/errors';
 import { measureTextLevel, resolveTextStyle, setTextStyle, textLevelSize } from '../../src/drawing/text';
 import { applyFont } from '../../src/drawing/text-style';
 import type { TableOptions, TableRow } from '../../src/table/types';
+import { contrastRatio, ensureReadableOn } from '../../src/theme/colors';
 vi.mock('../../src/drawing/text', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../src/drawing/text')>();
   return { ...actual, resolveTextStyle: vi.fn(actual.resolveTextStyle) };
@@ -1180,10 +1181,11 @@ describe('table level', () => {
   it('takes the color and the slant of the level for the body and the foot, with bold on top for the head and the foot', () => {
     const { doc, texts } = drawn(rowsOf(1), { columns, footRow: ['Total', 1], level: 'italic' });
     expect(textOf(texts, 'Row 0').fontStyle).toBe('italic');
-    expectColor(textOf(texts, 'Row 0').color, doc.theme.colors.secondary);
+    const { secondary, zebraFill, tint } = doc.theme.colors;
+    expectColor(textOf(texts, 'Row 0').color, ensureReadableOn(secondary, zebraFill));
     expect(textOf(texts, 'Item').fontStyle).toBe('bolditalic');
     expect(textOf(texts, 'Total').fontStyle).toBe('bolditalic');
-    expectColor(textOf(texts, 'Total').color, doc.theme.colors.secondary);
+    expectColor(textOf(texts, 'Total').color, ensureReadableOn(secondary, tint));
     // The head sits on the primary fill: it keeps its contrast color, not the one of the level.
     expectColor(textOf(texts, 'Item').color, doc.theme.colors.onPrimary);
   });
@@ -1211,9 +1213,39 @@ describe('table level', () => {
     expect(textOf(styled.texts, 'Row 0').fontStyle).toBe('bold');
     expectColor(textOf(styled.texts, 'Row 0').color, styled.doc.theme.colors.error);
     expect(textOf(styled.texts, 'Row 1').fontStyle).toBe('normal');
-    expectColor(textOf(styled.texts, 'Row 1').color, styled.doc.theme.colors.subtle);
+    const { subtle, background } = styled.doc.theme.colors;
+    expectColor(textOf(styled.texts, 'Row 1').color, ensureReadableOn(subtle, background));
     expect(textOf(styled.texts, 'Row 1').widths[0]).toBeCloseTo(textOf(plain.texts, 'Row 1').widths[0], 6);
     expect(cellsOf(styled.doc)[0].height).toBeCloseTo(rowAt(styled.doc, 'caption'), 3);
+  });
+
+  it('reads at 4.5:1 on its fill, a pale level color included: the stripe, the plain row and the foot', () => {
+    const { doc, texts } = drawn(rowsOf(2), { columns, level: 'caption', footRow: ['Total', 1] });
+    const { zebraFill, background, tint, subtle } = doc.theme.colors;
+    expect(contrastRatio(subtle, background)).toBeLessThan(4.5);
+    for (const [text, fill] of [
+      ['Row 0', zebraFill],
+      ['Row 1', background],
+      ['Total', tint],
+    ] as const) {
+      expect(contrastRatio(textOf(texts, text).color, fill)).toBeGreaterThanOrEqual(4.5);
+    }
+    // The fill a cellStyle gives is the one it reads on.
+    const filled = drawn(rowsOf(1), {
+      columns,
+      level: 'caption',
+      showHead: 'never',
+      cellStyle: () => ({ fill: '#1F2937' }),
+    });
+    expect(contrastRatio(textOf(filled.texts, 'Row 0').color, '#1F2937')).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('leaves the color of the default level as the theme sets it, however pale', () => {
+    const theme = createTheme({ colors: { text: '#CBD5E1' } });
+    const pale = makeDoc({ theme });
+    const texts = recordTexts(pale);
+    pale.table(rowsOf(2), { columns, footRow: ['Total', 1], level: 'small' });
+    for (const text of ['Row 0', 'Row 1', 'Total']) expectColor(textOf(texts, text).color, '#CBD5E1');
   });
 
   it('lets cellStyle remove the bold of the head', () => {

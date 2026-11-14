@@ -17,7 +17,8 @@ export interface TableColumn {
    * Width (mm): a finite number above 0, else `InvalidOptionError`. `'auto'` or absent: the column is sized from its
    * content, and the automatic columns share what the fixed ones leave of the content width, each at least as wide as
    * its longest word while the longest words fit together (a URL or an email counts its longest segment between
-   * separators). A table whose columns are all fixed is as wide as their sum, up to the content width (wider ones are scaled down, with a warning).
+   * separators). A table whose columns are all fixed is as wide as their sum, up to the content width (wider ones are
+   * scaled down, with a warning).
    * Default: `'auto'`.
    */
   width?: number | 'auto';
@@ -71,8 +72,8 @@ export interface TableOptions {
   /**
    * Text level of the head, the body and the foot row; a dense table takes `'caption'`. It sets the size of the text,
    * so the natural width of the columns, the wrapping, the row height and the pagination follow it; the body and the
-   * foot take its color and slant, the head and the foot are bold on top of it, and a `cellStyle` result composes
-   * with it. The cell padding and the continuation title (`'bodyBold'`) keep their size. Any text level, else
+   * foot take its color (a pale one, such as the `'caption'` gray, is darkened to 4.5:1 on the cell fill) and slant,
+   * the head and the foot are bold on top of it, and a `cellStyle` result composes with it. The cell padding and the continuation title (`'bodyBold'`) keep their size. Any text level, else
    * `InvalidOptionError`. Default: `'small'`.
    */
   level?: TextLevel;

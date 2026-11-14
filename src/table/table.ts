@@ -29,7 +29,7 @@ import type { ParagraphOptions, TextLevelMetrics } from '../drawing/text';
 import { text as drawText, widestUnbreakable, wrap, wrapMeasured } from '../drawing/text-lines';
 import { applyFont, applyTextStyle } from '../drawing/text-style';
 import type { TextStyle } from '../drawing/text-style';
-import { resolveColor, tint } from '../theme/colors';
+import { ensureReadableOn, resolveColor, tint } from '../theme/colors';
 import type { TableCell, TableCellContext, TableCellStyle, TableColumn, TableOptions, TableRow } from './types';
 
 type Section = TableCellContext['section'];
@@ -182,6 +182,24 @@ function textStyleResolver(
   };
 }
 
+/**
+ * The ink of the table level on a fill. The default level keeps the color the theme gives it; another one (`caption`
+ * is a pale gray) is darkened or lightened to 4.5:1 on the fill, which a zebra stripe or the foot would otherwise
+ * make hard to read.
+ */
+function inkResolver(ink: string, level: TextLevel): (fill: string) => string {
+  if (level === DEFAULT_CELL_LEVEL) return () => ink;
+  const inks = new Map<string, string>();
+  return (fill) => {
+    let readable = inks.get(fill);
+    if (!readable) {
+      readable = ensureReadableOn(ink, fill);
+      inks.set(fill, readable);
+    }
+    return readable;
+  };
+}
+
 /** Styles and measures one row of cells: section, zebra stripes, then the `cellStyle` callback. */
 function rowStyler(
   ctx: DrawingContext,
@@ -191,6 +209,7 @@ function rowStyler(
   const { theme, doc } = ctx;
   const textStyle = textStyleResolver(ctx, options.level);
   const ink = levelColor(ctx, options.level);
+  const inkOn = inkResolver(ink, options.level);
   let font: TextStyle | undefined;
   return (section, texts, rowIndex, row) => {
     const base = sectionStyle(ctx, section, ink);
@@ -201,7 +220,10 @@ function rowStyler(
       const text = texts[columnIndex] ?? '';
       const context: TableCellContext = { section, rowIndex, columnIndex, column, text, row };
       const custom = checkedCellStyle(options.cellStyle?.(context), context);
-      const color = custom?.color === undefined ? base.color : resolveColor(theme, custom.color);
+      const cellFill = custom?.fill === undefined ? fill : resolveColor(theme, custom.fill);
+      // The head sits on the primary fill, in its contrast color; the body and the foot in the ink of the level.
+      const defaultColor = section === 'head' ? base.color : inkOn(cellFill);
+      const color = custom?.color === undefined ? defaultColor : resolveColor(theme, custom.color);
       const style = textStyle(custom?.bold ?? base.bold, custom?.italic, color);
       if (style !== font) {
         applyFont(doc, style);
@@ -212,7 +234,7 @@ function rowStyler(
       return {
         text,
         style,
-        fill: custom?.fill === undefined ? fill : resolveColor(theme, custom.fill),
+        fill: cellFill,
         // The head follows its column, so a header sits over the figures it names.
         align: custom?.align ?? column.align ?? 'left',
         lines: lines.map((line) => line.text),
@@ -251,11 +273,15 @@ function shareRoom(indices: number[], caps: number[], room: number, widths: numb
  */
 function wordFloors(ctx: DrawingContext, rows: StyledRow[], auto: number[], natural: number[], padding: number) {
   const floors = natural.map(() => padding);
+  let font: TextStyle | undefined;
   for (const index of auto) {
     for (const { cells } of rows) {
       const cell = cells[index];
       if (cell.width + padding <= floors[index]) continue;
-      applyFont(ctx.doc, cell.style);
+      if (cell.style !== font) {
+        applyFont(ctx.doc, cell.style);
+        font = cell.style;
+      }
       for (const line of cell.lines) {
         floors[index] = Math.max(floors[index], widestUnbreakable(ctx.doc, line) + padding);
       }
