@@ -1,11 +1,12 @@
 import { TOC } from '../core/constants';
 import type { DrawingContext } from '../core/context';
-import { checkedNumber, checkedObject, optionalText } from '../core/errors';
+import { checkedNumber, checkedObject, checkedText, optionalFunction, optionalText } from '../core/errors';
 import type { TableOfContentsAnchor, TocEntry } from '../core/page-references';
 import { withDrawingState } from './drawing-state';
 import type { LeaderRowLayout } from './rich';
 import { drawLeaderRow, layoutLeaderRow, replaceLeaderValue } from './rich';
 import { drawHeading, drawParagraph, measureTextLevel, resolveTextStyle } from './text';
+import { trackedWidth } from './text-lines';
 import { applyFont } from './text-style';
 import type { TextStyle } from './text-style';
 
@@ -19,6 +20,12 @@ export interface TableOfContentsOptions {
    * Deepest heading level listed (`1` = h1 … `4` = h4). A heading's `toc` option overrides it. Default: 2.
    */
   depth?: 1 | 2 | 3 | 4;
+  /**
+   * Writes the page number of an entry: receives the number printed in the footer (from 1, covers not counted) and
+   * returns the text shown, e.g. `String(page).padStart(2, '0')` to match a running header. An empty string shows no
+   * number. Default: the number itself (`2`, `12`).
+   */
+  formatPage?: (page: number) => string;
 }
 
 /** The options of the table, checked and defaulted. Throws an `InvalidOptionError` for one of the wrong type. */
@@ -26,6 +33,7 @@ export function resolveTableOfContentsOptions(options?: TableOfContentsOptions):
   title: string;
   intro: string | undefined;
   depth: number;
+  formatPage: ((page: number) => string) | undefined;
 } {
   if (options !== undefined) checkedObject('tableOfContents options', options);
   return {
@@ -35,6 +43,7 @@ export function resolveTableOfContentsOptions(options?: TableOfContentsOptions):
       options?.depth === undefined
         ? 2
         : checkedNumber('tableOfContents depth', options.depth, { min: 1, max: 4, integer: true }),
+    formatPage: optionalFunction('tableOfContents formatPage', options?.formatPage),
   };
 }
 
@@ -44,7 +53,7 @@ export function resolveTableOfContentsOptions(options?: TableOfContentsOptions):
  */
 export function drawTableOfContents(ctx: DrawingContext, options?: TableOfContentsOptions): number {
   // Before the waiting headings are placed: an invalid option must not draw them.
-  const { title, intro, depth } = resolveTableOfContentsOptions(options);
+  const { title, intro, depth, formatPage } = resolveTableOfContentsOptions(options);
   return withDrawingState(ctx, () => {
     // The waiting headings are content above the table: `atPageTop` must see them placed.
     ctx.flushPendingHeadings();
@@ -58,6 +67,7 @@ export function drawTableOfContents(ctx: DrawingContext, options?: TableOfConten
       page: ctx.pageNumber,
       y: ctx.getYPos(),
       depth,
+      formatPage,
       startsPage,
     });
     ctx.addPage();
@@ -108,8 +118,8 @@ export function renderTableOfContents(ctx: DrawingContext): void {
   }
 
   const numberStyle = resolveTextStyle(ctx, 'label');
-  const rows = measureRows(ctx, entries, numberStyle);
-  const { placements, extraPages } = placeRows(ctx, rows, toc.y);
+  const pageText = pageTextOf(toc.formatPage);
+  const { rows, placements, extraPages } = layoutRows(ctx, toc, entries, numberStyle, pageText);
   // Shifts the entries in place: from here, rows point to the pages their headings end up on.
   ctx.insertPagesAfter(toc.page, extraPages);
   const labels = ctx.pageLabels;
@@ -119,14 +129,77 @@ export function renderTableOfContents(ctx: DrawingContext): void {
     const { page, y } = row.entry;
     ctx.doc.setPage(toc.page + pageOffset);
     // Every listed entry is on a numbered page, before and after the shift.
-    const folio = { text: String(labels.get(page)!), style: numberStyle };
+    const folio = { text: pageText(labels.get(page)!), style: numberStyle };
     drawLeaderRow(ctx, replaceLeaderValue(ctx, row.layout, folio), ctx.margins.left + row.indent, top);
     // The whole row links to the heading itself, not only to its page.
     ctx.doc.link(ctx.margins.left, top, ctx.contentWidth, row.height, { pageNumber: page, top: y });
   });
 }
 
-function measureRows(ctx: DrawingContext, entries: TocEntry[], numberStyle: TextStyle): TocRow[] {
+/** The text of a page number: `formatPage` with its result checked, else the number itself. */
+function pageTextOf(formatPage: ((page: number) => string) | undefined): (page: number) => string {
+  if (formatPage === undefined) return String;
+  // Called once per page: the same number is asked for by several entries and by the measuring passes.
+  const texts = new Map<number, string>();
+  return (page) => {
+    let text = texts.get(page);
+    if (text === undefined) {
+      text = checkedText('value returned by tableOfContents formatPage', formatPage(page));
+      texts.set(page, text);
+    }
+    return text;
+  };
+}
+
+/**
+ * Measures the rows, then places them. The room left to the page number depends on how many pages the entries end up
+ * on: with `formatPage` it is the widest text of the numbers they can take, so the measuring is redone when the
+ * rows need more continuation pages than it assumed (the rows only grow with the room: it settles). Only numbers of
+ * pages the document will have are passed to `formatPage`.
+ */
+function layoutRows(
+  ctx: DrawingContext,
+  toc: TableOfContentsAnchor,
+  entries: TocEntry[],
+  numberStyle: TextStyle,
+  pageText: (page: number) => string,
+) {
+  if (toc.formatPage === undefined) {
+    const rows = measureRows(ctx, entries, numberStyle, defaultPageRoom(ctx, numberStyle));
+    return { rows, ...placeRows(ctx, rows, toc.y) };
+  }
+  const labels = ctx.pageLabels;
+  // An entry after the table moves down by the pages inserted after it.
+  const labelsAfter = (extraPages: number) =>
+    new Set(
+      entries.flatMap(({ page }) =>
+        Array.from({ length: (page > toc.page ? extraPages : 0) + 1 }, (_, shift) => labels.get(page)! + shift),
+      ),
+    );
+  let assumed = 0;
+  for (;;) {
+    const room = withDrawingState(ctx, () => {
+      applyFont(ctx.doc, numberStyle);
+      return Math.max(
+        ...[...labelsAfter(assumed)].map((page) => trackedWidth(ctx.doc, pageText(page), numberStyle.charSpace)),
+      );
+    });
+    const rows = measureRows(ctx, entries, numberStyle, room);
+    const placed = placeRows(ctx, rows, toc.y);
+    if (placed.extraPages <= assumed) return { rows, ...placed };
+    assumed = placed.extraPages;
+  }
+}
+
+/** Room for the widest page number the document can reach, with a digit of slack for inserted pages. */
+function defaultPageRoom(ctx: DrawingContext, numberStyle: TextStyle): number {
+  return withDrawingState(ctx, () => {
+    applyFont(ctx.doc, numberStyle);
+    return ctx.doc.getTextWidth('9'.repeat(String(ctx.doc.getNumberOfPages()).length + 1));
+  });
+}
+
+function measureRows(ctx: DrawingContext, entries: TocEntry[], numberStyle: TextStyle, valueRoom: number): TocRow[] {
   const { doc, contentWidth } = ctx;
   const topLevel = Math.min(...entries.map((entry) => entry.level));
   const { lineHeight } = measureTextLevel(ctx, 'body');
@@ -139,9 +212,6 @@ function measureRows(ctx: DrawingContext, entries: TocEntry[], numberStyle: Text
       if (number === undefined) continue;
       numberWidths.set(level, Math.max(numberWidths.get(level) ?? 0, doc.getTextWidth(number) + TOC.numberGap));
     }
-    // Room for the widest page number the document can reach, with a digit of slack for inserted pages.
-    const valueRoom = doc.getTextWidth('9'.repeat(String(doc.getNumberOfPages()).length + 1));
-
     return entries.map((entry): TocRow => {
       const indent = (entry.level - topLevel) * TOC.levelIndent;
       const prefixWidth = numberWidths.get(entry.level) ?? 0;

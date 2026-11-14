@@ -1383,6 +1383,10 @@ const OPTIONAL_PAGES: Case[] = [
     d.heading('Waiting');
     d.tableOfContents({ depth: v as never });
   }),
+  ...option('tableOfContents formatPage', NOT_FUNCTION, (d, v) => {
+    d.heading('Waiting');
+    d.tableOfContents({ formatPage: v as never });
+  }),
   ...option('tableOfContents options', [null, 5, 'text'], (d, v) => d.tableOfContents(v as never)),
   ...option('watermark text', NOT_TEXT_OR_MISSING, (d, v) => d.watermark(v as never)),
   ...option('watermark allPages', NOT_FLAG, (d, v) => d.watermark('Draft', { allPages: v as never })),

@@ -853,8 +853,10 @@ doc.heading('Introduction').paragraph('...');
 Declared once, at the place it appears: it lists the headings of the whole document, those above it and those below it.
 `finalize()` fills it from the headings and their page numbers; entries link to their heading, and an overflowing list
 gets continuation pages. Options: `title` (default `'Contents'`),
-`intro`, `depth` (`1` to `4`, default `2`). The content that follows starts on a new page. A heading opts in or out with
-its own `toc` option.
+`intro`, `depth` (`1` to `4`, default `2`), `formatPage` (writes the page number, e.g. `(page) => String(page).padStart(2, '0')`
+to match a running header that prints `02`; the default is the number itself; an empty string shows no number; the links
+keep pointing to the page). The content that follows starts on a new page. A heading opts in or out with its own `toc`
+option.
 
 ### Cover pages
 

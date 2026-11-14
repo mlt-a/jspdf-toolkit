@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { LEADER } from '../../src/core/constants';
 import type { PDFDocument } from '../../src/core/document';
+import { InvalidOptionError } from '../../src/core/errors';
 import { measureTextLevel, resolveTextStyle } from '../../src/drawing/text';
 import { trackedWidth } from '../../src/drawing/text-lines';
 import type { TextStyle } from '../../src/drawing/text-style';
@@ -322,5 +323,144 @@ describe('tableOfContents', () => {
     const row = texts.findIndex((call) => call.lines[0] === title);
     expect(row).toBeGreaterThan(-1);
     expect(texts[row + 1].lines[0]).toMatch(/^\d$/);
+  });
+});
+
+/** The page number written as lower-case roman numerals: the width of a text that does not grow with its value. */
+function roman(page: number): string {
+  const symbols: [number, string][] = [
+    [10, 'x'],
+    [9, 'ix'],
+    [5, 'v'],
+    [4, 'iv'],
+    [1, 'i'],
+  ];
+  let rest = page;
+  let result = '';
+  for (const [value, symbol] of symbols) {
+    while (rest >= value) {
+      result += symbol;
+      rest -= value;
+    }
+  }
+  return result;
+}
+
+/** The text drawn right-aligned after each entry's row, by label, and the targets of the links, in order. */
+function drawnFolios(doc: PDFDocument, labels: string[]) {
+  const texts = recordTexts(doc);
+  const link = vi.spyOn(doc.doc, 'link');
+  doc.finalize();
+  const folios = labels.map((label) => {
+    const row = texts.findLastIndex((call) => call.lines[0] === label);
+    return texts.slice(row + 1).find((call) => call.align === 'right')?.lines[0];
+  });
+  const targets = link.mock.calls.map(([, , , , options]) => (options as { pageNumber: number }).pageNumber);
+  return { texts, folios, targets };
+}
+
+/** Three sections, one per page, after a cover: their numbered pages are 1 (the table), 2, 3 and 4. */
+function threeSections(formatPage?: (page: number) => string) {
+  const doc = makeDoc();
+  doc.cover('Title', { variant: 'wave' });
+  doc.tableOfContents({ formatPage });
+  doc.heading('Alpha').paragraph('Body.').addPage();
+  doc.heading('Beta').paragraph('Body.').addPage();
+  doc.heading('Gamma').paragraph('Body.');
+  return doc;
+}
+
+/** A document whose one label fits beside a number of any digit count, and not beside `Page 12`. */
+function labelBesideNumber(formatPage?: (page: number) => string) {
+  const doc = makeDoc();
+  doc.tableOfContents({ formatPage });
+  const style = resolveTextStyle(doc, 'bodyBold');
+  applyFont(doc.doc, style);
+  const wide = trackedWidth(doc.doc, 'Page 12', style.charSpace);
+  let label = 'm';
+  while (trackedWidth(doc.doc, label, style.charSpace) < doc.contentWidth - wide - LEADER.gap) label += 'm';
+  doc.heading(label).paragraph('Body.');
+  return { doc, label };
+}
+
+describe('tableOfContents formatPage', () => {
+  it('writes the page numbers as given and keeps the links on the pages', () => {
+    const doc = threeSections((page) => String(page).padStart(2, '0'));
+    const { folios, targets } = drawnFolios(doc, ['Alpha', 'Beta', 'Gamma']);
+    expect(folios).toEqual(['02', '03', '04']);
+    expect(targets).toEqual(doc.pageRefs.tocEntries.map((entry) => entry.page));
+  });
+
+  it('writes the number itself without it', () => {
+    expect(drawnFolios(threeSections(), ['Alpha', 'Beta', 'Gamma']).folios).toEqual(['2', '3', '4']);
+    expect(drawnFolios(threeSections(undefined), ['Alpha']).folios).toEqual(['2']);
+  });
+
+  it('leaves the label the room the text needs, wider than a number', () => {
+    const plain = labelBesideNumber();
+    const plainTexts = recordTexts(plain.doc);
+    plain.doc.finalize();
+    expect(plainTexts.filter((call) => /^m+$/.test(call.lines[0])).map((call) => call.lines[0])).toEqual([plain.label]);
+
+    const prefixed = labelBesideNumber((page) => `Page ${page + 11}`);
+    const texts = recordTexts(prefixed.doc);
+    prefixed.doc.finalize();
+    const row = texts.filter((call) => /^m+$/.test(call.lines[0])).map((call) => call.lines[0]);
+    expect(row.length).toBeGreaterThan(1);
+    expect(row.join('')).toBe(prefixed.label);
+    expect(texts.find((call) => call.align === 'right' && call.lines[0].startsWith('Page'))?.lines[0]).toBe('Page 13');
+  });
+
+  it('measures the widest text the entries can take once the table overflows, with roman numerals', () => {
+    const doc = makeDoc();
+    doc.heading('Before').paragraph('Opens the document.');
+    doc.tableOfContents({ formatPage: roman });
+    const sectionCount = 90;
+    const labels = ['Before'];
+    for (let index = 1; index <= sectionCount; index++) {
+      labels.push(`Section ${index}`);
+      doc.heading(`Section ${index}`, { level: 'h2' }).paragraph('A short paragraph under the section heading.');
+    }
+    const asked = new Set<number>();
+    const formatPage = vi.fn((page: number) => {
+      asked.add(page);
+      return roman(page);
+    });
+    // The same function, spied: the table keeps the one it was given at its declaration.
+    doc.pageRefs.setTocAnchor({ ...doc.pageRefs.tableOfContents!, formatPage });
+    const pagesBefore = doc.doc.getNumberOfPages();
+    const { folios, targets } = drawnFolios(doc, labels);
+
+    expect(doc.doc.getNumberOfPages()).toBeGreaterThan(pagesBefore);
+    const pageOf = (entry: { page: number }) => doc.pageLabels.get(entry.page)!;
+    expect(folios).toEqual(doc.pageRefs.tocEntries.map((entry) => roman(pageOf(entry))));
+    expect(targets).toEqual(doc.pageRefs.tocEntries.map((entry) => entry.page));
+    // Only pages the document has are asked for, each once.
+    expect(Math.max(...asked)).toBeLessThanOrEqual(doc.pageLabels.size);
+    expect(formatPage).toHaveBeenCalledTimes(asked.size);
+  });
+
+  it('shows no number for an empty text, and the entry keeps its link', () => {
+    const doc = threeSections((page) => (page === 3 ? '' : `p. ${page}`));
+    const { folios, targets } = drawnFolios(doc, ['Alpha', 'Beta', 'Gamma']);
+    expect(folios).toEqual(['p. 2', '', 'p. 4']);
+    expect(targets).toEqual(doc.pageRefs.tocEntries.map((entry) => entry.page));
+  });
+
+  it('throws an InvalidOptionError at finalize for a text that is none, before the table is drawn', () => {
+    const doc = threeSections(((page: number) => (page === 3 ? 3 : String(page))) as never);
+    const texts = recordTexts(doc);
+    const pages = doc.doc.getNumberOfPages();
+    expect(() => doc.finalize()).toThrow(InvalidOptionError);
+    expect(() => doc.finalize()).toThrow(/value returned by tableOfContents formatPage: 3 — must be a string/);
+    expect(texts.map((call) => call.lines[0])).not.toContain('Alpha');
+    expect(doc.doc.getNumberOfPages()).toBe(pages);
+  });
+
+  it('throws an InvalidOptionError for a formatPage that is no function, before the headings are placed', () => {
+    const doc = makeDoc();
+    doc.heading('Waiting');
+    expect(() => doc.tableOfContents({ formatPage: 'two digits' as never })).toThrow(InvalidOptionError);
+    expect(() => doc.tableOfContents({ formatPage: 'two digits' as never })).toThrow(/tableOfContents formatPage/);
   });
 });

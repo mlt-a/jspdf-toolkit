@@ -16,6 +16,8 @@ export interface TableOfContentsAnchor {
   page: number;
   y: number;
   depth: number;
+  /** Writes the page number of an entry, as given to `tableOfContents`: absent for the number itself. */
+  formatPage?: ((page: number) => string) | undefined;
   /** The table started at the top of its page: the page holds nothing but the table. */
   startsPage: boolean;
 }

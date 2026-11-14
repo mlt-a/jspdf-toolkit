@@ -8,6 +8,13 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- `tableOfContents` takes `formatPage: (page: number) => string`, which writes the page number of an entry (default:
+  the number itself, as before): `(page) => String(page).padStart(2, '0')` matches a running header that prints `02`,
+  and a prefix or roman numerals work too. It receives the number of `doc.pageLabels` (covers not counted), once the
+  entries have their final pages. The column of numbers, the leaders and the wrapping of the labels follow the text
+  returned, the widest the entries can reach; the links keep pointing to the page. An empty string shows no number. A
+  `formatPage` that is no function throws an `InvalidOptionError`, and so does a result that is no string, when the
+  document is finalized. The running header's `folio` keeps its two digits at least.
 - `table` takes `level`, the text level of the head, the body and the foot row (default `'small'`, the rendering of
   before): a dense table takes `'caption'` so that its header words are not cut in two. Column widths, wrapping, row
   height, repeated head and pagination follow the level; the body and the foot take its color (a pale one, such as the
