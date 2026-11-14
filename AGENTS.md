@@ -102,6 +102,10 @@ createTheme({ colors: { primary: '#3572B8' } })
 
 **finalize()**: Must be called before export (auto-called by `toBuffer`/`toDataUri`/`toBlob`). Renders page numbers and footers across all pages, skipping cover/back cover. Only runs once.
 
+**Page references**: `doc.pageReference()` follows the page through jsPDF's own `pageContext` object (`getCurrentPageInfo`, `getPageInfo`), which jsPDF moves with the page through `insertPage`, `movePage` and `deletePage`: never store a page number for a position handed to another system. A `finalize()` records `pageLabels` by that object before the footer and header run; a reference taken while `keepTogether` measures (`measuring > 0`) throws when read, since its scratch page is deleted. `tests/unit/page-references.test.ts` pins the jsPDF behavior it relies on.
+
+**Font fallbacks**: `resolveFace` is the only place a missing face is resolved and warned; `fontFallbacks` (`expectedFaces`, by lowercase family) silences a fallback there, face by face. `hasFontFace` asks `hasFace`, which ignores the option.
+
 ### Adding a New Drawing Primitive
 
 1. Create `drawX(ctx: DrawingContext, content, options?) → number` in `src/drawing/` (validates its options first, ends with `return ctx.endBlock(bottom, options?.spaceAfter)`), with a shared `layout*` function when it also needs a `computeXHeight` (same options, `spaceAfter` excluded)

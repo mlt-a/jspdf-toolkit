@@ -961,7 +961,7 @@ function checkLineOptions(ctx: DrawingContext, method: string, options?: LineCha
   };
 }
 
-/** The lowest and the highest value of the data, each at most 0 and at least 0: the scale always shows the zero line. */
+/** The lowest (0 or less) and the highest (0 or more) value of the data: the scale always shows the zero line. */
 function dataRange({ lines, band }: LineChartData): { low: number; high: number } {
   let low = 0;
   let high = 0;
@@ -1193,9 +1193,9 @@ function valueAt(xs: readonly number[], values: readonly number[], x: number): n
 }
 
 /**
- * Outline of the area between the line through (`xs`, `values`) and the zero line, between `from` and `to`, two X values
- * within the range of `xs`: interpolated at both ends so the edges stand exactly at those values, the points of the line
- * in between.
+ * Outline of the area between the line through (`xs`, `values`) and the zero line, between `from` and `to`, two X
+ * values within the range of `xs`: interpolated at both ends so the edges stand exactly at those values, the points of
+ * the line in between.
  */
 function highlightOutline(
   plot: Plot,

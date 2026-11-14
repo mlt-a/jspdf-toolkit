@@ -75,8 +75,8 @@ A series names a layer in the legend and may set its color:
 - **Draws what it can**: a value of zero or less, or that is not a finite number, leaves a layer out; with no value
   above 0 the chart draws nothing, or the `emptyText` line.
 - **Throws** an `InvalidOptionError` for a column with more values than named `series`, a `reference` whose `value` or a
-  `max` that is negative or not a finite number (0 is accepted), a `height` that is not above 0, besides the checks every block makes (see
-  [errors](errors.md#what-a-block-checks)).
+  `max` that is negative or not a finite number (0 is accepted), a `height` that is not above 0, besides the checks
+  every block makes (see [errors](errors.md#what-a-block-checks)).
 - **Scale**: `max` is the top of the scale as long as no column and not the reference is higher; the scale then extends
   to show them. A `max` of `0` is the same as none: the scale follows the tallest column or the reference.
 - **Zero**: a `reference` at `0` is drawn, dashed, over the axis at the bottom of the plot, with its label; it does not

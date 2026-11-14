@@ -5,7 +5,7 @@ import type { FontFallbacks, FontStyle } from './types';
 /** Faces declared to fall back on purpose, by lowercase family name: what `resolveFace` takes to stay silent. */
 export type ExpectedFaces = ReadonlyMap<string, ReadonlySet<FontStyle>>;
 
-/** The `fontFallbacks` document option, indexed for `resolveFace`: family names lowercased, a family listed twice merged. */
+/** The `fontFallbacks` option, indexed for `resolveFace`: family names lowercased, a family listed twice merged. */
 export function expectedFaces(fallbacks: FontFallbacks | undefined): ExpectedFaces {
   const expected = new Map<string, Set<FontStyle>>();
   for (const [family, styles] of Object.entries(fallbacks ?? {})) {

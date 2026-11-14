@@ -120,9 +120,10 @@ and the band:
   line.
 - **Throws** an `InvalidOptionError` for an `xs` value lower than the one before it (equal values are accepted), a line
   or a band with another number of values than points of `xs`, a line or band value that is not a finite number
-  (negative values are accepted), a band whose `lower` value is above its `upper` one, a `dash` of two lengths that are both 0, a `highlight.to` below `highlight.from`, a `yTicks`
-  that is not a whole number of 1 or more, an `xTicks` that is not one of 2 or more, besides the checks every block
-  makes (see [errors](errors.md#what-a-block-checks)).
+  (negative values are accepted), a band whose `lower` value is above its `upper` one, a `dash` of two lengths that are
+  both 0, a `highlight.to` below `highlight.from`, a `yTicks` that is not a whole number of 1 or more, an `xTicks` that
+  is not one of 2 or more, besides the checks every block makes (see
+  [errors](errors.md#what-a-block-checks)).
 - **Scale**: it always includes zero. With no value below 0 it runs from 0 to a round maximum (1, 2, 2.5, 5 or 10
   times a power of ten), with `yTicks` equal intervals: nothing changes for such data. With a value below 0 (a line or
   the `lower` edge of the band) the step between two grid lines is the round number at or above the range of the data

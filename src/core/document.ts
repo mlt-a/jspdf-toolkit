@@ -231,8 +231,9 @@ function validateOptions(options: DocumentOptions, resolved: Margins, pageWidth:
 }
 
 /**
- * Throws `InvalidOptionError` for options that are no object, and for a metadata text, a flag or a `fonts` entry or a `fontFallbacks` value of the
- * wrong type, before jsPDF is created: jsPDF would only fail on export, with an error of its own.
+ * Throws `InvalidOptionError` for options that are no object, and for a metadata text, a flag, a `fonts` entry or a
+ * `fontFallbacks` value of the wrong type, before jsPDF is created: jsPDF would only fail on export, with an error of
+ * its own.
  */
 function checkDocumentOptions(options: DocumentOptions): void {
   checkedObject('document options', options);
@@ -1489,8 +1490,8 @@ export class PDFDocument {
   ): { page: number; label: number | undefined } {
     if (measured) {
       throw new PdfToolkitError(
-        'Page reference taken while keepTogether() measured its block: that page is deleted and the block drawn again; ' +
-          'keep the reference of the last call',
+        'Page reference taken while keepTogether() measured its block: that page is deleted and the block is drawn ' +
+          'again; keep the reference of the last call',
       );
     }
     if (this.finalLabels === null) {

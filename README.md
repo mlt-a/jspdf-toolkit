@@ -743,9 +743,9 @@ color?, legendValue? }`; the legend shows its percentage, or `legendValue` (`'$1
   `{ xs, lines, band? }`: `xs` increases, a line is `{ label, values, color?, lineWidth?, dash?, emphasis? }` with one
   value per point of `xs`, `band` is `{ label, lower, upper, color? }`, each `lower` value at most the `upper` one. Each
   `xs` value is equal to or greater than the one before it. Options: `highlight` (`{ from, to, color?, label? }`, the
-  area between the emphasized line and the zero line). Lines left without a color take the shades of the primary color, whether or not
-  there is a band or a highlight; a band without a color is `'secondary'`, a highlight `'primary'`, both translucent,
-  so their legend swatches differ. Other options: `xTitle`, `yTitle`, `formatValue`, `formatX`, `height`
+  area between the emphasized line and the zero line). Lines left without a color take the shades of the primary color,
+  whether or not there is a band or a highlight; a band without a color is `'secondary'`, a highlight `'primary'`, both
+  translucent, so their legend swatches differ. Other options: `xTitle`, `yTitle`, `formatValue`, `formatX`, `height`
   (62), `width`, `yTicks` (4), `xTicks` (6), `emptyText`, `spaceAfter`. A plot narrower than 10 mm (a small `width`,
   wide Y labels) is not drawn: the chart takes no room and adds a `Failed to draw lineChart: …` warning.
 - A value of zero or less, or that is not a finite number, leaves a slice or a layer out. A line or band value may be
@@ -881,10 +881,10 @@ doc.heading('Introduction').paragraph('...');
 Declared once, at the place it appears: it lists the headings of the whole document, those above it and those below it.
 `finalize()` fills it from the headings and their page numbers; entries link to their heading, and an overflowing list
 gets continuation pages. Options: `title` (default `'Contents'`),
-`intro`, `depth` (`1` to `4`, default `2`), `formatPage` (writes the page number, e.g. `(page) => String(page).padStart(2, '0')`
-to match a running header that prints `02`; the default is the number itself; an empty string shows no number; the links
-keep pointing to the page). The content that follows starts on a new page. A heading opts in or out with its own `toc`
-option.
+`intro`, `depth` (`1` to `4`, default `2`), `formatPage` (writes the page number, e.g.
+`(page) => String(page).padStart(2, '0')` to match a running header that prints `02`; the default is the number itself;
+an empty string shows no number; the links keep pointing to the page). The content that follows starts on a new page. A
+heading opts in or out with its own `toc` option.
 
 ### Cover pages
 
@@ -1096,8 +1096,8 @@ console.log(page.page, box.x * MM_TO_PT, box.y * MM_TO_PT); // physical page, to
 ```
 
 Reading a reference throws a `PdfToolkitError` before `finalize()`, for one taken in a measuring pass of
-`keepTogether`, and for a page deleted since. It follows `doc.doc.insertPage`, `doc.doc.movePage` and `doc.doc.deletePage` too. The
-document keeps nothing per reference.
+`keepTogether`, and for a page deleted since. It follows `doc.doc.insertPage`, `doc.doc.movePage` and
+`doc.doc.deletePage` too. The document keeps nothing per reference.
 
 The rule: **invalid configuration throws, a problem with an asset warns.** A wrong option is a bug in the calling code,
 so it fails at once; an unreadable image should not lose a whole document, so it is skipped and reported. Every error
