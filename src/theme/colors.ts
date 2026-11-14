@@ -1,4 +1,4 @@
-import { InvalidColorError } from '../core/errors';
+import { InvalidColorError, checkedNumber } from '../core/errors';
 import type { ColorInput, ColorPalette, Theme } from './types';
 
 // === Color manipulation helpers ===
@@ -18,7 +18,7 @@ function parseHex(hex: string, token?: string): string {
  * Normalizes `#RGB`, `RGB` and `RRGGBB` to `#RRGGBB` (uppercase). Throws on anything else; `token` names the palette
  * entry in the error.
  */
-export function normalizeHex(hex: string, token?: string): string {
+export function normalizeHex(hex: string, token?: string): `#${string}` {
   return `#${parseHex(hex, token).toUpperCase()}`;
 }
 
@@ -105,7 +105,7 @@ function channelToHex(n: number): string {
  * rgbToHex(53, 114, 184); // '#3572B8'
  * ```
  */
-export function rgbToHex(r: number, g: number, b: number): string {
+export function rgbToHex(r: number, g: number, b: number): `#${string}` {
   return `#${channelToHex(r)}${channelToHex(g)}${channelToHex(b)}`;
 }
 
@@ -121,8 +121,8 @@ export function rgbToHex(r: number, g: number, b: number): string {
  * tint('#3572B8', 0.9); // a pale blue, close to white
  * ```
  */
-export function tint(hex: string, factor: number): string {
-  return mixInk(hex, '#FFFFFF', factor);
+export function tint(hex: string, factor: number): `#${string}` {
+  return mix(hex, '#FFFFFF', factor);
 }
 
 // === Relative luminance and contrast (WCAG 2.x) ===
@@ -175,16 +175,32 @@ export function readableOn(fill: string, light: string, dark: string): string {
   return overLighter >= LIGHT_MIN_CONTRAST || overLighter >= contrastRatio(fill, darker) ? lighter : darker;
 }
 
-/** Mix `ink` into `paper`: factor 0 = pure ink, factor 1 = pure paper. */
-export function mixInk(ink: string, paper: string, factor: number): string {
+function mix(ink: string, paper: string, factor: number): `#${string}` {
   const [ir, ig, ib] = hexToRgb(ink);
   const [pr, pg, pb] = hexToRgb(paper);
   return rgbToHex(ir + (pr - ir) * factor, ig + (pg - ig) * factor, ib + (pb - ib) * factor);
 }
 
 /**
+ * Mixes `ink` into `paper`: `factor` 0 is pure `ink`, 1 is pure `paper`. Both are `#RGB` or `#RRGGBB`; the result is an
+ * uppercase `#RRGGBB`, a `ColorInput` as it stands. Resolve a palette token first (`resolveColor`). Throws an
+ * `InvalidColorError` for a malformed color, an `InvalidOptionError` for a `factor` that is not a number from 0 to 1.
+ *
+ * @example
+ * ```ts
+ * import { mixInk } from '@mlt-a/jspdf-toolkit';
+ *
+ * mixInk('#000000', '#FFFFFF', 0.5); // '#808080'
+ * mixInk('#3572B8', '#FFFFFF', 0.9); // a pale blue: `tint` is this with white paper
+ * ```
+ */
+export function mixInk(ink: string, paper: string, factor: number): `#${string}` {
+  return mix(ink, paper, checkedNumber('mixInk factor', factor, { min: 0, max: 1 }));
+}
+
+/**
  * Moves `color` toward white or black (whichever contrasts more with `background`) until it reaches `minRatio`.
- * Returns `color` unchanged when it already reads well; otherwise the closest step that gets there, or the
+ * Returns `color` itself, written as `#RRGGBB`, when it already reads well; otherwise the closest step that gets there, or the
  * extreme if none does.
  *
  *
@@ -195,9 +211,9 @@ export function mixInk(ink: string, paper: string, factor: number): string {
  * const readable = ensureReadableOn('#9CA3AF', '#FFFFFF'); // darker gray, 4.5:1 on white
  * ```
  */
-export function ensureReadableOn(color: string, background: string, minRatio = 4.5): string {
+export function ensureReadableOn(color: string, background: string, minRatio = 4.5): `#${string}` {
   const backgroundLuminance = luminance(background);
-  if (contrastFromLuminance(luminance(color), backgroundLuminance) >= minRatio) return color;
+  if (contrastFromLuminance(luminance(color), backgroundLuminance) >= minRatio) return normalizeHex(color);
   const towardWhite = contrastFromLuminance(1, backgroundLuminance) >= contrastFromLuminance(0, backgroundLuminance);
   const target = towardWhite ? 255 : 0;
   const [r, g, b] = hexToRgb(color);
@@ -221,7 +237,7 @@ export function ensureReadableOn(color: string, background: string, minRatio = 4
  */
 function zebraFill(background: string, ink: string): string {
   const inkShare = luminance(background) < 0.2 ? 0.17 : 0.08;
-  return mixInk(ink, background, 1 - inkShare);
+  return mix(ink, background, 1 - inkShare);
 }
 
 // === Palette derivation ===

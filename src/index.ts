@@ -35,7 +35,16 @@ export type {
 } from './theme';
 
 // === Colors ===
-export { generatePalette, resolveColor, hexToRgb, rgbToHex, tint, contrastRatio, ensureReadableOn } from './theme';
+export {
+  generatePalette,
+  resolveColor,
+  hexToRgb,
+  rgbToHex,
+  tint,
+  mixInk,
+  contrastRatio,
+  ensureReadableOn,
+} from './theme';
 
 // === Fonts and images ===
 // Fonts go through the `fonts` document option; the path loaders live in the `/node` entry point.
@@ -49,7 +58,7 @@ export { PdfToolkitError, InvalidColorError, InvalidOptionError, AssetLoadError 
 
 // === Units and scales ===
 // The steps the built-in blocks use, so custom code matches them.
-export { PT_TO_MM, SPACING, LINE_WIDTH, RADIUS } from './core/constants';
+export { PT_TO_MM, SPACING, LINE_WIDTH, RADIUS, ascentMm } from './core/constants';
 export type { TextLevel, HeadingLevel, TextAlign } from './core/constants';
 
 // === Option types of the PDFDocument methods ===
@@ -110,6 +119,10 @@ export type { ClosingNoteOptions } from './page/closing-note';
 // `computeXHeight` takes the options of the matching method and excludes `spaceAfter`; `measureX` returns metrics.
 export { setTextStyle, measureTextLevel, computeParagraphHeight } from './drawing/text';
 export { setFont } from './drawing/text-style';
+export { drawText, wrapText, trackedTextWidth } from './drawing/text-primitives';
+export type { DrawTextOptions } from './drawing/text-lines';
+export { fitWithEllipsis } from './drawing/text-lines';
+export { withDrawingState } from './drawing/drawing-state';
 export type { FontRole } from './drawing/text-style';
 export type { TextLevelMetrics, MeasureTextLevelOptions } from './drawing/text';
 export { computeRichTextHeight, computeRichBlocksHeight } from './drawing/rich';

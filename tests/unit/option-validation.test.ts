@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { BADGE, BOX, CALLOUT, CHECKBOX, ICONS, LIST } from '../../src/core/constants';
+import { BADGE, BOX, CALLOUT, CHECKBOX, ICONS, LIST, ascentMm } from '../../src/core/constants';
 import { PDFDocument } from '../../src/core/document';
 import { InvalidColorError, InvalidOptionError } from '../../src/core/errors';
 import { parseAddressLines } from '../../src/drawing/address';
@@ -13,15 +13,19 @@ import {
   computeStackedBarHeight,
 } from '../../src/drawing/charts';
 import { computeDeclarationsBoxHeight } from '../../src/drawing/declarations';
+import { withDrawingState } from '../../src/drawing/drawing-state';
 import { drawHighlightedText, measureHighlightedText } from '../../src/drawing/highlights';
 import { drawIconWithText } from '../../src/drawing/icons';
 import { drawImage } from '../../src/drawing/image-helpers';
 import { computeRichBlocksHeight, computeRichTextHeight } from '../../src/drawing/rich';
 import { computeSignatureZoneHeight } from '../../src/drawing/signatures';
 import { computeParagraphHeight, measureTextLevel, setTextStyle } from '../../src/drawing/text';
+import { fitWithEllipsis } from '../../src/drawing/text-lines';
+import { drawText, trackedTextWidth, wrapText } from '../../src/drawing/text-primitives';
 import { setFont } from '../../src/drawing/text-style';
 import { loadFontFromBase64 } from '../../src/fonts/loader';
 import { parseRichInline, parseRichText } from '../../src/text/markup';
+import { mixInk } from '../../src/theme/colors';
 import { createTheme } from '../../src/theme/defaults';
 import { NOT_FINITE, PNG, expectRejectedBeforeDrawing, leaveRoom, watchDrawing } from './helpers';
 import { imageCover, makeDocWithImage } from './primitive-cases';
@@ -1446,6 +1450,27 @@ const DOCUMENT: Case[] = [
   ...option('setFont weight', ['heavy', 5, null, undefined], (d, v) => setFont(d, 'body', v as never, 10)),
   ...option('setFont size', SIZE, (d, v) => setFont(d, 'body', 'bold', v)),
   ...option('setFont italic', NOT_FLAG, (d, v) => setFont(d, 'body', 'bold', 10, v as never)),
+  ...option('withDrawingState fn', NOT_FUNCTION, (d, v) => withDrawingState(d, v as never)),
+  ...option('fitWithEllipsis value', NOT_TEXT_OR_MISSING, (d, v) => fitWithEllipsis(d, v as never, 50)),
+  ...option('fitWithEllipsis maxWidth', FINITE, (d, v) => fitWithEllipsis(d, 'Text', v)),
+  ...option('fitWithEllipsis charSpace', FINITE, (d, v) => fitWithEllipsis(d, 'Text', 50, v)),
+  ...option('ascentMm size', SIZE, (_d, v) => ascentMm(v)),
+  ...option('mixInk factor', [-0.1, 1.1, ...NOT_FINITE], (_d, v) => mixInk('#000000', '#FFFFFF', v)),
+  ...option('drawText value', [undefined, 5, null, {}], (d, v) => drawText(d, v as never, 10, 10)),
+  ...option('drawText value entry', NOT_TEXT_OR_MISSING, (d, v) => drawText(d, ['One', v as never], 10, 10)),
+  ...option('drawText x', FINITE, (d, v) => drawText(d, 'Text', v, 10)),
+  ...option('drawText y', FINITE, (d, v) => drawText(d, 'Text', 10, v)),
+  ...option('drawText options', NOT_OPTIONS.slice(1), (d, v) => drawText(d, 'Text', 10, 10, v as never)),
+  ...option('drawText align', NOT_CHOICE, (d, v) => drawText(d, 'Text', 10, 10, { align: v as never })),
+  ...option('drawText charSpace', FINITE, (d, v) => drawText(d, 'Text', 10, 10, { charSpace: v })),
+  ...option('drawText baseline', NOT_CHOICE, (d, v) => drawText(d, 'Text', 10, 10, { baseline: v as never })),
+  ...option('drawText maxWidth', SIZE, (d, v) => drawText(d, 'Text', 10, 10, { maxWidth: v })),
+  ...option('drawText lineHeightScale', SIZE, (d, v) => drawText(d, 'Text', 10, 10, { lineHeightScale: v })),
+  ...option('wrapText value', NOT_TEXT_OR_MISSING, (d, v) => wrapText(d, v as never, 50)),
+  ...option('wrapText width', SIZE, (d, v) => wrapText(d, 'Text', v)),
+  ...option('wrapText charSpace', FINITE, (d, v) => wrapText(d, 'Text', 50, v)),
+  ...option('trackedTextWidth value', NOT_TEXT_OR_MISSING, (d, v) => trackedTextWidth(d, v as never)),
+  ...option('trackedTextWidth charSpace', FINITE, (d, v) => trackedTextWidth(d, 'Text', v)),
 ];
 
 // --- Tables and charts ---
@@ -1641,6 +1666,8 @@ const COLOR_CALLS: [string, ColorCall][] = [
   ['inlineQuestion', (d, color) => d.inlineQuestion('Agreed?', { color, answer: 'Yes' })],
   ['drawIconWithText', (d, color) => drawIconWithText(d, 'Phone', { x: 10, y: 10, icon: 'img', color })],
   ['separator', (d, color) => d.separator({ color })],
+  ['mixInk ink', (_d, color) => mixInk(color as never, '#FFFFFF', 0.5)],
+  ['mixInk paper', (_d, color) => mixInk('#000000', color as never, 0.5)],
   ['closingNote', (d, color) => d.closingNote('Legal.', { color })],
   ['closingNote, empty', (d, color) => d.closingNote('', { color })],
   ['watermark', (d, color) => d.watermark('DRAFT', { color })],

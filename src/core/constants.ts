@@ -1,3 +1,5 @@
+import { POSITIVE, checkedNumber } from './errors';
+
 // Every length the library draws with lives in this file, in millimeters unless a name says otherwise.
 //
 // - `SPACING` is the one scale of gaps. A gap anywhere in the drawing code is a step of it.
@@ -479,8 +481,23 @@ export function lineHeightMm(fontSizePt: number, lineHeightFactor: number, scale
   return fontSizePt * PT_TO_MM * lineHeightFactor * scale;
 }
 
-/** Font size (pt) to the distance (mm) from the top of a line to its baseline. */
+/**
+ * Font size (pt) to the distance (mm) from the top of a line to its baseline: the ascent the built-in blocks use, so a
+ * custom block sets its baseline where they do. `measureTextLevel` gives it for a text level; this one serves a size
+ * that is no level. Empirical for Inter, close for Helvetica and other Latin fonts. Throws an `InvalidOptionError` for
+ * a size that is not a finite number above 0.
+ *
+ * @example
+ * ```ts
+ * import { ascentMm, setFont } from '@mlt-a/jspdf-toolkit';
+ *
+ * setFont(doc, 'title', 'bold', 28);
+ * const top = doc.getYPos();
+ * doc.doc.text('Big number', doc.margins.left, top + ascentMm(28));
+ * ```
+ */
 export function ascentMm(fontSizePt: number): number {
+  checkedNumber('ascentMm font size (pt)', fontSizePt, POSITIVE);
   return fontSizePt * PT_TO_MM * ASCENT_RATIO;
 }
 

@@ -247,8 +247,9 @@ its `#`.
 `tintLight`, `success`, `error`. Dark themes work: set `background` and `text`, and `zebraFill` follows.
 
 Helpers, all exported: `generatePalette(primary, overrides?)`, `tint(hex, factor)` (mix with white),
-`contrastRatio(a, b)` (WCAG, 1 to 21), `ensureReadableOn(color, background, minRatio = 4.5)`,
-`resolveColor(theme, input)`, `hexToRgb`, `rgbToHex`. `DEFAULT_COLORS`, `DEFAULT_TYPOGRAPHY` and `DEFAULT_SPACING` hold
+`mixInk(ink, paper, factor)` (mix with any color), `contrastRatio(a, b)` (WCAG, 1 to 21), `ensureReadableOn(color, background, minRatio = 4.5)`,
+`resolveColor(theme, input)`, `hexToRgb`, `rgbToHex`. `tint`, `mixInk`, `rgbToHex` and `ensureReadableOn` return a
+`#RRGGBB` string typed as such: a `ColorInput` takes it without a cast. `DEFAULT_COLORS`, `DEFAULT_TYPOGRAPHY` and `DEFAULT_SPACING` hold
 the defaults.
 
 ### Presets
@@ -1077,7 +1078,8 @@ then options: `drawX(ctx, content, options)`. A custom component follows the sam
   read `getYPos`) before drawing. A block that repeats something at the top of a new page (a title, a head row) passes
   its height as `ensureSpace(height, { lead })`, so a block too tall for a page with it is reported.
 - **Primitives placed by coordinates** take `{ x, y, … }` in their options, `y` being the top of what they draw, and
-  return the Y under it.
+  return the Y under it. `drawText` is the exception: it takes `x` and `y` as arguments, `y` being a baseline, and
+  returns nothing.
 - **Page decorations** (watermark, running header and footer) return nothing.
 - `computeXHeight(ctx, content, options)` returns the height a block will take, without `spaceAfter`, to decide a layout
   before drawing. `measureX` returns metrics (`measureTextLevel`, `measureHighlightedText`).
@@ -1134,13 +1136,20 @@ Exported building blocks for custom code:
 - Text: `setTextStyle(ctx, level)`, `setFont(ctx, role, weight, size, italic?)` (a `'body'`, `'title'` or `'label'`
   family at `'regular'` or `'bold'`, with face fallback), `measureTextLevel(ctx, level, options?)`
   (`{ lineHeight, ascent }`), `computeParagraphHeight`, `computeRichTextHeight`, `computeRichBlocksHeight`.
+- Text placed by hand, in the current font: `drawText(ctx, value, x, y, options?)` (at a baseline, `charSpace` counted
+  in `'center'` and `'right'`), `wrapText(ctx, value, width, charSpace?)`, `trackedTextWidth(ctx, value, charSpace?)`,
+  `fitWithEllipsis(ctx, value, maxWidth, charSpace?)` and `ascentMm(sizePt)` (the baseline under the top of a line, for
+  a size that is no text level).
+- Drawing state: `withDrawingState(ctx, fn)` puts back the font, size, colors, line width, cap and join `fn` changed.
+- Colors: `mixInk(ink, paper, factor)`, with `tint`, `rgbToHex` and `ensureReadableOn`: each returns a `#RRGGBB` string
+  a `ColorInput` takes as it is.
 - Boxes: `drawBox(ctx, { x, y, width, height, boxStyle, radius? })`, `computeInfoBoxHeight`,
   `computeDeclarationsBoxHeight`, `computeSignatureZoneHeight`.
 - Charts: `computeDonutChartHeight`, `computeStackedBarHeight`, `computeColumnChartHeight`, `computeLineChartHeight`.
 - Pills, icons and images: `drawHighlightedText(ctx, text, { x, y, … })`, `measureHighlightedText`,
   `drawIconWithText(ctx, text, { icon, x, y, … })`, `drawImage(ctx, image, { x, y, width?, height? })`. A pill wraps
   its glyphs, `padding` around them: with `y` at `padding` above the top of a text line, its text sits on that line.
-- Scales: `SPACING`, `LINE_WIDTH`, `RADIUS`, `PT_TO_MM`; the document rhythm is `theme.spacing`, complete on every theme
+- Scales: `SPACING`, `LINE_WIDTH`, `RADIUS`, `PT_TO_MM`, `ascentMm`; the document rhythm is `theme.spacing`, complete on every theme
   (`createTheme().spacing.block`).
 
 The reading column (the `measure` document option) applies to the `compute*` functions as it does to the drawing.
@@ -1162,7 +1171,7 @@ The types of `@mlt-a/jspdf-toolkit`, by area:
 | Document             | `DocumentOptions`, `AddPageOptions`, `BackgroundOptions`, `EnsureSpaceOptions`, `InsetOptions`, `Margins`, `PageFormat`, `DrawingContext`                                                                                                                                                                                                                                                                                           |
 | Theme                | `Theme`, `ResolvedTheme`, `ThemeOverrides`, `ColorPalette`, `ColorInput`, `Typography`, `ResolvedTypography`, `TypographySizes`, `TextLevelStyle`, `Spacing`, `SpacingOverrides`, `HeadingSpacing`, `ThemeAssets`, `CoverConfig`, `ChromeTokens`, `PresetThemeName`                                                                                                                                                                 |
 | Fonts and images     | `FontSource`, `FontStyle`, `LoadFontOptions`, `LoadImageOptions`                                                                                                                                                                                                                                                                                                                                                                    |
-| Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`                                                                                                                                                                                                                        |
+| Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`, `DrawTextOptions`                                                                                                                                                                                                     |
 | Lists                | `SeparatorOptions`, `ListItem`, `ListOptions`, `IconListOptions`                                                                                                                                                                                                                                                                                                                                                                    |
 | Fields and forms     | `Field`, `FieldLayout`, `FieldsOptions`, `CheckboxVariant`, `CheckboxOptions`, `InlineQuestionOptions`                                                                                                                                                                                                                                                                                                                              |
 | Boxes                | `InfoBoxOptions`, `InfoBoxCommon`, `SurfaceInfoBoxOptions`, `CalloutInfoBoxOptions`, `DeclarationItem`, `DeclarationsBoxOptions`, `AddressLine`, `AddressBlockOptions`, `ParseAddressLinesOptions`, `SignatureItem`, `SignatureBoxBounds`, `SignatureZoneOptions`, `BoxStylePreset`, `BoxOptions`                                                                                                                                   |

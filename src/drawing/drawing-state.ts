@@ -1,6 +1,7 @@
 import type { jsPDF } from 'jspdf';
 
 import type { DrawingContext } from '../core/context';
+import { checkedFunction } from '../core/errors';
 import { hexToRgb } from '../theme/colors';
 
 /**
@@ -107,8 +108,21 @@ const samePosition = (a: WritePosition | undefined, b: WritePosition) =>
  * page. The state jsPDF reports is then the one in force. Returns the result of `fn`.
  * Known limit: a page the scope writes text on, other than the ones it enters and ends on, does not get the fill back.
  * `saveGraphicsState` is no substitute: q/Q restores the PDF operators, not the state jsPDF keeps in JS.
+ * Throws an `InvalidOptionError` for an `fn` that is no function, before running anything.
+ *
+ * @example
+ * ```ts
+ * import { setTextStyle, withDrawingState } from '@mlt-a/jspdf-toolkit';
+ *
+ * withDrawingState(doc, () => {
+ *   setTextStyle(doc, 'h3');
+ *   doc.doc.text('Styled aside', doc.margins.left, doc.getYPos() + 6);
+ * });
+ * doc.paragraph('Back in the font and colors this was called with.');
+ * ```
  */
 export function withDrawingState<T>(ctx: DrawingContext, fn: () => T): T {
+  checkedFunction('withDrawingState fn', fn);
   const { doc } = ctx;
   const { fontName, fontStyle } = doc.getFont();
   const size = doc.getFontSize();

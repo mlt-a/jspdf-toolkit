@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vitest';
 
 import { InvalidColorError } from '../../src/core/errors';
 import { createTheme } from '../../src/theme';
@@ -7,6 +7,7 @@ import {
   ensureReadableOn,
   generatePalette,
   hexToRgb,
+  mixInk,
   normalizeHex,
   readableOn,
   resolveColor,
@@ -66,6 +67,39 @@ describe('tint', () => {
   it('returns the color at 0 and white at 1', () => {
     expect(tint('#3572B8', 0)).toBe('#3572B8');
     expect(tint('#3572B8', 1)).toBe('#FFFFFF');
+  });
+});
+
+describe('mixInk', () => {
+  it('is the ink at 0, the paper at 1 and the midpoint between them', () => {
+    expect(mixInk('#3572B8', '#FFFFFF', 0)).toBe('#3572B8');
+    expect(mixInk('#3572B8', '#102030', 1)).toBe('#102030');
+    expect(mixInk('#000000', '#FFFFFF', 0.5)).toBe('#808080');
+  });
+
+  it('reads short and unprefixed colors, and writes #RRGGBB in uppercase', () => {
+    expect(mixInk('f00', '#00f', 0.5)).toBe('#800080');
+  });
+
+  it('is what tint does with white paper', () => {
+    expect(mixInk('#3572B8', '#FFFFFF', 0.9)).toBe(tint('#3572B8', 0.9));
+  });
+
+  it('refuses a color that is malformed or a factor outside 0 to 1', () => {
+    expect(() => mixInk('nope', '#FFFFFF', 0.5)).toThrow(InvalidColorError);
+    expect(() => mixInk('#000000', '#12', 0.5)).toThrow(InvalidColorError);
+    expect(() => mixInk('#000000', '#FFFFFF', 1.5)).toThrow(/Invalid mixInk factor: 1.5/);
+    expect(() => mixInk('#000000', '#FFFFFF', Number.NaN)).toThrow(/mixInk factor/);
+  });
+});
+
+describe('the colors the helpers return', () => {
+  it('are typed as hex strings, so a ColorInput takes them without a cast', () => {
+    expectTypeOf(tint('#3572B8', 0.5)).toEqualTypeOf<`#${string}`>();
+    expectTypeOf(mixInk('#3572B8', '#FFFFFF', 0.5)).toEqualTypeOf<`#${string}`>();
+    expectTypeOf(rgbToHex(1, 2, 3)).toEqualTypeOf<`#${string}`>();
+    expectTypeOf(ensureReadableOn('#999999', '#FFFFFF')).toEqualTypeOf<`#${string}`>();
+    expectTypeOf(tint('#3572B8', 0.5)).toExtend<ColorInput>();
   });
 });
 
@@ -144,6 +178,11 @@ describe('contrastRatio', () => {
 describe('ensureReadableOn', () => {
   it('leaves a readable color unchanged', () => {
     expect(ensureReadableOn('#000000', '#FFFFFF')).toBe('#000000');
+  });
+
+  it('writes a readable color as #RRGGBB, whatever way it was given', () => {
+    expect(ensureReadableOn('000', '#fff')).toBe('#000000');
+    expect(ensureReadableOn('#abc', '#000')).toBe('#AABBCC');
   });
 
   it('lightens a dark color on a dark background until it reaches the ratio', () => {

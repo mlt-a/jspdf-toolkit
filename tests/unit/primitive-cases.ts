@@ -4,6 +4,7 @@ import { drawBox, drawInfoBox } from '../../src/drawing/boxes';
 import { drawHighlightedText } from '../../src/drawing/highlights';
 import { drawIconWithText } from '../../src/drawing/icons';
 import { drawImage } from '../../src/drawing/image-helpers';
+import { drawText } from '../../src/drawing/text-primitives';
 import { parseRichText } from '../../src/text/markup';
 import { createTheme } from '../../src/theme/defaults';
 import { LONG, PNG, changeEverything, makeDoc } from './helpers';
@@ -256,6 +257,7 @@ export const DIRECT: PrimitiveCase[] = [
   primitive(drawIconWithText, (fn, d) =>
     fn(d, 'Text', { x: 20, y: 40, icon: 'img', level: 'small', color: 'primary' }),
   ),
+  primitive(drawText, (fn, d) => fn(d, ['Total', 'Net'], 20, 40, { align: 'center', charSpace: 0.4 })),
   primitive(drawImage, (fn, d) => fn(d, 'img', { x: 20, y: 40, width: 10 })),
   primitive(drawImage, (fn, d) => fn(d, 'missing', { x: 20, y: 40, width: 10 }), 'unreadable'),
 ];

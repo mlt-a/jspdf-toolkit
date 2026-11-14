@@ -60,7 +60,8 @@ doc.paragraph('Back to the fluent API.');
   read `getYPos`) before drawing. A block that repeats something at the top of a new page (a title, a head row) passes
   its height as `ensureSpace(height, { lead })`, so a block too tall for a page with it is reported.
 - **Primitives placed by coordinates** take `{ x, y, … }` in their options, `y` being the top of what they draw, and
-  return the Y under it.
+  return the Y under it. `drawText` is the exception: it takes `x` and `y` as arguments, `y` being a baseline, and
+  returns nothing.
 - **Page decorations** (watermark, running header and footer) return nothing.
 - `computeXHeight(ctx, content, options)` returns the height a block will take, without `spaceAfter`, to decide a layout
   before drawing. `measureX` returns metrics (`measureTextLevel`, `measureHighlightedText`).
@@ -90,11 +91,43 @@ drawIconWithText(doc, 'Verified by Acme Corp', { icon: 'star', x: x + 4, y: y + 
 doc.endBlock(y + height, spaceAfter);
 ```
 
+A block that sets a tracked caption on a baseline of its own size centers it with `drawText` and `ascentMm`:
+
+```ts
+import { ascentMm, drawText, mixInk, resolveColor, setFont } from '@mlt-a/jspdf-toolkit';
+
+const size = 9;
+const spaceAfter = doc.resolveSpaceAfter();
+doc.ensureSpace(ascentMm(size) + spaceAfter);
+const y = doc.getYPos();
+
+setFont(doc, 'label', 'bold', size);
+doc.doc.setTextColor(mixInk(resolveColor(doc.theme, 'text'), resolveColor(doc.theme, 'background'), 0.3));
+const middle = doc.margins.left + doc.contentWidth / 2;
+drawText(doc, 'CONFIDENTIAL', middle, y + ascentMm(size), { align: 'center', charSpace: 0.6 });
+doc.endBlock(y + ascentMm(size), spaceAfter);
+```
+
 Exported for custom code:
 
 - **Text**: `setTextStyle(ctx, level)`, `setFont(ctx, role, weight, size, italic?)` (a `'body'`, `'title'` or `'label'`
   family at `'regular'` or `'bold'`, with face fallback), `measureTextLevel(ctx, level, options?)`
   (`{ lineHeight, ascent }`), `computeParagraphHeight`, `computeRichTextHeight`, `computeRichBlocksHeight`.
+- **Text placed by hand** (each reads the current font: set it first):
+  - `drawText(ctx, value, x, y, options?)` draws at a baseline, with the letter spacing (`charSpace`) counted in
+    `'center'` and `'right'`, which jsPDF alone does not do.
+  - `wrapText(ctx, value, width, charSpace?)` returns the lines a built-in paragraph wraps to, a word wider than the
+    line broken.
+  - `trackedTextWidth(ctx, value, charSpace?)` is the width `drawText` gives a line.
+  - `fitWithEllipsis(ctx, value, maxWidth, charSpace?)` cuts a line to a width, with an `…`.
+  - `ascentMm(sizePt)` is the distance from the top of a line to its baseline, for a size that is no text level
+    (`measureTextLevel` gives it for a level).
+- **Drawing state**: `withDrawingState(ctx, fn)` runs `fn` and puts back the font, size, colors, line width, cap and
+  join it found, so what a custom block sets does not reach the next one. The library runs the `draw` of a custom cover, header and
+  footer in one.
+- **Colors**: `mixInk(ink, paper, factor)` mixes two hex colors (`0` is the ink, `1` the paper); it, `tint`, `rgbToHex`
+  and `ensureReadableOn` return a `#RRGGBB` string a `ColorInput` takes as it is. `resolveColor(theme, input)` turns a
+  palette token into one first.
 - **Boxes**: `drawBox(ctx, { x, y, width, height, boxStyle, radius? })`, `computeInfoBoxHeight`,
   `computeDeclarationsBoxHeight`, `computeSignatureZoneHeight`.
 - **Charts**: `computeDonutChartHeight`, `computeStackedBarHeight`, `computeColumnChartHeight`,
@@ -102,7 +135,7 @@ Exported for custom code:
 - **Pills, icons and images**: `drawHighlightedText(ctx, text, { x, y, … })`, `measureHighlightedText`,
   `drawIconWithText(ctx, text, { icon, x, y, … })`, `drawImage(ctx, image, { x, y, width?, height? })`. A pill wraps its
   glyphs, `padding` around them: with `y` at `padding` above the top of a text line, its text sits on that line.
-- **Scales**: `SPACING`, `LINE_WIDTH`, `RADIUS`, `PT_TO_MM`; the document rhythm is `theme.spacing`, complete on every
+- **Scales**: `SPACING`, `LINE_WIDTH`, `RADIUS`, `PT_TO_MM`, `ascentMm`; the document rhythm is `theme.spacing`, complete on every
   theme.
 
 ## Options of the building blocks
@@ -164,6 +197,21 @@ Exported for custom code:
 | `y`      | `number` | required | Top edge (mm), from the top of the page.                                                              |
 | `width`  | `number` |          | Width (mm). Give `width`, `height` or both; one left out follows from the other and the image ratio.  |
 | `height` | `number` |          | Height (mm). Give `width`, `height` or both; one left out follows from the other and the image ratio. |
+
+<!-- /options -->
+
+`drawText(ctx, value, x, y, options?)`: `value` is a string or an array of lines, `x` and `y` the anchor and the baseline
+of the first line (mm). It returns nothing and moves no position.
+
+<!-- options: DrawTextOptions -->
+
+| Option            | Type                                            | Default  | Description                                                                                                                                     |
+| ----------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `align`           | `TextAlign`                                     | `'left'` | Which side of `x` the text sits on: `'left'` (the text starts at `x`), `'center'` or `'right'`.                                                 |
+| `charSpace`       | `number`                                        |          | Space (mm) added between letters: a finite number, negative to tighten. Unlike jsPDF alone, it counts in the centering and the right alignment. |
+| `baseline`        | `'alphabetic' \| 'middle' \| 'top' \| 'bottom'` |          | What `y` is the height of: the `'alphabetic'` baseline (the default), the `'top'`, `'middle'` or `'bottom'` of the text.                        |
+| `maxWidth`        | `number`                                        |          | Width (mm) jsPDF wraps the text to: a number above 0. Without it, a line is as long as its text.                                                |
+| `lineHeightScale` | `number`                                        | 1        | Multiplies the theme `lineHeightFactor` between lines of a multi-line text: a number above 0.                                                   |
 
 <!-- /options -->
 

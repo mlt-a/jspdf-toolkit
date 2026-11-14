@@ -3,7 +3,7 @@ import type { jsPDF } from 'jspdf';
 import { lineHeightMm } from '../core/constants';
 import type { TextAlign } from '../core/constants';
 import type { DrawingContext } from '../core/context';
-import { POSITIVE, checkedNumber, optionalNumber } from '../core/errors';
+import { POSITIVE, checkedNumber, checkedText, optionalNumber } from '../core/errors';
 
 /** The thin spaces `Intl.NumberFormat` emits: U+202F, U+2009 and U+2007. Not global: `test` keeps no `lastIndex`. */
 export const THIN_SPACE = /[\u202f\u2009\u2007]/;
@@ -20,12 +20,20 @@ export function normalizeText(value: string): string {
   return value.replace(THIN_SPACES, '\u00a0');
 }
 
-export interface TextOpts {
+/** Options of `drawText`. */
+export interface DrawTextOptions {
+  /** Which side of `x` the text sits on: `'left'` (the text starts at `x`), `'center'` or `'right'`. Default: `'left'`. */
   align?: TextAlign;
+  /**
+   * Space (mm) added between letters: a finite number, negative to tighten. Unlike jsPDF alone, it counts in the
+   * centering and the right alignment.
+   */
   charSpace?: number;
+  /** What `y` is the height of: the `'alphabetic'` baseline (the default), the `'top'`, `'middle'` or `'bottom'` of the text. */
   baseline?: 'alphabetic' | 'middle' | 'top' | 'bottom';
+  /** Width (mm) jsPDF wraps the text to: a number above 0. Without it, a line is as long as its text. */
   maxWidth?: number;
-  /** Multiplies the theme `lineHeightFactor` between lines of a multi-line text. */
+  /** Multiplies the theme `lineHeightFactor` between lines of a multi-line text: a number above 0. Default: 1. */
   lineHeightScale?: number;
 }
 
@@ -38,7 +46,13 @@ export function trackedWidth(doc: jsPDF, value: string, charSpace = 0): number {
  * Draws text. Multi-line text always gets the theme `lineHeightFactor` so jsPDF spaces lines exactly
  * as callers advance Y (see `lineHeightMm`).
  */
-export function text(ctx: DrawingContext, value: string | string[], x: number, y: number, opts: TextOpts = {}): void {
+export function text(
+  ctx: DrawingContext,
+  value: string | string[],
+  x: number,
+  y: number,
+  opts: DrawTextOptions = {},
+): void {
   const { lineHeightScale = 1, ...rest } = opts;
   const { charSpace, align } = rest;
   const lineHeightFactor = ctx.theme.typography.lineHeightFactor * lineHeightScale;
@@ -62,10 +76,24 @@ export function text(ctx: DrawingContext, value: string | string[], x: number, y
 const ELLIPSIS = '…';
 
 /**
- * `value` when it fits `maxWidth` in the current font and `charSpace`, else its longest start followed by an ellipsis
- * that fits, else `''`.
+ * `value` when it fits `maxWidth` mm in the current font, `charSpace` mm added between letters as `drawText` draws
+ * them, else its longest start followed by an ellipsis (`…`) that fits, else `''`. A `maxWidth` of 0 or less leaves
+ * nothing. Throws an `InvalidOptionError` for a `value` that is no string, or a `maxWidth` or `charSpace` that is not
+ * a finite number.
+ *
+ * @example
+ * ```ts
+ * import { fitWithEllipsis, setTextStyle } from '@mlt-a/jspdf-toolkit';
+ *
+ * setTextStyle(doc, 'body');
+ * const label = fitWithEllipsis(doc, 'A very long title that does not fit its column', 40);
+ * doc.doc.text(label, doc.margins.left, doc.getYPos() + 5);
+ * ```
  */
 export function fitWithEllipsis(ctx: DrawingContext, value: string, maxWidth: number, charSpace = 0): string {
+  checkedText('fitWithEllipsis value', value);
+  checkedNumber('fitWithEllipsis maxWidth', maxWidth);
+  checkedNumber('fitWithEllipsis charSpace', charSpace);
   const fits = (candidate: string) => trackedWidth(ctx.doc, candidate, charSpace) <= maxWidth;
   if (fits(value)) return value;
   const cut = (end: number) => value.slice(0, end).trimEnd() + ELLIPSIS;
