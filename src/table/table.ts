@@ -1,5 +1,5 @@
 import { LINE_WIDTH, TABLE, TEXT_ALIGNS } from '../core/constants';
-import type { TextAlign } from '../core/constants';
+import type { TextAlign, TextLevel } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
   InvalidOptionError,
@@ -17,7 +17,14 @@ import {
   optionalText,
 } from '../core/errors';
 import { withDrawingState } from '../drawing/drawing-state';
-import { computeParagraphHeight, drawParagraph, levelColor, measureTextLevel, resolveTextStyle } from '../drawing/text';
+import {
+  computeParagraphHeight,
+  drawParagraph,
+  levelColor,
+  measureTextLevel,
+  optionalLevel,
+  resolveTextStyle,
+} from '../drawing/text';
 import type { ParagraphOptions, TextLevelMetrics } from '../drawing/text';
 import { text as drawText, wrap, wrapMeasured } from '../drawing/text-lines';
 import { applyFont, applyTextStyle } from '../drawing/text-style';
@@ -27,11 +34,13 @@ import type { TableCell, TableCellContext, TableCellStyle, TableColumn, TableOpt
 
 type Section = TableCellContext['section'];
 
-/** Text level of every cell, as `theme.typography` styles it; the head and the foot are set in bold. */
-const CELL_LEVEL = 'small';
+/** Text level of the cells when the table names none. */
+const DEFAULT_CELL_LEVEL = 'small';
 
 /** `TableOptions` checked, with their defaults filled in. */
-interface ResolvedTableOptions extends Omit<TableOptions, 'showHead' | 'alternateRowFill'> {
+interface ResolvedTableOptions extends Omit<TableOptions, 'showHead' | 'alternateRowFill' | 'level'> {
+  /** Text level of every cell, as `theme.typography` styles it; the head and the foot are set in bold. */
+  level: TextLevel;
   /** Whether the head row is drawn on the first page of the table, and on the pages it continues on. */
   headOn: { firstPage: boolean; continuationPages: boolean };
   alternateRowFill: boolean;
@@ -107,9 +116,10 @@ function checkedCellStyle(style: TableCellStyle | undefined, cell: TableCellCont
 
 /** Checks the options and fills in their defaults. */
 function resolveTableOptions(ctx: DrawingContext, options: TableOptions): ResolvedTableOptions {
-  const { showHead = 'everyPage', alternateRowFill = true, ...rest } = checkedObject('table options', options);
+  const { showHead = 'everyPage', alternateRowFill = true, level, ...rest } = checkedObject('table options', options);
   checkedChoice('table showHead', showHead, SHOW_HEAD);
   optionalBoolean('table alternateRowFill', alternateRowFill);
+  const cellLevel = optionalLevel('table', level) ?? DEFAULT_CELL_LEVEL;
   optionalText('table continuationTitle', rest.continuationTitle);
   optionalFunction('table cellStyle', rest.cellStyle);
   // A row taller than the page cannot be drawn whole: the page height is the limit of what is meant.
@@ -128,6 +138,7 @@ function resolveTableOptions(ctx: DrawingContext, options: TableOptions): Resolv
   if (rest.footRow !== undefined) checkedArray('table footRow', rest.footRow);
   return {
     ...rest,
+    level: cellLevel,
     headOn: { firstPage: showHead !== 'never', continuationPages: showHead === 'everyPage' },
     alternateRowFill,
   };
@@ -157,13 +168,14 @@ function sectionStyle(ctx: DrawingContext, section: Section, ink: string): Secti
  */
 function textStyleResolver(
   ctx: DrawingContext,
+  level: TextLevel,
 ): (bold: boolean | undefined, italic: boolean | undefined, color: string) => TextStyle {
   const styles = new Map<string, TextStyle>();
   return (bold, italic, color) => {
     const key = `${String(bold)}/${String(italic)}/${color}`;
     let style = styles.get(key);
     if (!style) {
-      style = { ...resolveTextStyle(ctx, CELL_LEVEL, { bold, italic }), color };
+      style = { ...resolveTextStyle(ctx, level, { bold, italic }), color };
       styles.set(key, style);
     }
     return style;
@@ -177,8 +189,8 @@ function rowStyler(
   bodyRowCount: number,
 ): (section: Section, texts: string[], rowIndex: number, row?: TableRow) => StyledRow {
   const { theme, doc } = ctx;
-  const textStyle = textStyleResolver(ctx);
-  const ink = levelColor(ctx, CELL_LEVEL);
+  const textStyle = textStyleResolver(ctx, options.level);
+  const ink = levelColor(ctx, options.level);
   let font: TextStyle | undefined;
   return (section, texts, rowIndex, row) => {
     const base = sectionStyle(ctx, section, ink);
@@ -315,8 +327,8 @@ function heightKeptWith(rows: RowLayout[], index: number): number {
 /**
  * Draws a table, as wide as the content or as its fixed columns (see `TableColumn.width`). Rows never split: a row
  * that does not fit goes to the next page, under the continuation title and the head row. The foot row stays with
- * the last body row. Throws `InvalidOptionError` on a table without columns, with an invalid column width or with an
- * invalid `minRowHeight`.
+ * the last body row. Throws `InvalidOptionError` on a table without columns, with an invalid column width, with an
+ * invalid `minRowHeight` or with a `level` that is no text level.
  */
 export function drawTable(ctx: DrawingContext, data: TableRow[], tableOptions: TableOptions): number {
   const options = resolveTableOptions(ctx, tableOptions);
@@ -354,7 +366,7 @@ export function drawTable(ctx: DrawingContext, data: TableRow[], tableOptions: T
     // One layout for the whole table: the same widths and line breaks on every page.
     const widths = columnWidths(ctx, columns, styled, ctx.contentWidth);
     // Constant for the table: every cell is set in the same level.
-    const metrics = measureTextLevel(ctx, CELL_LEVEL);
+    const metrics = measureTextLevel(ctx, options.level);
     const rows = styled.map((row) => wrapRow(ctx, row, widths, metrics));
     const head = options.headOn.continuationPages ? rows[0] : undefined;
 

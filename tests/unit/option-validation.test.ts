@@ -1503,6 +1503,12 @@ const OPTIONAL_DATA: Case[] = [
     (d, v) => d.table([], { ...TABLE, continuationTitle: v as never }),
   ),
   ...option(
+    'table level',
+    NOT_CHOICE,
+    (d, v) => d.table([{ a: 'one' }], { ...TABLE, level: v as never }),
+    (d, v) => d.table([], { ...TABLE, level: v as never }),
+  ),
+  ...option(
     'table minRowHeight',
     [-1, 1000, ...NOT_FINITE],
     (d, v) => d.table([{ a: 'one' }], { ...TABLE, minRowHeight: v as never }),

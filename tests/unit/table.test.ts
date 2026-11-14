@@ -1,9 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { TABLE } from '../../src/core/constants';
+import { TABLE, TEXT_LEVELS } from '../../src/core/constants';
+import type { TextLevel } from '../../src/core/constants';
 import type { PDFDocument } from '../../src/core/document';
 import { InvalidColorError, InvalidOptionError } from '../../src/core/errors';
-import { measureTextLevel, resolveTextStyle, setTextStyle } from '../../src/drawing/text';
+import { measureTextLevel, resolveTextStyle, setTextStyle, textLevelSize } from '../../src/drawing/text';
 import type { TableOptions, TableRow } from '../../src/table/types';
 vi.mock('../../src/drawing/text', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../src/drawing/text')>();
@@ -277,6 +278,18 @@ describe('table options validation', () => {
     const run = () => doc.table(rowsOf(1), { columns, minRowHeight: minRowHeight as number });
     expect(run).toThrow(InvalidOptionError);
     expect(run).toThrow(/Invalid table minRowHeight \(mm\)/);
+  });
+
+  it.each([
+    ['an unknown level', 'huge'],
+    ['a number', 8],
+    ['null', null],
+    ['an empty string', ''],
+  ])('throws on a level that is %s', (_label, level) => {
+    const doc = makeDoc();
+    const run = () => doc.table(rowsOf(1), { columns, level: level as never });
+    expect(run).toThrow(InvalidOptionError);
+    expect(run).toThrow(/Unknown table level/);
   });
 
   it('accepts a minRowHeight of 0, the page height and none', () => {
@@ -796,6 +809,193 @@ describe('table minRowHeight', () => {
     const doc = makeDoc();
     doc.table(rowsOf(1), { columns, minRowHeight: doc.pageHeight });
     expect(doc.warnings.filter((warning) => /taller than the usable page height/.test(warning))).toHaveLength(1);
+  });
+});
+
+const lineAt = (doc: PDFDocument, level: TextLevel) => measureTextLevel(doc, level).lineHeight;
+const rowAt = (doc: PDFDocument, level: TextLevel) =>
+  lineAt(doc, level) + TABLE.cellPadding.top + TABLE.cellPadding.bottom;
+/** Leaves room for `rows` one-line rows set in `level`, and a little more. */
+const roomForAt = (rows: number, level: TextLevel) => (doc: PDFDocument) =>
+  leaveRoom(doc, rows * rowAt(doc, level) + 0.5);
+const pagesAt = (level?: TableOptions['level']) => drawn(rowsOf(120), { columns, level }).doc.doc.getNumberOfPages();
+
+describe('table level', () => {
+  // The head of a register that does not fit the width at the default level: long words, and no row of text under it.
+  const HEADERS = [
+    'Representatives',
+    'Responsibilities',
+    'Authorisation',
+    'Identification',
+    'Accommodation',
+    'Administration',
+    'Registration',
+    'Observations',
+  ];
+  const register = (level?: TableOptions['level']) =>
+    drawn([], {
+      columns: HEADERS.map((header, index) => ({ header, key: `k${index}` })),
+      minRowHeight: 10,
+      level,
+    });
+
+  it("cuts a header word in two at the default level and keeps it whole with 'caption'", () => {
+    const small = register();
+    expect(linesOf(small.texts).some((line) => !HEADERS.includes(line))).toBe(true);
+
+    const caption = register('caption');
+    expect(linesOf(caption.texts)).toEqual(HEADERS);
+    expect(caption.doc.warnings).toEqual([]);
+    expect(caption.cells.reduce((sum, cell) => sum + cell.width, 0)).toBeCloseTo(caption.doc.contentWidth, 3);
+  });
+
+  it("draws as before with no level, with undefined and with 'small'", () => {
+    const options = { columns, footRow: ['Total', 1], continuationTitle: 'Orders' };
+    const plain = drawn(rowsOf(120), options);
+    for (const level of ['small', undefined] as const) {
+      const other = drawn(rowsOf(120), { ...options, level });
+      expect(other.cells).toEqual(plain.cells);
+      expect(other.texts).toEqual(plain.texts);
+    }
+  });
+
+  it('sets the text in the size of the level, in every section', () => {
+    const options = { columns, footRow: ['Total', 1] };
+    const small = drawn(rowsOf(1), options);
+    const caption = drawn(rowsOf(1), { ...options, level: 'caption' });
+    const ratio = textLevelSize(caption.doc, 'caption') / textLevelSize(small.doc, 'small');
+    expect(ratio).toBeLessThan(1);
+    for (const label of ['Item', 'Row 0', 'Total']) {
+      expect(textOf(caption.texts, label).widths[0]).toBeCloseTo(textOf(small.texts, label).widths[0] * ratio, 3);
+    }
+  });
+
+  it('gives every row the line height of the level, with the cell padding unchanged', () => {
+    const { doc, cells } = drawn(rowsOf(1), { columns, footRow: ['Total', 1], level: 'caption' });
+    expect(lineAt(doc, 'caption')).toBeLessThan(lineAt(doc, 'small'));
+    expect(cells).toHaveLength(3 * columns.length);
+    for (const cell of cells) expect(cell.height).toBeCloseTo(rowAt(doc, 'caption'), 3);
+  });
+
+  it('wraps a cell to its column with the width of the level', () => {
+    // A column too narrow for the word at 'small', wide enough at 'caption'.
+    const fixed = [{ header: 'Item', key: 'item', width: 22 }, columns[1]];
+    const wrapped = drawn([{ item: 'Accommodation', value: 1 }], { columns: fixed, showHead: 'never' });
+    expect(wrapped.texts[0].lines.length).toBeGreaterThan(1);
+    const whole = drawn([{ item: 'Accommodation', value: 1 }], { columns: fixed, showHead: 'never', level: 'caption' });
+    expect(whole.texts[0].lines).toEqual(['Accommodation']);
+  });
+
+  it('keeps the minimum height of a body row, and the head and the foot at the height of their text', () => {
+    const { doc, cells } = drawn(rowsOf(1), { columns, footRow: ['Total', 1], level: 'caption', minRowHeight: 12 });
+    const [head, body, foot] = byRow(cells);
+    expect(head[0].height).toBeCloseTo(rowAt(doc, 'caption'), 3);
+    expect(body[0].height).toBeCloseTo(12, 3);
+    expect(foot[0].height).toBeCloseTo(rowAt(doc, 'caption'), 3);
+  });
+
+  it('puts more rows on a page at a smaller level, and as many at the default one', () => {
+    expect(pagesAt('caption')).toBeLessThan(pagesAt());
+    expect(pagesAt('small')).toBe(pagesAt());
+    expect(pagesAt('h2')).toBeGreaterThan(pagesAt());
+  });
+
+  it('keeps the head with the first row, measured at the level of the table', () => {
+    // Room for the head and a first row of a caption, short of the same at the default level.
+    const room = roomForAt(2, 'caption');
+    const small = drawn(rowsOf(1), { columns }, room);
+    expect(small.cells.filter((cell) => cell.page === 1)).toHaveLength(0);
+    const caption = drawn(rowsOf(1), { columns, level: 'caption' }, room);
+    expect(caption.cells.filter((cell) => cell.page === 1)).toHaveLength(2 * columns.length);
+  });
+
+  it('keeps the last row with the foot, measured at the level of the table', () => {
+    const { cells } = drawn(rowsOf(1), { columns, footRow: ['Total', 1], level: 'caption' }, roomForAt(3, 'caption'));
+    expect(cells.filter((cell) => cell.page === 1)).toHaveLength(3 * columns.length);
+  });
+
+  it('repeats the head at the level of the table under a continuation title that keeps its size', () => {
+    const options = { columns, continuationTitle: 'Orders (continued)' };
+    const { doc, cells, texts } = drawn(rowsOf(120), { ...options, level: 'caption' });
+    expect(doc.doc.getNumberOfPages()).toBeGreaterThan(1);
+    const small = drawn(rowsOf(120), options);
+    const title = textOf(texts, 'Orders (continued)');
+    expect(title.widths[0]).toBeCloseTo(textOf(small.texts, 'Orders (continued)').widths[0], 6);
+    expect(title.fontStyle).toBe('bold');
+    const head = cells.find((cell) => cell.page === 2)!;
+    const titleLine = measureTextLevel(doc, 'bodyBold').lineHeight;
+    expect(head.y).toBeCloseTo(doc.margins.top + titleLine + TABLE.continuationTitleGap, 3);
+    expect(head.height).toBeCloseTo(rowAt(doc, 'caption'), 3);
+    const bottom = doc.layout.bottom(doc.pageHeight);
+    for (const cell of cells) expect(cell.y + cell.height).toBeLessThanOrEqual(bottom + 1e-6);
+  });
+
+  it('takes the color and the slant of the level for the body and the foot, with bold on top for the head and the foot', () => {
+    const { doc, texts } = drawn(rowsOf(1), { columns, footRow: ['Total', 1], level: 'italic' });
+    expect(textOf(texts, 'Row 0').fontStyle).toBe('italic');
+    expectColor(textOf(texts, 'Row 0').color, doc.theme.colors.secondary);
+    expect(textOf(texts, 'Item').fontStyle).toBe('bolditalic');
+    expect(textOf(texts, 'Total').fontStyle).toBe('bolditalic');
+    expectColor(textOf(texts, 'Total').color, doc.theme.colors.secondary);
+    // The head sits on the primary fill: it keeps its contrast color, not the one of the level.
+    expectColor(textOf(texts, 'Item').color, doc.theme.colors.onPrimary);
+  });
+
+  it('follows a level the theme restyles', () => {
+    const theme = createTheme({ typography: { levels: { caption: { bold: true } }, sizes: { caption: 6 } } });
+    const { doc, texts } = drawn(rowsOf(1), { columns, level: 'caption', showHead: 'never' }, () => undefined);
+    expect(textOf(texts, 'Row 0').fontStyle).toBe('normal');
+    const custom = makeDoc({ theme });
+    const customTexts = recordTexts(custom);
+    custom.table(rowsOf(1), { columns, level: 'caption', showHead: 'never' });
+    expect(textOf(customTexts, 'Row 0').fontStyle).toBe('bold');
+    expect(lineAt(custom, 'caption')).toBeLessThan(lineAt(doc, 'caption'));
+    expect(cellsOf(custom)[0].height).toBeCloseTo(rowAt(custom, 'caption'), 3);
+  });
+
+  it('composes with cellStyle: a style changes its cell, the size stays the one of the table', () => {
+    const options = { columns, level: 'caption', showHead: 'never' } as const;
+    const styled = drawn(rowsOf(2), {
+      ...options,
+      cellStyle: ({ rowIndex, columnIndex }) =>
+        rowIndex === 0 && columnIndex === 0 ? { bold: true, color: 'error' } : undefined,
+    });
+    const plain = drawn(rowsOf(2), options);
+    expect(textOf(styled.texts, 'Row 0').fontStyle).toBe('bold');
+    expectColor(textOf(styled.texts, 'Row 0').color, styled.doc.theme.colors.error);
+    expect(textOf(styled.texts, 'Row 1').fontStyle).toBe('normal');
+    expectColor(textOf(styled.texts, 'Row 1').color, styled.doc.theme.colors.subtle);
+    expect(textOf(styled.texts, 'Row 1').widths[0]).toBeCloseTo(textOf(plain.texts, 'Row 1').widths[0], 6);
+    expect(cellsOf(styled.doc)[0].height).toBeCloseTo(rowAt(styled.doc, 'caption'), 3);
+  });
+
+  it('lets cellStyle remove the bold of the head', () => {
+    const { texts } = drawn(rowsOf(1), {
+      columns,
+      level: 'caption',
+      cellStyle: ({ section }) => (section === 'head' ? { bold: false } : undefined),
+    });
+    expect(textOf(texts, 'Item').fontStyle).toBe('normal');
+  });
+
+  it('resolves every text style at the level of the table', () => {
+    vi.mocked(resolveTextStyle).mockClear();
+    drawn(rowsOf(3), { columns, level: 'caption', footRow: ['Total', 1] });
+    const levels = vi.mocked(resolveTextStyle).mock.calls.map(([, level]) => level);
+    expect(levels.length).toBeGreaterThan(0);
+    expect(new Set(levels)).toEqual(new Set(['caption']));
+  });
+
+  it('accepts every text level', () => {
+    for (const level of TEXT_LEVELS) {
+      expect(() => makeDoc().table(rowsOf(1), { columns, level })).not.toThrow();
+    }
+  });
+
+  it('measures the same in keepTogether', () => {
+    const doc = makeDoc();
+    doc.keepTogether(() => doc.table(rowsOf(3), { columns, level: 'caption', spaceAfter: 0 }));
+    for (const cell of cellsOf(doc)) expect(cell.height).toBeCloseTo(rowAt(doc, 'caption'), 3);
   });
 });
 

@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `table` takes `level`, the text level of the head, the body and the foot row (default `'small'`, the rendering of
+  before): a dense table takes `'caption'` so that its header words are not cut in two. Column widths, wrapping, row
+  height, repeated head, pagination and `minRowHeight` follow the level; the body and the foot take its color and slant,
+  the head and the foot stay bold, and `cellStyle` composes with it. The cell padding and the continuation title keep
+  their size. A value that is no text level throws an `InvalidOptionError`.
+
 ## [0.2.0] - 2026-11-14
 
 ### Added

@@ -1,4 +1,4 @@
-import type { TextAlign } from '../core/constants';
+import type { TextAlign, TextLevel } from '../core/constants';
 import type { ColorInput } from '../theme/types';
 
 /** A cell value: numbers are printed as they are, `null` and `undefined` leave the cell empty. */
@@ -47,11 +47,11 @@ export interface TableCellStyle {
   /** Cell fill. */
   fill?: ColorInput;
   /**
-   * Bold text; `false` removes the weight too. Default: bold in the head and the foot, the weight of the `small` level
+   * Bold text; `false` removes the weight too. Default: bold in the head and the foot, the weight of the table `level`
    * in the body.
    */
   bold?: boolean;
-  /** Italic text; `false` removes the slant too. Default: the slant of the `small` level. */
+  /** Italic text; `false` removes the slant too. Default: the slant of the table `level`. */
   italic?: boolean;
   /** Horizontal alignment of the cell. Default: the column `align`. */
   align?: TextAlign;
@@ -67,6 +67,14 @@ export interface TableOptions {
   alternateRowFill?: boolean;
   /** Bold line drawn above the table on each page it continues on, e.g. `'Orders (continued)'`. */
   continuationTitle?: string;
+  /**
+   * Text level of the head, the body and the foot row; a dense table takes `'caption'`. It sets the size of the text,
+   * so the natural width of the columns, the wrapping, the row height and the pagination follow it; the body and the
+   * foot take its color and slant, the head and the foot are bold on top of it, and a `cellStyle` result composes
+   * with it. The cell padding and the continuation title (`'bodyBold'`) keep their size. Any text level, else
+   * `InvalidOptionError`. Default: `'small'`.
+   */
+  level?: TextLevel;
   /** Closing row, one cell per column, in bold on the `tint` fill. It stays with the last body row. */
   footRow?: TableCell[];
   /**
