@@ -14,6 +14,8 @@ All notable changes to this project are documented here. The format follows
   the plain header. An option of the other variant throws an `InvalidOptionError`, both ways.
 - Types `PlainPageHeaderOptions`, `CustomPageHeaderOptions`, `PlainPageFooterOptions`, `CustomPageFooterOptions` and
   `PageNumbers`.
+- `addWarning(message)` is public on the document: a custom component records a warning in `doc.warnings`, deduplicated
+  and printed in `debug` mode like the built-in ones. A message that is not a string throws an `InvalidOptionError`.
 
 ### Changed
 

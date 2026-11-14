@@ -1356,6 +1356,7 @@ const OPTIONAL_PAGES: Case[] = [
     d.inset({ right: d.contentWidth, width: 10 }, () => d.paragraph('Inside')),
   ),
   ...option('onNewPage callback', NOT_FUNCTION, (d, v) => d.onNewPage(v as never)),
+  ...option('addWarning message', NOT_TEXT_OR_MISSING, (d, v) => d.addWarning(v as never)),
   ...option('registerImage name', NOT_TEXT_OR_MISSING, (d, v) => d.registerImage(v as never, PNG)),
   ...option('registerImage image', NOT_TEXT_OR_MISSING, (d, v) => d.registerImage('other', v as never)),
   ...option('registerImages images', [null, 5, 'text', ['a']], (d, v) => d.registerImages(v as never)),

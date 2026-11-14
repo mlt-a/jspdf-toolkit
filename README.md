@@ -371,6 +371,7 @@ Each method returns the document, so calls chain. `o?` is the optional options o
 | `registerImage(name, data)`, `registerImages(map)`                  | Names an image for every image option.                        | [Node and browser](#node-and-browser)                            |
 | `finalize()`, `toBuffer()`, `toDataUri()`, `toBlob()`               | Page numbers, footers and export.                             | [Finalize, export…](#finalize-export-warnings-and-errors)        |
 | `margins`, `contentWidth`, `measure`, `firstPageTop`                | Read-only margins and widths of the page or column.           | [Document options](#document-options)                            |
+| `addWarning(message)`                                               | Records a warning from a custom component (returns nothing).  | [Custom components](#low-level-primitives-and-custom-components) |
 | `warnings`, `coverPage`, `backCoverPage`, `pageLabels`              | Read-only state: problems met, cover pages, page numbers.     | [Finalize, export…](#finalize-export-warnings-and-errors)        |
 
 ### Spacing
@@ -1076,6 +1077,8 @@ then options: `drawX(ctx, content, options)`. A custom component follows the sam
 - **Page decorations** (watermark, running header and footer) return nothing.
 - `computeXHeight(ctx, content, options)` returns the height a block will take, without `spaceAfter`, to decide a layout
   before drawing. `measureX` returns metrics (`measureTextLevel`, `measureHighlightedText`).
+- A problem the block handles instead of throwing goes to `ctx.addWarning(message)`: it joins `doc.warnings` once and is
+  printed in `debug` mode. An invalid option still throws.
 
 Raw jsPDF drawing after a block finds the font, colors, line width, cap and join set before it, in force on the page: a
 `doc.doc.rect(…, 'F')` without `doc.doc.setFillColor` takes the fill set before the block, even though the block wrote

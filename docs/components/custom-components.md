@@ -182,5 +182,9 @@ Exported for custom code:
 - **Throws** like the blocks, from `compute*Height` too (see [errors](errors.md#what-a-block-checks)). `drawImage`
   throws when it has neither a `width` nor a `height`.
 - **Warns** when an image or an icon is neither a registered name nor readable data.
+- **Report your own problems** with `ctx.addWarning(message)`, as the built-in blocks do: an asset that cannot be read, a
+  text that does not fit. The message joins `doc.warnings` once, however many times it is raised, and is printed in
+  `debug` mode. Follow the library's wording: `Failed to draw <what>: <reason>`, or a plain sentence with no final
+  period. Throw, as the built-in blocks do, for an invalid option.
 - **In a column**: `ctx` is the document laid out in the column, so `ctx.margins`, `ctx.contentWidth` and `ctx.measure`
   are the column's.

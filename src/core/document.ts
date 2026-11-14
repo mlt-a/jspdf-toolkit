@@ -1232,8 +1232,24 @@ export class PDFDocument {
 
   // === Document state ===
 
-  /** @internal Records a warning for `warnings`, printed in `debug` mode. */
+  /**
+   * Records a problem a custom component handled instead of throwing, as the built-in blocks do: it joins `warnings`
+   * and is printed in `debug` mode. A message already recorded is not added again, so a component drawn in a loop
+   * warns once. Follow the library's wording: `Failed to draw <what>: <reason>`, or a plain sentence, with no final
+   * period. Inside `keepTogether`, a warning raised by the measuring pass is rolled back and raised again by the real
+   * pass, so it is listed (and printed) once. Returns nothing: it is not a chaining call.
+   *
+   * @group Flow control
+   * @param message The warning text. Throws an `InvalidOptionError` when it is not a string.
+   *
+   * @example
+   * ```ts
+   * // warns: Failed to draw note
+   * doc.addWarning('Failed to draw note: its text is too long for one line');
+   * ```
+   */
   addWarning(message: string): void {
+    checkedText('addWarning message', message);
     // A primitive drawn in a loop would otherwise repeat the same warning for every item.
     if (this.warningList.includes(message)) return;
     this.warningList.push(message);
