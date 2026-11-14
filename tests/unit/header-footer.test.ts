@@ -456,6 +456,40 @@ describe('custom pageHeader and pageFooter', () => {
     expect(doc.warnings.some((warning) => warning.startsWith('Drawing after finalize()'))).toBe(true);
   });
 
+  it('draws a block from the top of each page and leaves the flow as it was', () => {
+    const doc = makeDoc();
+    doc.paragraph('One').addPage().paragraph('Two').addPage().paragraph('Three');
+    const end = doc.peekYPos();
+    const starts: number[] = [];
+    doc.pageFooter({
+      variant: 'custom',
+      draw: (ctx) => {
+        starts.push(ctx.peekYPos());
+        ctx.heading('Waiting');
+        ctx.separator();
+      },
+    });
+    doc.finalize();
+    expect(starts).toEqual([doc.margins.top, doc.margins.top, doc.margins.top]);
+    expect(doc.peekYPos()).toBe(end);
+    expect(doc.doc.getNumberOfPages()).toBe(3);
+  });
+
+  it('puts the flow back when draw throws', () => {
+    const doc = makeDoc();
+    doc.paragraph('One');
+    const end = doc.peekYPos();
+    doc.pageFooter({
+      variant: 'custom',
+      draw: (ctx) => {
+        ctx.heading('Waiting');
+        throw new Error('boom');
+      },
+    });
+    expect(() => doc.finalize()).toThrow('boom');
+    expect(doc.peekYPos()).toBe(end);
+  });
+
   it('stops finalize and propagates when draw throws, jsPDF back on its page', () => {
     const doc = makeDoc();
     doc.paragraph('One').addPage().paragraph('Two').addPage().paragraph('Three').backCover();

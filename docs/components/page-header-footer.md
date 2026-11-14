@@ -145,7 +145,8 @@ doc.heading('Highlights').paragraph('The content starts under the 30 mm the head
   font, colors and line width it sets do not reach the next page. A custom footer draws in the bottom margin as it is:
   it takes no `theme.assets.footerLogo` and needs no minimum height.
 - **Draw with jsPDF**: use `ctx.doc` and the low-level primitives. A block (`ctx.paragraph`…) is drawn after
-  `finalize()` and warns as such.
+  `finalize()` and warns as such; it starts at the top of the page, and the position of the document is put back after
+  each call.
 - **When a callback throws**, `finalize()` stops and the error propagates: the pages drawn so far keep what was drawn,
   the watermarks are not drawn, and the document stays finalized.
 - **Numbering**: page numbers count from 1 and skip the [cover](cover.md) and the [back cover](back-cover.md), which

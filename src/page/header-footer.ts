@@ -130,8 +130,8 @@ export function headerReserve(options: PageHeaderOptions): number {
 export const DEFAULT_PAGE_FOOTER: PlainPageFooterOptions = { right: '{page}/{pages}' };
 
 /**
- * Runs `draw` on every numbered page, each call in a drawing state of its own, from the `body` text style and the fill
- * jsPDF reports, as the `onNewPage` hook does. jsPDF goes back to the page it was on, also when `draw` throws.
+ * Runs `draw` on every numbered page, each call in a drawing state and a flow of its own, from the `body` text style
+ * and the fill jsPDF reports, as the `onNewPage` hook does. jsPDF goes back to the page it was on, also when `draw` throws.
  */
 function drawCustomChrome(
   ctx: DrawingContext,
@@ -148,7 +148,8 @@ function drawCustomChrome(
         // A page drawn earlier may have another fill in force than the one jsPDF reports.
         restateFillColor(doc);
         setTextStyle(ctx, 'body');
-        draw(ctx, { page: pageLabel, pages });
+        // A block it draws starts at the top of this page, not where the last page of the document ended.
+        ctx.fromPageTop(() => draw(ctx, { page: pageLabel, pages }));
       });
     }
   } finally {

@@ -850,6 +850,25 @@ export class PDFDocument {
     this.trailing = trailing;
   }
 
+  /**
+   * @internal Runs `draw` on the current page as on an empty one: the position at the top of its content, nothing
+   * above it. The flow (position, space under the last block, waiting headings) is put back after it, also when `draw`
+   * throws, so a block it draws neither starts where the last page ended nor moves what follows.
+   */
+  fromPageTop(draw: () => void): void {
+    const { yPos, trailing } = this;
+    const pending = this.pendingHeadings;
+    this.pendingHeadings = [];
+    this.restoreFlow(this.layout.topFor(this.pageNumber), NO_TRAILING);
+    try {
+      draw();
+      this.flushPendingHeadings();
+    } finally {
+      this.restoreFlow(yPos, trailing);
+      this.pendingHeadings = pending;
+    }
+  }
+
   /** @internal Bottom of the last block drawn: the position, less the space that block left under it. */
   contentBottom(): number {
     return this.yPos - this.trailing.space;
