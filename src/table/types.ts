@@ -15,8 +15,9 @@ export interface TableColumn {
   key: string;
   /**
    * Width (mm): a finite number above 0, else `InvalidOptionError`. `'auto'` or absent: the column is sized from its
-   * content, and the automatic columns share what the fixed ones leave of the content width. A table whose columns
-   * are all fixed is as wide as their sum, up to the content width (wider ones are scaled down, with a warning).
+   * content, and the automatic columns share what the fixed ones leave of the content width, each at least as wide as
+   * its longest word while the longest words fit together (a URL or an email counts its longest segment between
+   * separators). A table whose columns are all fixed is as wide as their sum, up to the content width (wider ones are scaled down, with a warning).
    * Default: `'auto'`.
    */
   width?: number | 'auto';

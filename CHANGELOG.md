@@ -14,6 +14,17 @@ All notable changes to this project are documented here. The format follows
   the head and the foot stay bold, and `cellStyle` composes with it. The cell padding and the continuation title keep
   their size. A value that is no text level throws an `InvalidOptionError`.
 
+### Fixed
+
+- `table` no longer cuts a word in two when the longest words fit: an automatic column takes at least the width of its
+  longest word (head and body, at the table `level`, padding included; a URL or an email counts its longest segment
+  between the separators it breaks at, no-break spaces keep a word whole) before the others share the rest. A register
+  with no body row, or a column of long words next to wide ones, keeps its words whole. A table where no word was cut
+  keeps its widths. When the longest words of the automatic columns do not fit together, the sharing runs on those
+  words instead of the full contents, without a warning: the columns whose longest word fits an equal share keep it
+  whole, the others split what is left, and cut words are fewer or the same as before. Columns with a `width` do not
+  change.
+
 ## [0.2.0] - 2026-11-14
 
 ### Added

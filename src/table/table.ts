@@ -26,7 +26,7 @@ import {
   resolveTextStyle,
 } from '../drawing/text';
 import type { ParagraphOptions, TextLevelMetrics } from '../drawing/text';
-import { text as drawText, wrap, wrapMeasured } from '../drawing/text-lines';
+import { text as drawText, widestUnbreakable, wrap, wrapMeasured } from '../drawing/text-lines';
 import { applyFont, applyTextStyle } from '../drawing/text-style';
 import type { TextStyle } from '../drawing/text-style';
 import { resolveColor, tint } from '../theme/colors';
@@ -229,9 +229,74 @@ function rowStyler(
 }
 
 /**
+ * Narrowest first, each column of `indices` takes the smaller of its `caps` width and the equal share of what the
+ * ones after it leave: once a column takes the share, every wider one after it takes the same share. Writes into
+ * `widths` and returns the room left, positive only when every cap was met. `indices` is sorted in place.
+ */
+function shareRoom(indices: number[], caps: number[], room: number, widths: number[]): number {
+  let left = room;
+  let remaining = indices.length;
+  indices.sort((a, b) => caps[a] - caps[b]);
+  for (const index of indices) {
+    widths[index] = Math.min(caps[index], left / remaining);
+    left -= widths[index];
+    remaining -= 1;
+  }
+  return left;
+}
+
+/**
+ * Width (mm) of the widest word of each automatic column, padding included, at most its natural width: the least a
+ * column takes without cutting a word in two. A cell no wider than the widest word found so far is not looked at.
+ */
+function wordFloors(ctx: DrawingContext, rows: StyledRow[], auto: number[], natural: number[], padding: number) {
+  const floors = natural.map(() => padding);
+  for (const index of auto) {
+    for (const { cells } of rows) {
+      const cell = cells[index];
+      if (cell.width + padding <= floors[index]) continue;
+      applyFont(ctx.doc, cell.style);
+      for (const line of cell.lines) {
+        floors[index] = Math.max(floors[index], widestUnbreakable(ctx.doc, line) + padding);
+      }
+    }
+    floors[index] = Math.min(floors[index], natural[index]);
+  }
+  return floors;
+}
+
+/**
+ * Shares `room` between `auto` columns some of which are cut short of their natural width, so that no word is cut in
+ * two when the longest words fit: a column narrower than its floor takes the floor, and the others share what is left
+ * as before (a column can fall under its own floor once another is raised: the pass is repeated). When the floors
+ * together are wider than `room` a word is cut whatever is done: the same sharing runs on the floors instead of the
+ * natural widths, so that the columns whose longest word fits the equal share keep it whole, and the others split
+ * what is left.
+ */
+function shareAboveFloors(auto: number[], natural: number[], floors: number[], room: number, widths: number[]): void {
+  const pinned: number[] = [];
+  let free = auto;
+  for (;;) {
+    const short = free.filter((index) => widths[index] < floors[index] - TABLE.wrapSlack);
+    if (short.length === 0) return;
+    pinned.push(...short);
+    free = free.filter((index) => !short.includes(index));
+    const pinnedWidth = pinned.reduce((sum, index) => sum + floors[index], 0);
+    if (pinnedWidth > room) {
+      shareRoom(auto, floors, room, widths);
+      return;
+    }
+    for (const index of pinned) widths[index] = floors[index];
+    shareRoom(free, natural, room - pinnedWidth, widths);
+  }
+}
+
+/**
  * Width (mm) of each column. Fixed widths are kept. The automatic columns share what is left: one whose content fits
  * in an equal share keeps its natural width, the others split the rest; room left over once every content fits is
- * handed out in proportion.
+ * handed out in proportion. A column never gets less than its longest word, padding included (a URL or an email: its
+ * longest segment between separators), unless the longest words of the automatic columns together are wider than
+ * the room: see `shareAboveFloors`.
  */
 function columnWidths(ctx: DrawingContext, columns: TableColumn[], rows: StyledRow[], tableWidth: number): number[] {
   const padding = TABLE.cellPadding.left + TABLE.cellPadding.right;
@@ -248,18 +313,14 @@ function columnWidths(ctx: DrawingContext, columns: TableColumn[], rows: StyledR
   const minimum = auto.length * (padding + TABLE.minTextWidth);
   // Fixed columns that leave the automatic ones less than their minimum make the table too wide.
   const overflow = taken + minimum > tableWidth;
-  let room = overflow ? minimum : tableWidth - taken;
-  let remaining = auto.length;
-  // Narrowest first: once a column takes the equal share, every wider one after it takes the same share.
-  auto.sort((a, b) => natural[a] - natural[b]);
-  for (const index of auto) {
-    widths[index] = Math.min(natural[index], room / remaining);
-    room -= widths[index];
-    remaining -= 1;
-  }
-  if (room > 0) {
+  const room = overflow ? minimum : tableWidth - taken;
+  const left = shareRoom(auto, natural, room, widths);
+  if (!overflow && auto.some((index) => widths[index] < natural[index])) {
+    // A column cut short of its content may be cut inside a word: the floors say whether it is.
+    shareAboveFloors(auto, natural, wordFloors(ctx, rows, auto, natural, padding), room, widths);
+  } else if (left > 0) {
     const total = auto.reduce((sum, index) => sum + widths[index], 0);
-    for (const index of auto) widths[index] += (room * widths[index]) / total;
+    for (const index of auto) widths[index] += (left * widths[index]) / total;
   }
   return overflow ? scaleToTable(ctx, widths, tableWidth) : widths;
 }

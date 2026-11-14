@@ -25,6 +25,7 @@ import {
   remainingTextWidth,
   text as drawText,
   trackedWidth,
+  widestUnbreakable,
   wrap,
 } from '../../src/drawing/text-lines';
 import { INTER_FAMILY, interFonts } from '../../src/fonts/inter';
@@ -256,6 +257,48 @@ function setup() {
   setTextStyle(doc, 'fieldValue');
   return doc;
 }
+
+describe('widestUnbreakable', () => {
+  it('is the widest word of a line', () => {
+    const doc = setup();
+    expect(widestUnbreakable(doc.doc, 'a few dysfonctionnements here')).toBeCloseTo(
+      widthOf(doc, 'dysfonctionnements'),
+      6,
+    );
+    expect(widestUnbreakable(doc.doc, '')).toBe(0);
+  });
+
+  it('reads a URL as its widest segment, a separator staying on the left of the cut', () => {
+    const doc = setup();
+    const url = 'https://www.example-registry.org/documents/annual_report-2026/summary.pdf';
+    const widest = widestUnbreakable(doc.doc, url);
+    expect(widest).toBeCloseTo(widthOf(doc, 'documents/'), 6);
+    expect(widest).toBeLessThan(widthOf(doc, url) / 3);
+    // It is the width the token breaks at: the cut only goes through a segment under it, never inside one.
+    for (const line of breakLongToken(doc, url, widest)) expect(widthOf(doc, line)).toBeLessThanOrEqual(widest + 1e-6);
+    expect(breakLongToken(doc, url, widest).join('')).toBe(url);
+  });
+
+  it('cuts an email at its last @: the local part with the @, then the domain', () => {
+    const doc = setup();
+    const widest = widestUnbreakable(doc.doc, 'prenom@domaine');
+    expect(widest).toBeCloseTo(widthOf(doc, 'prenom@'), 6);
+    expect(widestUnbreakable(doc.doc, 'a@b@domaine')).toBeCloseTo(widthOf(doc, 'domaine'), 6);
+    expect(widestUnbreakable(doc.doc, 'x@')).toBeCloseTo(widthOf(doc, 'x@'), 6);
+  });
+
+  it('keeps no-break and thin spaces inside the word', () => {
+    const doc = setup();
+    const amount = '1\u00a0234\u00a0567,89';
+    expect(widestUnbreakable(doc.doc, amount)).toBeCloseTo(widthOf(doc, amount), 6);
+    expect(widestUnbreakable(doc.doc, '1\u202f234')).toBeCloseTo(widthOf(doc, '1\u00a0234'), 6);
+  });
+
+  it('counts the letter spacing in each segment', () => {
+    const doc = setup();
+    expect(widestUnbreakable(doc.doc, 'abc def', 0.5)).toBeCloseTo(trackedWidth(doc.doc, 'abc', 0.5), 6);
+  });
+});
 
 describe('breakLongToken', () => {
   it('breaks an email after @ and at dots, never mid-word', () => {

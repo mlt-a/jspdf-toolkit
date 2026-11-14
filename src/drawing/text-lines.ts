@@ -307,6 +307,28 @@ function wrapWithLongWords(
 /** Segments end after a delimiter (`.` `/` `\` `_` `-`), which stays on the left. */
 const SEGMENT_BREAK = /(?<=[./\\_-])/;
 
+/** The groups `breakLongToken` keeps apart: up to the last `@` (it included), and after it. */
+function tokenGroups(token: string): string[] {
+  const at = token.lastIndexOf('@');
+  return at >= 0 ? [token.slice(0, at + 1), token.slice(at + 1)] : [token];
+}
+
+/**
+ * Width (mm) of the widest piece of `value` that wrapping cannot split without cutting a word: a word, or for an email
+ * or a URL its widest segment between the separators `breakLongToken` breaks at. A line narrower than that cuts a word
+ * in two. The current font must be set by the caller.
+ */
+export function widestUnbreakable(doc: jsPDF, value: string, charSpace = 0): number {
+  let widest = 0;
+  for (const word of normalizeText(value).split(' ')) {
+    for (const group of tokenGroups(word)) {
+      for (const segment of group.split(SEGMENT_BREAK))
+        widest = Math.max(widest, trackedWidth(doc, segment, charSpace));
+    }
+  }
+  return widest;
+}
+
 /**
  * Splits a token wider than `width` (email, IBAN, URL) into lines. It cuts at `@` first (local part
  * and `@` on one line, domain on the next), then packs each side at `.` `/` `_` `-`. Only a segment
@@ -314,10 +336,8 @@ const SEGMENT_BREAK = /(?<=[./\\_-])/;
  */
 export function breakLongToken(ctx: DrawingContext, token: string, width: number, charSpace = 0): string[] {
   const { doc } = ctx;
-  const at = token.lastIndexOf('@');
-  const groups = at >= 0 ? [token.slice(0, at + 1), token.slice(at + 1)] : [token];
   const lines: string[] = [];
-  for (const group of groups) {
+  for (const group of tokenGroups(token)) {
     let line = '';
     let lineWidth = 0;
     for (const segment of group.split(SEGMENT_BREAK)) {

@@ -5,6 +5,7 @@ import type { TextLevel } from '../../src/core/constants';
 import type { PDFDocument } from '../../src/core/document';
 import { InvalidColorError, InvalidOptionError } from '../../src/core/errors';
 import { measureTextLevel, resolveTextStyle, setTextStyle, textLevelSize } from '../../src/drawing/text';
+import { applyFont } from '../../src/drawing/text-style';
 import type { TableOptions, TableRow } from '../../src/table/types';
 vi.mock('../../src/drawing/text', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../src/drawing/text')>();
@@ -230,6 +231,252 @@ describe('table widths', () => {
         /mm wide together, more than the available width \(186\.0 mm\): they are scaled down to fit$/,
       ),
     ]);
+  });
+});
+
+/** `count` times `word`, separated by spaces: a cell whose natural width is far over any share of the table. */
+const prose = (count: number, word: string) => Array.from({ length: count }, () => word).join(' ');
+
+/** The words of `sources` that are not whole in a line drawn: the ones wrapping cut in two. */
+function cutWords(texts: DrawnText[], sources: string[]): string[] {
+  const whole = new Set(linesOf(texts).flatMap((line) => line.split(' ')));
+  return sources.flatMap((source) => source.split(' ')).filter((word) => !whole.has(word));
+}
+
+/** Width (mm) of `value` set in `level`, bold or not, plus the cell padding: the least a cell needs for the word. */
+function wordWidth(value: string, level: TextLevel, bold = false): number {
+  const doc = makeDoc();
+  applyFont(doc.doc, resolveTextStyle(doc, level, { bold }));
+  return doc.doc.getTextWidth(value) + TABLE.cellPadding.left + TABLE.cellPadding.right;
+}
+
+const sumOf = (cells: Cell[]) => cells.reduce((sum, cell) => sum + cell.width, 0);
+
+const proseColumns = (count: number) => Array.from({ length: count }, (_, i) => ({ header: `R${i}`, key: `p${i}` }));
+const proseRow = (count: number): TableRow =>
+  Object.fromEntries(Array.from({ length: count }, (_, i) => [`p${i}`, prose(12, 'alpha')]));
+
+describe('table widths and long words', () => {
+  const LONG_WORD = 'dysfonctionnements';
+
+  it('gives a column the width of its longest word before the others share the rest', () => {
+    // Nine equal shares are narrower than the word: it was cut, and the others kept room they did not need.
+    const columnCount = 9;
+    expect(wordWidth(LONG_WORD, 'small')).toBeGreaterThan(186 / columnCount);
+    const source = `The ${LONG_WORD} noted ${prose(6, 'beta')}`;
+    const { doc, cells, texts } = drawn([{ issue: source, ...proseRow(columnCount - 1) }], {
+      columns: [{ header: 'Issue', key: 'issue' }, ...proseColumns(columnCount - 1)],
+    });
+    expect(cutWords(texts, [source])).toEqual([]);
+    expect(cells[0].width).toBeCloseTo(wordWidth(LONG_WORD, 'small'), 3);
+    // The others share the rest equally, and the table still spans the content width.
+    const others = cells.slice(1, columnCount);
+    for (const cell of others) expect(cell.width).toBeCloseTo(others[0].width, 3);
+    expect(others[0].width).toBeLessThan(doc.contentWidth / columnCount);
+    expect(sumOf(cells.slice(0, columnCount))).toBeCloseTo(doc.contentWidth, 3);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('takes the longest word of the body or of the bold head, whichever is wider', () => {
+    const columnCount = 9;
+    const fillers = proseColumns(columnCount - 1);
+    const head = drawn([{ issue: 'a b c', ...proseRow(columnCount - 1) }], {
+      columns: [{ header: `Of ${LONG_WORD}`, key: 'issue' }, ...fillers],
+    });
+    expect(head.cells[0].width).toBeCloseTo(wordWidth(LONG_WORD, 'small', true), 3);
+    expect(cutWords(head.texts, [`Of ${LONG_WORD}`])).toEqual([]);
+    const body = drawn([{ issue: `a ${LONG_WORD}`, ...proseRow(columnCount - 1) }], {
+      columns: [{ header: 'Issue', key: 'issue' }, ...fillers],
+    });
+    expect(body.cells[0].width).toBeCloseTo(wordWidth(LONG_WORD, 'small'), 3);
+  });
+
+  it('keeps every header word whole in a register of eight columns without a body row', () => {
+    const headers = [
+      'Representatives present',
+      'Responsibilities held',
+      'Authorisation level',
+      'Identification number',
+      'Lodging booked',
+      'Admin fees',
+      'Registration date',
+      'Observations noted',
+    ];
+    const longest = headers.map((header) =>
+      Math.max(...header.split(' ').map((word) => wordWidth(word, 'small', true))),
+    );
+    const { doc, cells, texts } = drawn([], {
+      columns: headers.map((header, index) => ({ header, key: `k${index}` })),
+      minRowHeight: 10,
+    });
+    // The words fit together, and an equal share (what the table gave each column before) is too narrow for four.
+    expect(longest.reduce((sum, width) => sum + width, 0)).toBeLessThan(doc.contentWidth);
+    expect(longest.filter((width) => width > doc.contentWidth / headers.length).length).toBeGreaterThan(0);
+    expect(cutWords(texts, headers)).toEqual([]);
+    const widths = cells.slice(0, headers.length).map((cell) => cell.width);
+    expect(new Set(widths.map((width) => Math.round(width))).size).toBeGreaterThan(1);
+    widths.forEach((width, index) => expect(width).toBeGreaterThanOrEqual(longest[index] - 1e-3));
+    expect(sumOf(cells.slice(0, headers.length))).toBeCloseTo(doc.contentWidth, 3);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('raises several columns to their word at once, the rest sharing what is left', () => {
+    // Raising a column lowers the share of the others: a second one may need raising in turn.
+    const words = ['dysfonctionnements', 'responsabilites', 'alpha', 'beta', 'gamma'];
+    const sources = words.map((word) => `${word} ${prose(14, 'delta')}`);
+    const { doc, cells, texts } = drawn([Object.fromEntries(sources.map((source, index) => [`k${index}`, source]))], {
+      columns: sources.map((_, index) => ({ header: `C${index}`, key: `k${index}` })),
+    });
+    expect(
+      cutWords(
+        texts,
+        sources.map((source) => source.split(' ').slice(0, 1).join(' ')),
+      ),
+    ).toEqual([]);
+    expect(cells[0].width).toBeGreaterThanOrEqual(wordWidth(words[0], 'small') - 1e-3);
+    expect(sumOf(cells.slice(0, 5))).toBeCloseTo(doc.contentWidth, 3);
+  });
+
+  it('does not reserve the whole length of a URL: its longest segment is enough', () => {
+    const url = 'https://www.example-registry.org/documents/annual_report-2026/summary.pdf';
+    const columnCount = 14;
+    const segment = wordWidth('documents/', 'small');
+    // An equal share is under the segment: the URL was cut inside it before.
+    expect(segment).toBeGreaterThan(186 / columnCount);
+    const { doc, cells, texts } = drawn([{ link: url, ...proseRow(columnCount - 1) }], {
+      columns: [{ header: 'Link', key: 'link' }, ...proseColumns(columnCount - 1)],
+    });
+    expect(cells[0].width).toBeCloseTo(segment, 3);
+    expect(cells[0].width).toBeLessThan(wordWidth(url, 'small') / 3);
+    const call = texts.find((entry) => entry.lines.join('') === url)!;
+    expect(call.lines.length).toBeGreaterThan(1);
+    // Cut after a separator only: no line ends inside a segment.
+    for (const line of call.lines.slice(0, -1)) expect(line).toMatch(/[/.\-_@]$/);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('falls back to the sharing of the longest words when they do not fit together', () => {
+    // Seven columns of one long word and one of short words: the words together are wider than the table.
+    const columnCount = 8;
+    const sources = Array.from({ length: columnCount }, (_, i) => (i === 0 ? prose(14, 'alpha') : `${LONG_WORD} ${i}`));
+    const { doc, cells, texts } = drawn([Object.fromEntries(sources.map((source, i) => [`k${i}`, source]))], {
+      columns: sources.map((_, i) => ({ header: `C${i}`, key: `k${i}` })),
+    });
+    const widths = cells.slice(0, columnCount).map((cell) => cell.width);
+    expect(wordWidth(LONG_WORD, 'small') * (columnCount - 1)).toBeGreaterThan(doc.contentWidth);
+    // No exception, no warning, and the table still spans the width.
+    expect(sumOf(cells.slice(0, columnCount))).toBeCloseTo(doc.contentWidth, 3);
+    expect(doc.warnings).toEqual([]);
+    // The column whose word is short keeps it whole in its floor: the room it did not need goes to the others, which
+    // are cut as little as an equal split of what is left allows (more room than the equal share of the table).
+    expect(widths[0]).toBeCloseTo(wordWidth('alpha', 'small'), 3);
+    for (const width of widths.slice(1)) {
+      expect(width).toBeCloseTo(widths[1], 3);
+      expect(width).toBeGreaterThan(doc.contentWidth / columnCount);
+    }
+    expect(cutWords(texts, [sources[0]])).toEqual([]);
+    expect(cutWords(texts, sources.slice(1)).length).toBeGreaterThan(0);
+  });
+
+  it('draws the cut words of columns that cannot hold them, as before', () => {
+    const columnCount = 8;
+    const { doc, cells, texts } = drawn(
+      [Object.fromEntries(Array.from({ length: columnCount }, (_, i) => [`k${i}`, LONG_WORD]))],
+      {
+        columns: Array.from({ length: columnCount }, (_, i) => ({ header: `C${i}`, key: `k${i}` })),
+      },
+    );
+    for (const cell of cells.slice(0, columnCount)) expect(cell.width).toBeCloseTo(doc.contentWidth / columnCount, 3);
+    expect(cutWords(texts, [LONG_WORD])).toEqual([LONG_WORD]);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('keeps the widths of a table where no word is cut', () => {
+    // Widths of the same table before the longest word was reserved: two columns share the room, no word is cut.
+    const { cells } = drawn(
+      [
+        { a: prose(14, 'considerations'), b: prose(12, 'remarques'), c: '12', d: '$2,750.00' },
+        { a: prose(9, 'details'), b: prose(20, 'notes'), c: '7', d: '$30.00' },
+      ],
+      {
+        columns: [
+          { header: 'Description', key: 'a' },
+          { header: 'Notes', key: 'b' },
+          { header: 'Qty', key: 'c', align: 'right' },
+          { header: 'Total', key: 'd', align: 'right' },
+        ],
+      },
+    );
+    expect(cells.slice(0, 4).map((cell) => cell.width)).toEqual([80.4353, 80.4353, 8.6849, 16.446]);
+  });
+
+  it('leaves the columns with a width as given, a word cut inside a fixed one included', () => {
+    const columnCount = 9;
+    const source = `The ${LONG_WORD} noted ${prose(6, 'beta')}`;
+    const { doc, cells, texts } = drawn([{ issue: source, ...proseRow(columnCount - 1) }], {
+      columns: [{ header: 'Issue', key: 'issue', width: 15 }, ...proseColumns(columnCount - 1)],
+    });
+    expect(cells[0].width).toBe(15);
+    expect(cutWords(texts, [LONG_WORD])).toEqual([LONG_WORD]);
+    // The others split what the fixed column leaves.
+    for (const cell of cells.slice(1, columnCount)) expect(cell.width).toBeCloseTo((doc.contentWidth - 15) / 8, 3);
+  });
+
+  it('reserves the word for the automatic columns only, next to a fixed column', () => {
+    const columnCount = 9;
+    const source = `The ${LONG_WORD} noted ${prose(6, 'beta')}`;
+    const { doc, cells, texts } = drawn([{ issue: source, ...proseRow(columnCount - 1) }], {
+      columns: [
+        { header: 'Fixed', key: 'p0', width: 20 },
+        { header: 'Issue', key: 'issue' },
+        ...Array.from({ length: columnCount - 2 }, (_, i) => ({ header: `R${i}`, key: `p${i + 1}` })),
+      ],
+    });
+    expect(cells[0].width).toBe(20);
+    expect(cutWords(texts, [source])).toEqual([]);
+    expect(cells[1].width).toBeCloseTo(wordWidth(LONG_WORD, 'small'), 3);
+    expect(sumOf(cells.slice(0, columnCount))).toBeCloseTo(doc.contentWidth, 3);
+  });
+
+  it('follows the level of the table: the word is measured in its size', () => {
+    const columnCount = 9;
+    const source = `The ${LONG_WORD} noted ${prose(6, 'beta')}`;
+    const widthAt = (level?: TextLevel) => {
+      const { cells, texts } = drawn([{ issue: source, ...proseRow(columnCount - 1) }], {
+        columns: [{ header: 'Issue', key: 'issue' }, ...proseColumns(columnCount - 1)],
+        level,
+      });
+      expect(cutWords(texts, [source])).toEqual([]);
+      return cells[0].width;
+    };
+    const small = widthAt();
+    expect(widthAt('small')).toBeCloseTo(small, 6);
+    // A smaller level needs a narrower column for the same word, a larger one a wider.
+    expect(widthAt('caption')).toBeCloseTo(wordWidth(LONG_WORD, 'caption'), 3);
+    expect(widthAt('caption')).toBeLessThan(small);
+    expect(widthAt('body')).toBeCloseTo(wordWidth(LONG_WORD, 'body'), 3);
+    expect(widthAt('body')).toBeGreaterThan(small);
+  });
+
+  it('measures the word of a cell in the style its cellStyle gives it', () => {
+    const columnCount = 9;
+    const { cells } = drawn([{ issue: LONG_WORD, ...proseRow(columnCount - 1) }], {
+      columns: [{ header: 'Issue', key: 'issue' }, ...proseColumns(columnCount - 1)],
+      cellStyle: ({ section, columnIndex }) => (section === 'body' && columnIndex === 0 ? { bold: true } : undefined),
+    });
+    expect(cells[0].width).toBeCloseTo(wordWidth(LONG_WORD, 'small', true), 3);
+  });
+
+  it('keeps the proportional sharing of the room left when every content fits', () => {
+    const { doc, cells } = drawn([{ a: '', b: prose(20, 'alpha') }], {
+      columns: [
+        { header: '', key: 'a' },
+        { header: 'B', key: 'b' },
+      ],
+    });
+    // Every content fits: the room left is handed out in proportion, as before.
+    expect(cells[0].width).toBeLessThan(cells[1].width / 10);
+    expect(sumOf(cells.slice(0, 2))).toBeCloseTo(doc.contentWidth, 3);
   });
 });
 
