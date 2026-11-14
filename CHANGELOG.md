@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-14
+
 ### Added
 
 - `pageHeader` and `pageFooter` take `variant: 'custom'` with a `draw(ctx, { page, pages })` callback: `finalize()`
@@ -165,5 +167,6 @@ First public release: themed PDF generation on top of jsPDF, through a fluent, t
 - `@mlt-a/jspdf-toolkit/fonts/inter`: `interFonts`, Inter regular, bold and italic.
 - ESM only, typed, with `jspdf` as the only peer dependency. Runs on Node 20 and later, and in the browser.
 
-[Unreleased]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mlt-a/jspdf-toolkit/releases/tag/v0.1.0
