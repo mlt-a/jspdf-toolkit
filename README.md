@@ -695,10 +695,11 @@ doc.lineChart(
 - `donutChart(slices, options?)`: parts of a whole as a ring with a legend on its right. A slice is `{ label, value,
 color?, legendValue? }`; the legend shows its percentage, or `legendValue` (`'$1,200'`). Options: `diameter` (46,
   shrinking to leave the legend 36 mm, down to 20, and to the available width), `innerRatio` (0.62; 0 draws a pie),
-  `centerLabel`, `legend` (`true`), `emptyText`, `spaceAfter`.
+  `centerLabel`, `legend` (`true`), `formatPercent` (`(share) => string`, share from 0 to 1: `45%` by default;
+  another language or precision, e.g. a no-break space before the sign), `emptyText`, `spaceAfter`.
 - `stackedBar(slices, options?)`: the same slices as one bar, with the percentages inside the slices wide enough for
   them and the legend under it. Options: `width` (the content width), `height` (9), `legend`, `percentages` (`true`),
-  `emptyText`, `spaceAfter`.
+  `formatPercent` (like `donutChart`: inside the slices and in the legend), `emptyText`, `spaceAfter`.
 - `columnChart(columns, options?)`: vertical columns on one scale. A column is `{ label, valueLabel?, values }`, with
   one value per series stacked from the bottom up (an array even for a plain column: `[90]`); the label takes two lines
   at most. Options: `series` (`{ label, color? }[]`, names the legend), `max` (the top of the scale as long as no column

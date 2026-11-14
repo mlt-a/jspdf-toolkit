@@ -26,12 +26,12 @@ import {
   drawChart,
   emptyChart,
   fillPolygon,
+  formatShare,
   isDrawable,
   labelFitter,
   legendBaseline,
   legendBelow,
   legendRowsHeight,
-  percent,
   seriesColors,
   squareSwatch,
   strokePolyline,
@@ -74,17 +74,31 @@ interface Part {
   label: string;
   value: number;
   color: string;
-  /** Its percentage of the whole. */
+  /** Its percentage of the whole, formatted. */
   share: string;
   /** What the legend shows: `legendValue`, else `share`. */
   legendText: string;
 }
 
 /**
+ * Checks `formatPercent` and returns the function that writes a share, 0 to 1: the one given, its result checked, else
+ * the default `45%`.
+ */
+function shareFormatter(method: string, formatPercent: ((share: number) => string) | undefined) {
+  const format = optionalFunction(`${method} formatPercent`, formatPercent) ?? formatShare;
+  return (share: number) => checkedText(`value returned by ${method} formatPercent`, format(share));
+}
+
+/**
  * The parts a chart draws: those with a drawable value, in order, each with its color. Every part is checked first,
  * those left out too, so an invalid label or color throws before anything is drawn.
  */
-function drawableParts(ctx: DrawingContext, method: string, parts: readonly ChartSlice[]): Part[] {
+function drawableParts(
+  ctx: DrawingContext,
+  method: string,
+  parts: readonly ChartSlice[],
+  formatPercent: (share: number) => string,
+): Part[] {
   checkedObjects(`${method} data`, parts, (part) => {
     checkedText(`${method} label`, part.label);
     optionalText(`${method} legendValue of "${part.label}"`, part.legendValue);
@@ -99,7 +113,7 @@ function drawableParts(ctx: DrawingContext, method: string, parts: readonly Char
   );
   const total = kept.reduce((sum, part) => sum + part.value, 0);
   return kept.map((part, index) => {
-    const share = percent(part.value, total);
+    const share = formatPercent(part.value / total);
     return { label: part.label, value: part.value, color: colors[index], share, legendText: part.legendValue ?? share };
   });
 }
@@ -133,6 +147,14 @@ export interface DonutChartOptions {
   centerLabel?: string;
   /** Legend on the right. Default: `true`. */
   legend?: boolean;
+  /**
+   * Formats the share of a slice in the legend, a number from 0 to 1 (0.45 for 45 %). Default: a rounded whole
+   * percentage, `45%`. For another language or precision, e.g.
+   * `new Intl.NumberFormat('fr-FR', { style: 'percent' }).format`.
+   * Not used for a slice with a `legendValue`. May run more than once per chart
+   * (`keepTogether` measures first): no side effects.
+   */
+  formatPercent?: (share: number) => string;
   /** Line drawn when no slice has a value. Default: none, the chart draws nothing. */
   emptyText?: string;
   /** Space (mm) under the chart. Default: `theme.spacing.block`. */
@@ -247,7 +269,7 @@ function layoutDonutChart(
   const centerLabel = optionalText(`${method} centerLabel`, options?.centerLabel);
   const emptyText = optionalText(`${method} emptyText`, options?.emptyText);
   const showLegend = optionalBoolean(`${method} legend`, options?.legend) ?? true;
-  const parts = drawableParts(ctx, method, slices);
+  const parts = drawableParts(ctx, method, slices, shareFormatter(method, options?.formatPercent));
   if (parts.length === 0) return emptyChart(ctx, emptyText);
 
   const diameter = donutDiameter(ctx, options?.diameter, showLegend);
@@ -330,6 +352,14 @@ export interface StackedBarOptions {
   legend?: boolean;
   /** Percentage inside the slices wide enough for it. Default: `true`. */
   percentages?: boolean;
+  /**
+   * Formats the share of a slice, a number from 0 to 1 (0.45 for 45 %), inside the slice and in the legend. Default: a
+   * rounded whole percentage, `45%`. For another language or precision, e.g.
+   * `new Intl.NumberFormat('fr-FR', { style: 'percent' }).format`.
+   * The legend shows a `legendValue` in its place. A slice too narrow for the text it gets
+   * carries no percentage. May run more than once per chart (`keepTogether` measures first): no side effects.
+   */
+  formatPercent?: (share: number) => string;
   /** Line drawn when no slice has a value. Default: none, the chart draws nothing. */
   emptyText?: string;
   /** Space (mm) under the chart. Default: `theme.spacing.block`. */
@@ -347,7 +377,7 @@ function layoutStackedBar(
   const emptyText = optionalText(`${method} emptyText`, options?.emptyText);
   const showLegend = optionalBoolean(`${method} legend`, options?.legend) ?? true;
   const showPercentages = optionalBoolean(`${method} percentages`, options?.percentages) ?? true;
-  const parts = drawableParts(ctx, method, slices);
+  const parts = drawableParts(ctx, method, slices, shareFormatter(method, options?.formatPercent));
   if (parts.length === 0) return emptyChart(ctx, emptyText);
 
   const barWidth = frameWidth(ctx, `${method} width`, width);
@@ -360,8 +390,14 @@ function layoutStackedBar(
         labelFitter(ctx, method),
       )
     : undefined;
-  const percentages = showPercentages;
   const valueStyle = resolveTextStyle(ctx, VALUE_LEVEL, { bold: true });
+  // The percentage is measured as it is drawn: a formatted text wider than the default one needs a wider slice.
+  const shareWidths = showPercentages
+    ? withDrawingState(ctx, () => {
+        applyTextStyle(ctx.doc, valueStyle);
+        return parts.map((part) => ctx.doc.getTextWidth(part.share));
+      })
+    : [];
   const value = measureTextLevel(ctx, VALUE_LEVEL);
   const { background, text, border } = ctx.theme.colors;
   const left = ctx.margins.left;
@@ -376,7 +412,7 @@ function layoutStackedBar(
         const sliceWidth = index === parts.length - 1 ? left + barWidth - x : (part.value / total) * barWidth;
         doc.setFillColor(part.color);
         doc.rect(x, top, sliceWidth, barHeight, 'F');
-        if (percentages && sliceWidth > CHART.stackedBar.minLabelWidth) {
+        if (showPercentages && sliceWidth > Math.max(CHART.stackedBar.minLabelWidth, shareWidths[index])) {
           // A color of its own, chosen for the contrast over the fill: the theme's color for the level would not.
           applyTextStyle(doc, { ...valueStyle, color: readableOn(part.color, background, text) });
           drawText(ctx, part.share, x + sliceWidth / 2, top + barHeight / 2 + capitalMiddle(value), {

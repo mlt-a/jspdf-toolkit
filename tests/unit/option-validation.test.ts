@@ -1487,6 +1487,14 @@ const OPTIONAL_DATA: Case[] = [
       ),
     ),
   ),
+  ...PART_CHARTS.flatMap(([name, call]) =>
+    option(
+      `${name} formatPercent`,
+      NOT_FUNCTION,
+      (d, v) => call(d, [SLICE], { formatPercent: v }),
+      (d, v) => call(d, [], { formatPercent: v }),
+    ),
+  ),
   ...option(
     'columnChart legend',
     NOT_FLAG,

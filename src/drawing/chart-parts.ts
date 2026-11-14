@@ -58,7 +58,8 @@ export function isDrawable(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value) && value > 0;
 }
 
-export const percent = (value: number, total: number): string => `${Math.round((value / total) * 100)}%`;
+/** The percentage a chart of parts shows by default: the share (0 to 1) as a rounded whole percentage, `45%`. */
+export const formatShare = (share: number): string => `${Math.round(share * 100)}%`;
 
 /** Width (mm) of the widest of `texts` in the current font. */
 export function widestText(ctx: DrawingContext, texts: readonly string[]): number {

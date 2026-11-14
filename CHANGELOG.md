@@ -19,6 +19,10 @@ All notable changes to this project are documented here. The format follows
 - `table` takes `minRowHeight` (mm): every body row is at least that tall, empty or short ones included, for a sheet
   filled in by hand once printed. The text stays at the top of the row; the head and the foot row are not affected.
   A value that is not a finite number from 0 to the page height throws an `InvalidOptionError`.
+- `donutChart` and `stackedBar` take `formatPercent(share)`, the share a number from 0 to 1, for another language or
+  precision (`45 %` with a no-break space, `45,5 %`). It writes the percentages of the legend and inside the bar and
+  sets the widths they are measured with; the default is still `45%`. A value that is not a function, or a result that
+  is not a string, throws an `InvalidOptionError`.
 
 ### Changed
 

@@ -683,6 +683,43 @@ describe('donutChart', () => {
     expect(drawn).not.toContain('25%');
   });
 
+  it('formats the share with formatPercent: a number from 0 to 1, a no-break space before the sign', () => {
+    const doc = makeDoc();
+    const texts = recordTexts(doc);
+    const shares: number[] = [];
+    doc.donutChart(slices(3, 1), {
+      formatPercent: (share) => {
+        shares.push(share);
+        return `${(share * 100).toFixed(1).replace('.', ',')}\u00a0%`;
+      },
+    });
+    expect(shares).toEqual([0.75, 0.25]);
+    expect(drawnTexts(texts)).toEqual(expect.arrayContaining(['75,0\u00a0%', '25,0\u00a0%']));
+    expect(drawnTexts(texts)).not.toContain('75%');
+  });
+
+  it('keeps a legendValue over formatPercent, and does not call it for no slice', () => {
+    const formatPercent = vi.fn(() => '#');
+    const doc = makeDoc();
+    const texts = recordTexts(doc);
+    doc.donutChart([{ label: 'A', value: 1, legendValue: '$250' }], { formatPercent });
+    expect(drawnTexts(texts)).toContain('$250');
+    doc.donutChart([], { formatPercent });
+    expect(formatPercent).toHaveBeenCalledTimes(1);
+  });
+
+  it('measures the legend with the formatted text: its values end further right than the default ones', () => {
+    const rightOf = (options: object) => {
+      const doc = makeDoc();
+      const texts = recordTexts(doc);
+      doc.donutChart(SLICES, { legend: true, ...options });
+      return texts.find((call) => call.lines.includes('Bonds') === false && call.align === 'right')?.x as number;
+    };
+    expect(rightOf({ formatPercent: (share: number) => `${share * 100} percent of the whole` })).toBeGreaterThan(
+      rightOf({}),
+    );
+  });
+
   it('draws no legend on request, and is then as tall as its diameter', () => {
     const doc = makeDoc();
     const texts = recordTexts(doc);
@@ -867,6 +904,26 @@ describe('stackedBar', () => {
     expect(drawnTexts(texts)).toEqual(['97%']);
   });
 
+  it('formats the share with formatPercent inside the slices and in the legend', () => {
+    const doc = makeDoc();
+    const texts = recordTexts(doc);
+    doc.stackedBar(slices(3, 1), { formatPercent: (share) => `${share * 100}\u00a0%` });
+    const drawn = drawnTexts(texts);
+    expect(drawn).toEqual(expect.arrayContaining(['75\u00a0%', '25\u00a0%', 'Part 1 75\u00a0%', 'Part 2 25\u00a0%']));
+  });
+
+  it('measures the formatted text: the legend wraps and a slice too narrow for it carries none', () => {
+    const wide = { formatPercent: (share: number) => `${share * 100} percent of the whole` };
+    expect(computeStackedBarHeight(makeDoc(), slices(1, 1, 1, 1, 1, 1), wide)).toBeGreaterThan(
+      computeStackedBarHeight(makeDoc(), slices(1, 1, 1, 1, 1, 1)),
+    );
+    const doc = makeDoc();
+    const texts = recordTexts(doc);
+    doc.stackedBar(slices(1, 1), { ...wide, width: 40, legend: false });
+    // Each slice is 20 mm, wider than the default minimum of 12 but narrower than the text.
+    expect(texts).toHaveLength(0);
+  });
+
   it('writes no percentage on request', () => {
     const doc = makeDoc();
     const texts = recordTexts(doc);
@@ -985,6 +1042,24 @@ describe('stackedBar', () => {
     const texts = recordTexts(doc);
     doc.stackedBar([{ label: 'A', value: 3 }, ...slices(NaN, Infinity, -4, 0)]);
     expect(drawnTexts(texts)).toEqual(['100%', 'A 100%']);
+  });
+});
+
+describe.each([
+  ['donutChart', (ctx: PDFDocument, formatPercent: unknown) => ctx.donutChart(SLICES, { formatPercent } as never)],
+  ['stackedBar', (ctx: PDFDocument, formatPercent: unknown) => ctx.stackedBar(SLICES, { formatPercent } as never)],
+])('%s formatPercent', (name, draw) => {
+  it.each([
+    ['returns a number', () => 1, `Invalid value returned by ${name} formatPercent: 1 — must be a string`],
+    ['returns nothing', () => undefined, /formatPercent: undefined — must be a string/],
+  ])('throws for a function that %s, before drawing', (_, formatPercent, message) => {
+    const doc = makeDoc();
+    const rect = vi.spyOn(doc.doc, 'rect');
+    const start = doc.getYPos();
+    expect(() => draw(doc, formatPercent)).toThrow(InvalidOptionError);
+    expect(() => draw(doc, formatPercent)).toThrow(message);
+    expect(rect).not.toHaveBeenCalled();
+    expect(doc.getYPos()).toBe(start);
   });
 });
 
