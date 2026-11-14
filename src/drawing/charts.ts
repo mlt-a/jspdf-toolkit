@@ -14,7 +14,6 @@ import {
   optionalNumber,
   optionalText,
 } from '../core/errors';
-import type { NumberBounds } from '../core/errors';
 import { readableOn, resolveColor, resolveOptionalColor } from '../theme/colors';
 import type { ColorInput } from '../theme/types';
 import type { ChartLayout, LabelFitter, LegendEntry, Point, Swatch } from './chart-parts';
@@ -483,8 +482,8 @@ export interface ColumnChartOptions {
    */
   series?: ChartSeries[];
   /**
-   * Top of the scale, above 0. The scale reaches `max` as long as no column and not the reference is higher: it then
-   * extends to show them. Default: the tallest column, or the reference when it is higher.
+   * Top of the scale, 0 or more. The scale reaches `max` as long as no column and not the reference is higher: it then
+   * extends to show them. Default: the tallest column, or the reference when it is higher; `0` is the same as no `max`.
    */
   max?: number;
   /**
@@ -493,7 +492,10 @@ export interface ColumnChartOptions {
    * of the chart is cut with an ellipsis.
    */
   reference?: {
-    /** Where the line stands on the scale, above 0. A value above every column raises the scale to it. */
+    /**
+     * Where the line stands on the scale, 0 or more: `0` is the baseline, where the dashed line is drawn over the axis.
+     * A value above every column raises the scale to it.
+     */
     value: number;
     /** Text right of the plot, at the height of the line. */
     label: string;
@@ -522,7 +524,7 @@ function checkColumnChart(method: string, columns: ChartColumn[], options?: Colu
   const reference = options?.reference;
   if (reference !== undefined) {
     checkedObject(`${method} reference`, reference);
-    checkedNumber(`${method} reference value`, reference.value, POSITIVE);
+    checkedNumber(`${method} reference value`, reference.value, { min: 0 });
     checkedText(`${method} reference label`, reference.label);
   }
   const series = checkedObjects(`${method} series`, options?.series === undefined ? [] : options.series, (entry) =>
@@ -540,7 +542,7 @@ function checkColumnChart(method: string, columns: ChartColumn[], options?: Colu
   });
   return {
     scaleHeight: optionalNumber(`${method} height`, options?.height, POSITIVE) ?? CHART.column.height,
-    scaleMax: options?.max === undefined ? 0 : checkedNumber(`${method} max`, options.max, POSITIVE),
+    scaleMax: options?.max === undefined ? 0 : checkedNumber(`${method} max`, options.max, { min: 0 }),
     reference,
     series,
     emptyText: optionalText(`${method} emptyText`, options?.emptyText),
@@ -768,8 +770,8 @@ export function computeColumnChartHeight(ctx: DrawingContext, columns: ChartColu
 /** One line of `lineChart`. */
 export interface ChartLine extends ChartSeries {
   /**
-   * One value per point of `xs`, each a finite number of 0 or more, else an `InvalidOptionError`, where
-   * `ChartColumn.values` leaves such a value out.
+   * One value per point of `xs`, each a finite number, negative or not, else an `InvalidOptionError`, where
+   * `ChartColumn.values` leaves a value that is not above 0 out.
    */
   values: number[];
   /** Stroke width (mm), above 0. Default: 0.5. */
@@ -806,14 +808,19 @@ export interface LineChartData {
 }
 
 /**
- * Options of `lineChart`: lines over a common X axis, on a scale from 0 to a round maximum, with a grid, axis labels
- * and a legend. With fewer than two points or no value above 0, the chart draws `emptyText`, or nothing. Invalid data
+ * Options of `lineChart`: lines over a common X axis, with a grid, axis labels and a legend. The Y scale always
+ * includes 0. With no value below 0 it runs from 0 to a round maximum; with one, it runs from a round minimum to a
+ * round maximum on grid lines a round step apart, and the axis line is drawn at 0. With fewer than two points or
+ * every value at 0, the chart draws `emptyText`, or nothing. Invalid data
  * or options throw an `InvalidOptionError` before anything is drawn, even when there is nothing to draw. A plot
  * narrower than 10 mm (a small `width`, wide Y labels) is not drawn: the chart takes no room and
  * adds a warning.
  */
 export interface LineChartOptions {
-  /** Colors the area under the emphasized line (or the first one) between two X values, e.g. a target period. */
+  /**
+   * Colors the area between the emphasized line (or the first one) and the zero line, between two X values, e.g. a
+   * target period. Under a scale that goes below 0, the area follows the line on both sides of the zero line.
+   */
   highlight?: {
     /** X value where the area starts. */
     from: number;
@@ -845,11 +852,14 @@ export interface LineChartOptions {
    * warning. Default: the available width.
    */
   width?: number;
-  /** Horizontal grid lines above the axis, a whole number of 1 or more. Default: 4. */
+  /**
+   * Horizontal grid lines above the axis, a whole number of 1 or more. Default: 4. A scale that goes below 0 has grid
+   * lines at the multiples of a round step that fit this number, so it may have one more.
+   */
   yTicks?: number;
   /** Most labels under the X axis, a whole number of 2 or more. Default: 6. */
   xTicks?: number;
-  /** Line drawn when there are fewer than two points or no value above 0. Default: none, the chart draws nothing. */
+  /** Line drawn when there are fewer than two points or every value is 0. Default: none, the chart draws nothing. */
   emptyText?: string;
   /** Space (mm) under the chart. Default: `theme.spacing.block`. */
   spaceAfter?: number;
@@ -857,9 +867,6 @@ export interface LineChartOptions {
 
 /** Most decimals `Number.prototype.toFixed` takes. */
 const MAX_DECIMALS = 100;
-
-/** Bounds of a plotted value: the scale starts at 0. */
-const PLOTTED: NumberBounds = { min: 0 };
 
 /** The next round number at or above `value` (1, 2, 2.5, 5 or 10 times a power of ten): a readable top of scale. */
 export function niceCeil(value: number): number {
@@ -876,13 +883,13 @@ function tickDecimals(step: number): number {
   return Math.min(MAX_DECIMALS, Math.max(0, CHART.line.labelDigits - 1 - Math.floor(Math.log10(step))));
 }
 
-/** Throws on a series that cannot be plotted, before anything is drawn: a wrong length, or a value out of `bounds`. */
-function checkSeries(what: string, values: readonly number[], points: number, bounds: NumberBounds): void {
+/** Throws on a series that cannot be plotted, before anything is drawn: a wrong length, or a value not finite. */
+function checkSeries(what: string, values: readonly number[], points: number): void {
   checkedArray(what, values);
   if (values.length !== points) {
     throw new InvalidOptionError(`Invalid ${what}: ${values.length} values for ${points} points of xs`);
   }
-  for (let index = 0; index < points; index++) checkedNumber(() => `${what} at index ${index}`, values[index], bounds);
+  for (let index = 0; index < points; index++) checkedNumber(() => `${what} at index ${index}`, values[index]);
 }
 
 function checkLineData(method: string, data: LineChartData): void {
@@ -898,7 +905,7 @@ function checkLineData(method: string, data: LineChartData): void {
   }
   checkedObjects(`${method} lines`, lines, (line) => {
     const name = `${method} line "${checkedText(`${method} line label`, line.label)}"`;
-    checkSeries(`${name} values`, line.values, points, PLOTTED);
+    checkSeries(`${name} values`, line.values, points);
     if (line.lineWidth !== undefined) checkedNumber(`${name} lineWidth`, line.lineWidth, POSITIVE);
     optionalBoolean(`${name} emphasis`, line.emphasis);
     if (line.dash !== undefined) checkDash(`${name} dash`, line.dash);
@@ -906,13 +913,10 @@ function checkLineData(method: string, data: LineChartData): void {
   if (band !== undefined) {
     checkedObject(`${method} band`, band);
     checkedText(`${method} band label`, band.label);
-    checkSeries(`${method} band.lower`, band.lower, points, PLOTTED);
-    checkSeries(`${method} band.upper`, band.upper, points, PLOTTED);
+    checkSeries(`${method} band.lower`, band.lower, points);
+    checkSeries(`${method} band.upper`, band.upper, points);
     for (let index = 0; index < points; index++) {
-      checkedNumber(() => `${method} band.lower at index ${index}`, band.lower[index], {
-        ...PLOTTED,
-        max: band.upper[index],
-      });
+      checkedNumber(() => `${method} band.lower at index ${index}`, band.lower[index], { max: band.upper[index] });
     }
   }
 }
@@ -957,13 +961,46 @@ function checkLineOptions(ctx: DrawingContext, method: string, options?: LineCha
   };
 }
 
-/** The highest value of the data, 0 when there is none. */
-function dataMax({ lines, band }: LineChartData): number {
-  let max = 0;
-  for (const series of [...lines.map((line) => line.values), band?.upper ?? []]) {
-    for (const value of series) if (value > max) max = value;
+/** The lowest and the highest value of the data, each at most 0 and at least 0: the scale always shows the zero line. */
+function dataRange({ lines, band }: LineChartData): { low: number; high: number } {
+  let low = 0;
+  let high = 0;
+  for (const series of [...lines.map((line) => line.values), band?.lower ?? [], band?.upper ?? []]) {
+    for (const value of series) {
+      if (value > high) high = value;
+      if (value < low) low = value;
+    }
   }
-  return max;
+  return { low, high };
+}
+
+/** The Y scale of a line chart: its two ends, the grid values from the bottom up, and the gap between two. */
+interface YScale {
+  min: number;
+  max: number;
+  grid: number[];
+  step: number;
+}
+
+/** `value` without the noise of floating point (`0.1 * 3`), to 12 significant digits. */
+const tidy = (value: number): number => Number(value.toPrecision(12));
+
+/**
+ * The scale of data between `low` (0 or less) and `high` (0 or more), not both 0. With nothing below 0 it runs from 0
+ * to `niceCeil(high)` in `yTicks` equal steps. Otherwise the step is the next round number at or above the range
+ * over `yTicks`, and the ends are the multiples of it that enclose the data: at most `yTicks + 1` steps, 0 on the grid.
+ */
+function yScale(low: number, high: number, yTicks: number): YScale {
+  if (low === 0) {
+    const max = niceCeil(high);
+    const step = max / yTicks;
+    return { min: 0, max, grid: Array.from({ length: yTicks + 1 }, (_, tick) => step * tick), step };
+  }
+  const step = niceCeil((high - low) / yTicks);
+  const first = Math.floor(tidy(low / step));
+  const last = Math.ceil(tidy(high / step));
+  const grid = Array.from({ length: last - first + 1 }, (_, tick) => tidy((first + tick) * step));
+  return { min: grid[0], max: grid[grid.length - 1], grid, step };
 }
 
 const lineStroke = (line: ChartLine, color: string): Stroke => ({
@@ -1007,7 +1044,7 @@ function lineLegendEntries(
 
 /** The axis texts of a line chart, measured, and the horizontal frame of its plot. */
 interface LineAxes {
-  /** Grid values from 0 to the top of the scale, with their labels. */
+  /** Grid values from the bottom of the scale to its top, with their labels. */
   yLabels: { value: number; text: string }[];
   /** The X labels kept, with their left edge. */
   xLabels: { text: string; x: number }[];
@@ -1024,19 +1061,16 @@ interface LineAxes {
 function layoutLineAxes(
   ctx: DrawingContext,
   xs: readonly number[],
-  frame: { left: number; right: number; yMax: number; yTicks: number; xTicks: number },
+  frame: { left: number; right: number; grid: readonly number[]; xTicks: number },
   format: { value: (value: number) => string; x: (x: number) => string },
 ): LineAxes {
-  const { left, right, yMax, yTicks, xTicks } = frame;
+  const { left, right, grid, xTicks } = frame;
   const { doc } = ctx;
   const formatValue = (value: number) => checkedText('value returned by lineChart formatValue', format.value(value));
   const formatX = (x: number) => checkedText('value returned by lineChart formatX', format.x(x));
   return withDrawingState(ctx, () => {
     setTextStyle(ctx, AXIS_LEVEL);
-    const yLabels = Array.from({ length: yTicks + 1 }, (_, tick) => {
-      const value = (yMax / yTicks) * tick;
-      return { value, text: formatValue(value) };
-    });
+    const yLabels = grid.map((value) => ({ value, text: formatValue(value) }));
     const yTexts = yLabels.map((label) => label.text);
     const plotLeft = left + widestText(ctx, yTexts) + CHART.line.axisGap;
     const plotWidth = right - plotLeft;
@@ -1073,20 +1107,22 @@ interface Plot {
   x: (x: number) => number;
   /** Position (mm) of a Y value. */
   y: (value: number) => number;
+  /** Color of the axis at 0: the border color, a darker one when it is not the bottom of the plot. */
+  axisColor: string;
 }
 
 const curve = (plot: Plot, xs: readonly number[], values: readonly number[]): Point[] =>
   values.map((value, index) => [plot.x(xs[index]), plot.y(value)]);
 
-/** The grid lines above the axis, faint, and the Y labels. */
+/** The grid lines, faint, and the Y labels. The line at 0 is the axis, drawn over the lines. */
 function paintGrid(ctx: DrawingContext, plot: Plot, axes: LineAxes, axis: TextLevelMetrics): void {
   const { doc } = ctx;
   doc.setDrawColor(ctx.theme.colors.border);
   doc.setLineWidth(LINE_WIDTH.thin);
   withOpacity(doc, CHART.line.gridOpacity, () => {
-    // The first value is the axis itself, drawn over the lines.
-    for (let tick = 1; tick < axes.yLabels.length; tick++) {
-      const y = plot.y(axes.yLabels[tick].value);
+    for (const { value } of axes.yLabels) {
+      if (value === 0) continue;
+      const y = plot.y(value);
       doc.line(plot.left, y, plot.right, y);
     }
   });
@@ -1113,7 +1149,7 @@ function paintArea(ctx: DrawingContext, color: string, outline: readonly Point[]
   });
 }
 
-/** The axis, over the lines, then the X labels and the X title under it. */
+/** The axis at 0, over the lines, then the X labels and the X title under the plot. */
 function paintXAxis(
   ctx: DrawingContext,
   plot: Plot,
@@ -1122,9 +1158,10 @@ function paintXAxis(
   title: string | undefined,
 ): void {
   const { doc } = ctx;
-  doc.setDrawColor(ctx.theme.colors.border);
+  doc.setDrawColor(plot.axisColor);
   doc.setLineWidth(LINE_WIDTH.thin);
-  doc.line(plot.left, plot.bottom, plot.right, plot.bottom);
+  const zero = plot.y(0);
+  doc.line(plot.left, zero, plot.right, zero);
   setTextStyle(ctx, AXIS_LEVEL);
   const baseline = plot.bottom + CHART.captionGap + axis.ascent;
   for (const label of axes.xLabels) drawText(ctx, label.text, label.x, baseline);
@@ -1156,8 +1193,9 @@ function valueAt(xs: readonly number[], values: readonly number[], x: number): n
 }
 
 /**
- * Outline of the area under the line through (`xs`, `values`) between `from` and `to`, two X values within the range of
- * `xs`: interpolated at both ends so the edges stand exactly at those values, the points of the line in between.
+ * Outline of the area between the line through (`xs`, `values`) and the zero line, between `from` and `to`, two X values
+ * within the range of `xs`: interpolated at both ends so the edges stand exactly at those values, the points of the line
+ * in between.
  */
 function highlightOutline(
   plot: Plot,
@@ -1167,13 +1205,13 @@ function highlightOutline(
   to: number,
 ): Point[] {
   const outline: Point[] = [
-    [plot.x(from), plot.bottom],
+    [plot.x(from), plot.y(0)],
     [plot.x(from), plot.y(valueAt(xs, values, from))],
   ];
   let index = firstAtLeast(xs, from);
   while (index < xs.length && xs[index] <= from) index++;
   for (; index < xs.length && xs[index] < to; index++) outline.push([plot.x(xs[index]), plot.y(values[index])]);
-  outline.push([plot.x(to), plot.y(valueAt(xs, values, to))], [plot.x(to), plot.bottom]);
+  outline.push([plot.x(to), plot.y(valueAt(xs, values, to))], [plot.x(to), plot.y(0)]);
   return outline;
 }
 
@@ -1201,22 +1239,22 @@ function layoutLineChart(
   const highlightColor = resolveOptionalColor(ctx.theme, highlight?.color, 'primary');
 
   const points = xs.length;
-  const highest = dataMax(data);
-  if (points < 2 || highest === 0) return emptyChart(ctx, settings.emptyText);
+  const { low, high } = dataRange(data);
+  if (points < 2 || (low === 0 && high === 0)) return emptyChart(ctx, settings.emptyText);
 
   const { plotHeight, yTicks, xTitle, yTitle } = settings;
   const width = frameWidth(ctx, `${method} width`, settings.width);
   const drawnBand = band?.upper.some((upper, index) => upper > band.lower[index]) ? band : undefined;
   const strokes = lines.map((line, index) => lineStroke(line, lineColors[index]));
-  const yMax = niceCeil(highest);
+  const scale = yScale(low, high, yTicks);
   // Rounded to what the scale needs: two fixed decimals would print the grid values 0.025 and 0.075 as 0.03 and 0.08.
-  const decimals = tickDecimals(yMax / yTicks);
+  const decimals = tickDecimals(scale.step);
   const left = ctx.margins.left;
   const right = left + width;
   const axes = layoutLineAxes(
     ctx,
     xs,
-    { left, right, yMax, yTicks, xTicks: settings.xTicks },
+    { left, right, grid: scale.grid, xTicks: settings.xTicks },
     {
       value: options?.formatValue ?? ((value: number) => String(Number(value.toFixed(decimals)))),
       x: options?.formatX ?? String,
@@ -1262,7 +1300,8 @@ function layoutLineChart(
         right,
         bottom,
         x: axes.plotX,
-        y: (value) => bottom - (value / yMax) * plotHeight,
+        y: (value) => bottom - ((value - scale.min) / (scale.max - scale.min)) * plotHeight,
+        axisColor: scale.min < 0 ? ctx.theme.colors.subtle : ctx.theme.colors.border,
       };
 
       if (yTitle) {

@@ -707,19 +707,22 @@ color?, legendValue? }`; the legend shows its percentage, or `legendValue` (`'$1
   at most. Options: `series` (`{ label, color? }[]`, names the legend), `max` (the top of the scale as long as no column
   and not the reference is higher: the scale then extends to show them), `reference` (`{ value, label }`, a dashed line
   across the plot, its label in a room of its own on the right that no column runs under), `legend`, `height` (42),
-  `emptyText`, `spaceAfter`. With `series` given, a column with more values than named series throws.
-- `lineChart(data, options?)`: lines over a shared X axis, from zero to a round maximum. `data` is
+  `emptyText`, `spaceAfter`. With `series` given, a column with more values than named series throws. A `max` of 0 is
+  no `max`; a `reference` at 0 is drawn on the axis; a negative `max` or `reference` value throws.
+- `lineChart(data, options?)`: lines over a shared X axis, on a scale that always includes zero: from zero to a round
+  maximum, or, when a value is below zero, from a round minimum to a round maximum on grid lines a round step apart,
+  with the axis drawn at zero. `data` is
   `{ xs, lines, band? }`: `xs` increases, a line is `{ label, values, color?, lineWidth?, dash?, emphasis? }` with one
   value per point of `xs`, `band` is `{ label, lower, upper, color? }`, each `lower` value at most the `upper` one. Each
   `xs` value is equal to or greater than the one before it. Options: `highlight` (`{ from, to, color?, label? }`, the
-  area under the emphasized line). Lines left without a color take the shades of the primary color, whether or not
+  area between the emphasized line and the zero line). Lines left without a color take the shades of the primary color, whether or not
   there is a band or a highlight; a band without a color is `'secondary'`, a highlight `'primary'`, both translucent,
   so their legend swatches differ. Other options: `xTitle`, `yTitle`, `formatValue`, `formatX`, `height`
   (62), `width`, `yTicks` (4), `xTicks` (6), `emptyText`, `spaceAfter`. A plot narrower than 10 mm (a small `width`,
   wide Y labels) is not drawn: the chart takes no room and adds a `Failed to draw lineChart: …` warning.
-- A value of zero or less, or that is not a finite number, leaves a slice or a layer out. A line or band value must be a
-  finite number of 0 or more. A chart with no value above 0 draws nothing, and leaves the position as it was;
-  `emptyText` draws that muted line instead.
+- A value of zero or less, or that is not a finite number, leaves a slice or a layer out. A line or band value may be
+  negative but must be a finite number. A column chart with no value above 0, or a line chart with every value at 0,
+  draws nothing, and leaves the position as it was; `emptyText` draws that muted line instead.
 - A `width` or `diameter` wider than the available width (the content width, or the column's in `columns`) is brought
   down to it, with a warning; a `diameter` within it that leaves the legend no room is brought down to what is left,
   with a warning of its own. A label cut short ends with an ellipsis; a label left with no room at all is left out,

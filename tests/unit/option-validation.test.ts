@@ -812,6 +812,34 @@ const STRUCTURE_DATA: Case[] = [
   ...option('computeColumnChartHeight reference', [null], (d, v) =>
     computeColumnChartHeight(d, [CHART_COLUMN], { reference: v as never }),
   ),
+  // 0 is a value: a negative or a number that is not finite is not.
+  ...option(
+    'columnChart max',
+    [-1, ...NOT_FINITE],
+    (d, v) => d.columnChart([CHART_COLUMN], { max: v }),
+    (d, v) => d.columnChart([], { max: v }),
+  ),
+  ...option(
+    'columnChart reference value',
+    [-1, ...NOT_FINITE],
+    (d, v) => d.columnChart([CHART_COLUMN], { reference: { value: v, label: 'Target' } }),
+    (d, v) => d.columnChart([], { reference: { value: v, label: 'Target' } }),
+  ),
+  ...option(
+    'lineChart line value',
+    NOT_FINITE,
+    (d, v) => d.lineChart({ xs: [1, 2], lines: [{ label: 'A', values: [-1, v] }] }),
+    (d, v) => d.lineChart({ xs: [1], lines: [{ label: 'A', values: [v] }] }),
+  ),
+  ...option(
+    'lineChart band bound',
+    NOT_FINITE,
+    (d, v) => d.lineChart({ xs: [1, 2], lines: [], band: { label: 'B', lower: [-2, -1], upper: [1, v] } }),
+    (d, v) => d.lineChart({ xs: [1], lines: [], band: { label: 'B', lower: [-2], upper: [v] } }),
+  ),
+  ...option('lineChart band lower above upper', [-3, 2], (d, v) =>
+    d.lineChart({ xs: [1, 2], lines: [], band: { label: 'B', lower: [-4, v], upper: [-3, -4] } }),
+  ),
   ...option('lineChart data', NOT_OBJECT, (d, v) => d.lineChart(v as never)),
   ...listOf('lineChart lines', (d, lines) => d.lineChart({ ...LINE_DATA, lines: lines as never }), LINE_DATA.lines[0], [
     'label',

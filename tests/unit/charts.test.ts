@@ -1157,6 +1157,43 @@ describe('columnChart', () => {
     expect(tall[3]).toBeCloseTo(20, 6);
   });
 
+  it('takes a max of 0 for no max: the scale follows the tallest column', () => {
+    const columns = [{ label: 'A', values: [50] }];
+    const plain = fills(columns, { height: 40 });
+    expect(fills(columns, { height: 40, max: 0 })).toEqual(plain);
+    expect(plain[0][3]).toBeCloseTo(40, 6);
+    // Under the reference, too: the scale reaches it.
+    const [column] = fills(columns, { height: 40, max: 0, reference: { value: 100, label: 'Target' } });
+    expect(column[3]).toBeCloseTo(20, 6);
+  });
+
+  it('draws a reference of 0 on the axis, with its label, and leaves the scale to the columns', () => {
+    const doc = makeDoc();
+    const texts = recordTexts(doc);
+    const dash = vi.spyOn(doc.doc, 'setLineDashPattern');
+    const line = vi.spyOn(doc.doc, 'line');
+    const rect = vi.spyOn(doc.doc, 'rect');
+    const start = doc.getYPos();
+    doc.columnChart([{ label: 'A', values: [50] }], { height: 40, reference: { value: 0, label: 'Break-even' } });
+    expect(dash).toHaveBeenCalledWith(CHART.column.referenceDash, 0);
+    const [base, reference] = line.mock.calls as number[][];
+    expect(reference[1]).toBeCloseTo(base[1], 6);
+    expect(base[1] - start).toBeCloseTo(40, 6);
+    expect(reference[2]).toBeCloseTo(base[2], 6);
+    const [column] = rect.mock.calls.filter((call) => call[4] === 'F') as number[][];
+    expect(column[3]).toBeCloseTo(40, 6);
+    const label = textOf(texts, 'Break-even');
+    expect(label.y).toBeCloseTo(reference[1] + capitalMiddle(measureTextLevel(doc, 'caption')), 6);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('draws nothing for a reference of 0 and no value above 0, like any other reference', () => {
+    const doc = makeDoc();
+    const start = doc.getYPos();
+    doc.columnChart([{ label: 'A', values: [0] }], { max: 0, reference: { value: 0, label: 'T' } });
+    expect(doc.getYPos()).toBe(start);
+  });
+
   it('raises the scale to the reference when it is above every column', () => {
     const [column] = fills([{ label: 'A', values: [50] }], {
       height: 40,
@@ -1351,8 +1388,8 @@ describe('columnChart', () => {
     ['a height of 0', { height: 0 }, /height/],
     ['a negative height', { height: -3 }, /height/],
     ['a max that is NaN', { max: Number.NaN }, /max/],
-    ['a max of 0', { max: 0 }, /max/],
-    ['a reference of 0', { reference: { value: 0, label: 'T' } }, /reference value/],
+    ['a negative max', { max: -1 }, /max/],
+    ['a negative reference', { reference: { value: -1, label: 'T' } }, /reference value/],
     ['a reference that is NaN', { reference: { value: Number.NaN, label: 'T' } }, /reference value/],
     ['a reference label that is not a string', { reference: { value: 5, label: 5 as never } }, /reference label/],
   ])('throws for %s, before drawing', (_, options, message) => {
@@ -1504,7 +1541,7 @@ describe('lineChart', () => {
     const crossed = { label: 'Range', lower: [100, 104, 140, 112, 116], upper: [100, 116, 134, 154, 176] };
     expect(() => doc.lineChart({ xs: XS, lines: [LINE], band: crossed })).toThrow(InvalidOptionError);
     expect(() => doc.lineChart({ xs: XS, lines: [LINE], band: crossed })).toThrow(
-      'Invalid lineChart band.lower at index 2: 140 — must be a finite number, at least 0 and at most 134',
+      'Invalid lineChart band.lower at index 2: 140 — must be a finite number, at most 134',
     );
     expect(line).not.toHaveBeenCalled();
     expect(doc.getYPos()).toBe(start);
@@ -1825,6 +1862,201 @@ describe('lineChart', () => {
   });
 });
 
+const SIGNED = { xs: [1, 2, 3], lines: [{ label: 'Gain', values: [-30, 20, 80] }] };
+
+/** The Y (mm, from the top of the chart) of what a signed chart draws: the grid, the axis, the points. */
+const drawSigned = (data: LineChartData, options: LineChartOptions = {}) => {
+  const doc = makeDoc();
+  const texts = recordTexts(doc);
+  const line = vi.spyOn(doc.doc, 'line');
+  const moveTo = vi.spyOn(doc.doc, 'moveTo');
+  const lineTo = vi.spyOn(doc.doc, 'lineTo');
+  const start = doc.getYPos();
+  doc.lineChart(data, { height: 60, spaceAfter: 0, ...options });
+  const right = doc.margins.left + doc.contentWidth;
+  const spanning = (line.mock.calls as number[][]).filter((call) => Math.abs(call[2] - right) < 1e-6);
+  return {
+    doc,
+    start,
+    drawn: drawnTexts(texts),
+    texts,
+    /** Y of the grid lines then the axis, the order they are drawn in. */
+    rules: spanning.map((call) => call[1] - start),
+    moves: (moveTo.mock.calls as number[][]).map(([x, y]) => [x, y - start]),
+    lines: (lineTo.mock.calls as number[][]).map(([x, y]) => [x, y - start]),
+  };
+};
+
+const signedAxisColor = (data: LineChartData) => {
+  const doc = makeDoc();
+  let color = '';
+  vi.spyOn(doc.doc, 'setDrawColor').mockImplementation(function (this: unknown, value: unknown) {
+    color = String(value);
+    return doc.doc;
+  });
+  const colors: string[] = [];
+  vi.spyOn(doc.doc, 'line').mockImplementation(function (this: unknown) {
+    colors.push(color);
+    return doc.doc;
+  });
+  doc.lineChart(data);
+  // The axis is the last full-width line before the legend sample.
+  return { doc, axis: colors[colors.length - 2] };
+};
+
+describe('lineChart with values below zero', () => {
+  it('extends the scale below zero to round multiples of a round step, zero on the grid', () => {
+    // 110 over 4 is 27.5: the step is 50, and the ends are -50 and 100.
+    const { drawn } = drawSigned(SIGNED);
+    expect(drawn).toEqual(expect.arrayContaining(['-50', '0', '50', '100']));
+    expect(drawn).not.toContain('150');
+    expect(drawn).not.toContain('-100');
+    expect(yLabelsOf([-3, -1, -2])).toEqual(expect.arrayContaining(['-3', '-2', '-1', '0']));
+    expect(yLabelsOf([-0.03, 0.02, 0.06])).toEqual(
+      expect.arrayContaining(['-0.05', '-0.025', '0', '0.025', '0.05', '0.075']),
+    );
+  });
+
+  it('has at most one grid interval more than yTicks', () => {
+    for (const yTicks of [1, 2, 3, 4, 7]) {
+      const { rules } = drawSigned(SIGNED, { yTicks });
+      // The grid lines other than zero, and the axis at zero.
+      expect(rules.length).toBeLessThanOrEqual(yTicks + 2);
+    }
+  });
+
+  it('draws the axis at zero, solid, apart from the faint grid, and puts the points at their value', () => {
+    const { rules, moves, lines, doc } = drawSigned(SIGNED);
+    // The grid at -50, 50 and 100, then the axis at 0: the plot runs 60 mm over 150.
+    expect(rules).toHaveLength(4);
+    expect(rules[0]).toBeCloseTo(60, 6);
+    expect(rules[1]).toBeCloseTo(20, 6);
+    expect(rules[2]).toBeCloseTo(0, 6);
+    expect(rules[3]).toBeCloseTo(40, 6);
+    expect(moves[0][1]).toBeCloseTo(60 - (20 / 150) * 60, 6);
+    expect(lines.map(([, y]) => y)).toEqual([
+      expect.closeTo(60 - (70 / 150) * 60, 6),
+      expect.closeTo(60 - (130 / 150) * 60, 6),
+    ]);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('draws the axis at zero in a darker color than the border when the scale goes below zero', () => {
+    const signed = signedAxisColor(SIGNED);
+    expect(signed.axis).toBe(signed.doc.theme.colors.subtle);
+    const positive = signedAxisColor({ xs: XS, lines: [LINE] });
+    expect(positive.axis).toBe(positive.doc.theme.colors.border);
+  });
+
+  it('labels the X axis under the bottom of the plot, not at zero', () => {
+    const { texts, start } = drawSigned(SIGNED);
+    // The plot is 60 mm high: the labels sit under its bottom, which is below the axis at zero (40 mm).
+    expect(textOf(texts, '1').y).toBeGreaterThan(start + 60);
+  });
+
+  it('gives formatValue the negative values as they are', () => {
+    const seen: number[] = [];
+    const { drawn } = drawSigned(SIGNED, { formatValue: (value) => (seen.push(value), `${value} €`) });
+    expect(seen).toEqual(expect.arrayContaining([-50, 0, 50, 100]));
+    expect(drawn).toEqual(expect.arrayContaining(['-50 €', '0 €']));
+  });
+
+  it('takes the lower edge of a band into account for the scale, and keeps it inside the plot', () => {
+    const data = {
+      xs: [1, 2, 3],
+      lines: [{ label: 'Gain', values: [0, 10, 20] }],
+      band: { label: 'Range', lower: [-120, -20, 0], upper: [10, 30, 40] },
+    };
+    const { drawn, moves, lines } = drawSigned(data);
+    expect(drawn).toEqual(expect.arrayContaining(['-150', '-100', '-50', '0', '50']));
+    for (const [, y] of [...moves, ...lines]) {
+      expect(y).toBeGreaterThanOrEqual(-1e-6);
+      expect(y).toBeLessThanOrEqual(60 + 1e-6);
+    }
+    expect(drawn).toContain('Range');
+  });
+
+  it('accepts a band below zero, and one that straddles it', () => {
+    const doc = makeDoc();
+    expect(() =>
+      doc.lineChart({ xs: [1, 2], lines: [], band: { label: 'Below', lower: [-8, -6], upper: [-4, -1] } }),
+    ).not.toThrow();
+    expect(() =>
+      doc.lineChart({ xs: [1, 2], lines: [], band: { label: 'Across', lower: [-8, -6], upper: [4, 1] } }),
+    ).not.toThrow();
+  });
+
+  it('fills a highlight up to the zero line, on both sides of it', () => {
+    const { moves, lines } = drawSigned(SIGNED, { highlight: { from: 1, to: 3 } });
+    // The first path is the area: from the zero line up to the line, along it, and back down to the zero line.
+    const zero = 40;
+    expect(moves[0][1]).toBeCloseTo(zero, 6);
+    expect(lines[0][1]).toBeCloseTo(60 - (20 / 150) * 60, 6);
+    expect(lines[2][1]).toBeCloseTo(60 - (130 / 150) * 60, 6);
+    expect(lines[3][1]).toBeCloseTo(zero, 6);
+    // The ends stand at the X values asked for.
+    expect(lines[3][0]).toBeCloseTo(lines[2][0], 6);
+    expect(moves[0][0]).toBeCloseTo(lines[0][0], 6);
+  });
+
+  it('keeps the highlight on the zero line when the scale starts at 0', () => {
+    const { moves, lines, rules } = drawSigned(
+      { xs: [1, 2], lines: [{ label: 'L', values: [4, 8] }] },
+      { highlight: { from: 1, to: 2 } },
+    );
+    const axis = rules[rules.length - 1];
+    expect(axis).toBeCloseTo(60, 6);
+    expect(moves[0][1]).toBeCloseTo(60, 6);
+    expect(lines[2][1]).toBeCloseTo(60, 6);
+  });
+
+  it('plots a chart of negative values under the zero line, which is the top of the scale', () => {
+    const { rules, moves, lines, drawn } = drawSigned({
+      xs: [1, 2, 3],
+      lines: [{ label: 'Loss', values: [-3, -1, -2] }],
+    });
+    expect(drawn).toEqual(expect.arrayContaining(['-3', '-2', '-1', '0']));
+    // The axis at zero is the top of the plot, the lowest value its bottom.
+    expect(rules[rules.length - 1]).toBeCloseTo(0, 6);
+    expect(moves[0][1]).toBeCloseTo(60, 6);
+    expect(lines[0][1]).toBeCloseTo(20, 6);
+  });
+
+  it('draws a single negative point among zeros, and a zero line of nothing but zeros as empty', () => {
+    const { drawn } = drawSigned({ xs: [1, 2, 3], lines: [{ label: 'Dip', values: [0, -4, 0] }] });
+    expect(drawn).toContain('Dip');
+    const doc = makeDoc();
+    const start = doc.getYPos();
+    doc.lineChart({ xs: [1, 2, 3], lines: [{ label: 'Flat', values: [0, -0, 0] }] });
+    expect(doc.getYPos()).toBe(start);
+  });
+
+  it('measures the height it reserves, whether the scale goes below zero or not', () => {
+    const doc = makeDoc();
+    const ensure = vi.spyOn(doc, 'ensureSpace');
+    const start = doc.getYPos();
+    doc.lineChart(SIGNED);
+    expect(doc.getYPos() - start).toBeCloseTo(ensure.mock.calls[0][0], 6);
+    expect(computeLineChartHeight(makeDoc(), SIGNED)).toBeCloseTo(
+      computeLineChartHeight(makeDoc(), { ...SIGNED, lines: [{ label: 'Gain', values: [30, 20, 80] }] }),
+      6,
+    );
+  });
+
+  it('leaves the scale of values at 0 or above exactly as it was: from 0 to a round maximum', () => {
+    const { rules, drawn, moves } = drawSigned({ xs: XS, lines: [LINE] });
+    // 4 grid lines evenly spaced above the axis, then the axis at the bottom of the plot.
+    expect(rules).toEqual([45, 30, 15, 0, 60].map((value) => expect.closeTo(value, 6)));
+    expect(drawn).toEqual(expect.arrayContaining(['0', '50', '100', '150', '200']));
+    expect(drawn).not.toContain('-50');
+    expect(moves[0][1]).toBeCloseTo(60 - (100 / 200) * 60, 6);
+  });
+
+  it('keeps the grid values of a positive fine scale exactly', () => {
+    expect(yLabelsOf([0.02, 0.05, 0.08])).toEqual(expect.arrayContaining(['0', '0.025', '0.05', '0.075', '0.1']));
+  });
+});
+
 describe('a width wider than the frame', () => {
   it.each([
     ['stackedBar width', (ctx: PDFDocument) => ctx.stackedBar(SLICES, { width: 500 })],
@@ -2086,11 +2318,10 @@ describe('what the charts check before drawing', () => {
   });
 
   it.each([
-    ['a line', { xs: [1, 2, 3], lines: [{ label: 'L', values: [5, -3, 0] }] }, /line "L" values at index 1: -3/],
     [
-      'the bottom of the band',
-      { xs: [1, 2, 3], lines: [], band: { label: 'B', lower: [-1, 0, 0], upper: [1, 1, 1] } },
-      /band\.lower at index 0: -1/,
+      'the bottom of the band over its top, below 0',
+      { xs: [1, 2, 3], lines: [], band: { label: 'B', lower: [-4, -2, -4], upper: [-3, -3, -4] } },
+      /band\.lower at index 1: -2 — must be a finite number, at most -3/,
     ],
     [
       'the label of a line',
@@ -2102,7 +2333,7 @@ describe('what the charts check before drawing', () => {
       { xs: [1, 2], lines: [], band: { label: 7 as never, lower: [0, 0], upper: [1, 1] } },
       /band label/,
     ],
-  ])('lineChart throws for a negative value or a label that is no text: %s', (_, data, message) => {
+  ])('lineChart throws for a band crossed below 0 or a label that is no text: %s', (_, data, message) => {
     const doc = makeDoc();
     const lineTo = vi.spyOn(doc.doc, 'lineTo');
     expect(() => doc.lineChart(data)).toThrow(InvalidOptionError);
@@ -2129,7 +2360,7 @@ describe('what the charts check before drawing', () => {
     [
       'columnChart max',
       (ctx: PDFDocument) => ctx.columnChart(COLUMNS, { max: -1 }),
-      '-1 — must be a finite number, greater than 0',
+      '-1 — must be a finite number, at least 0',
     ],
     [
       'lineChart highlight.to',

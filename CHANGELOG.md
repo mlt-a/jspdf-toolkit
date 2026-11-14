@@ -14,6 +14,18 @@ All notable changes to this project are documented here. The format follows
   gray of `'caption'`, is darkened to 4.5:1 on the cell fill) and slant, the head and the foot stay bold, and
   `cellStyle` composes with it. The cell padding, the continuation title and `minRowHeight` keep their size. A value
   that is no text level throws an `InvalidOptionError`.
+- `lineChart` draws values below zero: a line value and the `lower` and `upper` edges of a band may be negative. The Y
+  scale extends under zero to round multiples of a round step (at most `yTicks` + 1 intervals, zero always on the
+  grid) and the axis is drawn at zero, solid, over the lines; the X labels stay under the plot. A `highlight` is filled
+  between the line and the zero line, on both sides of it when the line crosses it. `formatValue` receives the negative
+  values as they are. Values at 0 or above keep the scale, the grid and the labels they had. The scale stays
+  automatic: no option sets its ends.
+
+### Changed
+
+- `columnChart` accepts a `max` and a `reference.value` of 0: they no longer throw. A `max` of 0 is the same as none; a
+  reference at 0 is drawn, dashed, over the axis, and does not change the scale. A negative or non-finite value still
+  throws. Calls that passed before draw the same.
 
 ### Fixed
 
