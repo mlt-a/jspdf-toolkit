@@ -421,6 +421,8 @@ export const CHART = {
     height: 9,
     /** Narrowest slice that carries its percentage. */
     minLabelWidth: 12,
+    /** Room (mm) kept on each side of a percentage, so that its text never touches the edges of its slice. */
+    labelPadding: SPACING.xsmall,
   },
   column: {
     /** Height of the tallest possible column. */

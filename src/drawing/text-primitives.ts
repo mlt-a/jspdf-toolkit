@@ -18,11 +18,12 @@ const BASELINES = ['alphabetic', 'middle', 'top', 'bottom'] as const;
 /**
  * Draws `value` at `x`, `y` in the current font, size and color (`setTextStyle`, `setFont`): the primitive under the
  * built-in text. `y` is the baseline of the first line (`'alphabetic'`, see `baseline`), not the top: add
- * `measureTextLevel(...).ascent` or `ascentMm(size)` to the top of a line. Unlike `doc.doc.text`, `charSpace` counts in
- * the centering and the right alignment, so a tracked text sits on its anchor. An array is one line per entry, spaced by
- * the theme `lineHeightFactor`. Moves neither the position nor the page: it returns nothing, and a block closes with
- * `endBlock`. Leaves the font, colors and fill as it found them. Throws an `InvalidOptionError` for a `value` that is no string or array of strings, a coordinate or
- * option that is not a finite number, or an `align` or `baseline` it does not take.
+ * `measureTextLevel(...).ascent` or `ascentMm(size)` to the top of a line. Unlike `doc.doc.text`, `charSpace` counts
+ * in the centering and the right alignment, so a tracked text sits on its anchor. An array is one line per entry,
+ * spaced by the theme `lineHeightFactor`. Moves neither the position nor the page: it returns nothing, and a block
+ * closes with `endBlock`. Leaves the font, colors and fill as it found them. Throws an `InvalidOptionError` for a
+ * `value` that is no string or array of strings, a coordinate or option that is not a finite number, or an `align` or
+ * `baseline` it does not take.
  *
  * @example
  * ```ts

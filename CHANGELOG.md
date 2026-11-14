@@ -25,18 +25,20 @@ All notable changes to this project are documented here. The format follows
   is not a string, throws an `InvalidOptionError`.
 - `fields` and `fieldRows` take `labelSuffix`, the text after the label of an `'inline'` field (default `':'`), for
   another usage (`'\u00a0:'` in French) or none (`''`). It counts in the width of the label. With the `'stacked'` or
-  `'leader'` layout it throws an `InvalidOptionError`; a value that is not a string throws one too.
-
-- Building blocks for custom components, exported: `drawText(ctx, value, x, y, options?)` (text at a baseline, `charSpace`
-  counted in the `'center'` and `'right'` alignments, which jsPDF alone does not do), `wrapText(ctx, value, width,
-charSpace?)`, `trackedTextWidth(ctx, value, charSpace?)`, `fitWithEllipsis(ctx, value, maxWidth, charSpace?)`,
-  `withDrawingState(ctx, fn)`, `mixInk(ink, paper, factor)` and `ascentMm(sizePt)`, the ascent the built-in blocks put a
-  baseline at. Their arguments are checked: an invalid one throws an `InvalidOptionError`. Type `DrawTextOptions`.
+  `'leader'` layout it throws an `InvalidOptionError`; a value that is not a string throws one too. A field that falls
+  back to the stacked layout shows its label without the suffix.
+- Building blocks for custom components, exported: `drawText(ctx, value, x, y, options?)` (text at a baseline,
+  `charSpace` counted in the `'center'` and `'right'` alignments, which jsPDF alone does not do),
+  `wrapText(ctx, value, width, charSpace?)`, `trackedTextWidth(ctx, value, charSpace?)`,
+  `fitWithEllipsis(ctx, value, maxWidth, charSpace?)`, `withDrawingState(ctx, fn)`, `mixInk(ink, paper, factor)` and
+  `ascentMm(sizePt)`, the ascent the built-in blocks put a baseline at. Their arguments are checked: an invalid one
+  throws an `InvalidOptionError`. Type `DrawTextOptions`.
 
 ### Changed
 
 - `tint`, `mixInk`, `rgbToHex` and `ensureReadableOn` return a string typed as a hex color, so a `ColorInput` takes the
-  result without a cast. `ensureReadableOn` returns a color that already reads well as `#RRGGBB` in uppercase, no longer as given.
+  result without a cast. `ensureReadableOn` returns a color that already reads well as `#RRGGBB` in uppercase, no
+  longer as given.
 - `PageHeaderOptions` and `PageFooterOptions` are unions discriminated by `variant`: `'plain'`, the default, or
   `'custom'`. Code that leaves `variant` out works as before.
 

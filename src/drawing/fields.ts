@@ -47,8 +47,9 @@ export interface FieldsOptions {
   rowGap?: number;
   /**
    * - `'stacked'` (default): the label above the value, the fields of a row side by side in columns.
-   * - `'inline'`: one field per line, `Label: value` (the `labelSuffix` follows the label). A long value wraps under itself, after the label. A highlighted
-   *   value keeps its pill. A label wider than half the line falls back to `'stacked'` for that field.
+   * - `'inline'`: one field per line, `Label: value` (the `labelSuffix` follows the label). A long value wraps under
+   *   itself, after the label. A highlighted value keeps its pill. A label wider than half the line falls back to
+   *   `'stacked'` for that field.
    * - `'leader'`: one field per line, the label on the left, the value on the right in bold or as a pill, dotted
    *   leader between them. A value wider than half the line goes on its own right-aligned lines under the label, with
    *   no leader.
@@ -62,10 +63,11 @@ export interface FieldsOptions {
   layout?: FieldLayout;
   /**
    * Text set right after the label of an `'inline'` field, before the gap that precedes the value. Default: `':'`.
-   * Another language or style writes its own (`' :'` with a no-break space, `' –'`), and an empty string leaves it
-   * out. It is part of the label for the measure: it counts in the width the value is placed after and in the test
-   * that sends a too wide label to the stacked layout. Only `'inline'` has one: with `'stacked'` (the default) or
-   * `'leader'` the option throws an `InvalidOptionError`, like an option of another variant.
+   * Another language or style writes its own (`'\u00a0:'` with a no-break space, `'\u00a0–'`), and an empty string
+   * leaves it out. It is part of the label for the measure: it counts in the width the value is placed after and in
+   * the test that sends a too wide label to the stacked layout, where the field shows its label without the suffix.
+   * Only `'inline'` has one: with `'stacked'` (the default) or `'leader'` the option throws an `InvalidOptionError`,
+   * like an option of another variant.
    */
   labelSuffix?: string;
 }

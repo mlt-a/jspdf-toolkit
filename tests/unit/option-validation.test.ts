@@ -945,17 +945,15 @@ const STRUCTURE_VARIANTS: Case[] = [
   ),
   ...option('iconList bulletChar', ['*', ''], (d, v) => d.iconList(['One'], { icon: 'img', bulletChar: v } as never)),
   // Only the inline layout has a label suffix: the stacked (default) and leader ones refuse it, content or none.
-  ...(['stacked', 'leader', undefined] as const).flatMap((layout) => [
-    ...single(`fields ${layout ?? 'default'} layout with labelSuffix`, (d) =>
-      d.fields([FIELD], { layout, labelSuffix: ':' }),
-    ),
-    ...single(`fields ${layout ?? 'default'} layout with labelSuffix, nothing to draw`, (d) =>
-      d.fields([], { layout, labelSuffix: '' }),
-    ),
-    ...single(`fieldRows ${layout ?? 'default'} layout with labelSuffix`, (d) =>
-      d.fieldRows([[FIELD]], { layout, labelSuffix: ':' }),
-    ),
-  ]),
+  ...option(
+    'fields layout with labelSuffix',
+    ['stacked', 'leader', undefined] as const,
+    (d, layout) => d.fields([FIELD], { layout, labelSuffix: ':' }),
+    (d, layout) => d.fields([], { layout, labelSuffix: '' }),
+  ),
+  ...option('fieldRows layout with labelSuffix', ['stacked', 'leader', undefined] as const, (d, layout) =>
+    d.fieldRows([[FIELD]], { layout, labelSuffix: ':' }),
+  ),
   // A cover takes the options of its own variant only; every option another variant takes is refused.
   ...(Object.keys(COVER_OPTIONS) as (keyof typeof COVER_OPTIONS)[]).flatMap((variant) =>
     FOREIGN_COVER_KEYS.filter(([key]) => !(key in COVER_OPTIONS[variant])).map(([key, value]) =>

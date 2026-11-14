@@ -61,6 +61,23 @@ describe('drawText', () => {
     setTextStyle(doc, 'body');
     expect(() => drawText(doc, 'Hello there', 20, 40, { baseline: 'top', maxWidth: 30 })).not.toThrow();
   });
+
+  it('wraps a tracked, centred or right-aligned text to maxWidth before anchoring each line', () => {
+    const value = 'A rather long sentence that needs wrapping to a narrow width';
+    for (const align of ['center', 'right'] as const) {
+      const doc = makeDoc();
+      setTextStyle(doc, 'body');
+      const lines = wrapText(doc, value, 30, 0.6);
+      expect(lines.length).toBeGreaterThan(1);
+      const texts = recordTexts(doc);
+      drawText(doc, value, 100, 40, { align, charSpace: 0.6, maxWidth: 30 });
+      expect(texts.map((call) => call.lines.join(''))).toEqual(lines);
+      texts.forEach((call, index) => {
+        const width = trackedTextWidth(doc, lines[index], 0.6);
+        expect(call.x).toBeCloseTo(align === 'right' ? 100 - width : 100 - width / 2, 6);
+      });
+    }
+  });
 });
 
 describe('wrapText', () => {

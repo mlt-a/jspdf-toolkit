@@ -207,10 +207,10 @@ of the first line (mm). It returns nothing and moves no position.
 
 | Option            | Type                                            | Default  | Description                                                                                                                                     |
 | ----------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `align`           | `TextAlign`                                     | `'left'` | Which side of `x` the text sits on: `'left'` (the text starts at `x`), `'center'` or `'right'`.                                                 |
+| `align`           | `TextAlign`                                     | `'left'` | Which side of `x` the text sits on: `'left'` (it starts at `x`), `'center'` or `'right'`.                                                       |
 | `charSpace`       | `number`                                        |          | Space (mm) added between letters: a finite number, negative to tighten. Unlike jsPDF alone, it counts in the centering and the right alignment. |
 | `baseline`        | `'alphabetic' \| 'middle' \| 'top' \| 'bottom'` |          | What `y` is the height of: the `'alphabetic'` baseline (the default), the `'top'`, `'middle'` or `'bottom'` of the text.                        |
-| `maxWidth`        | `number`                                        |          | Width (mm) jsPDF wraps the text to: a number above 0. Without it, a line is as long as its text.                                                |
+| `maxWidth`        | `number`                                        |          | Width (mm) the text is wrapped to, `charSpace` counted: above 0. Without it, a line is as long as its text.                                     |
 | `lineHeightScale` | `number`                                        | 1        | Multiplies the theme `lineHeightFactor` between lines of a multi-line text: a number above 0.                                                   |
 
 <!-- /options -->

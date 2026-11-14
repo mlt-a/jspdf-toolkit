@@ -643,6 +643,14 @@ describe('the text of the charts follows the theme', () => {
   });
 });
 
+/** Where the legend values of a donut end (`x` of the first right-aligned text). */
+const rightOf = (options: object) => {
+  const doc = makeDoc();
+  const texts = recordTexts(doc);
+  doc.donutChart(SLICES, { legend: true, ...options });
+  return texts.find((call) => call.lines.includes('Bonds') === false && call.align === 'right')?.x as number;
+};
+
 describe('donutChart', () => {
   it('leaves out the slices without a value', () => {
     const doc = makeDoc();
@@ -709,12 +717,6 @@ describe('donutChart', () => {
   });
 
   it('measures the legend with the formatted text: its values end further right than the default ones', () => {
-    const rightOf = (options: object) => {
-      const doc = makeDoc();
-      const texts = recordTexts(doc);
-      doc.donutChart(SLICES, { legend: true, ...options });
-      return texts.find((call) => call.lines.includes('Bonds') === false && call.align === 'right')?.x as number;
-    };
     expect(rightOf({ formatPercent: (share: number) => `${share * 100} percent of the whole` })).toBeGreaterThan(
       rightOf({}),
     );

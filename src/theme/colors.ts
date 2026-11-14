@@ -200,8 +200,8 @@ export function mixInk(ink: string, paper: string, factor: number): `#${string}`
 
 /**
  * Moves `color` toward white or black (whichever contrasts more with `background`) until it reaches `minRatio`.
- * Returns `color` itself, written as `#RRGGBB`, when it already reads well; otherwise the closest step that gets there, or the
- * extreme if none does.
+ * Returns `color` itself, written as `#RRGGBB`, when it already reads well; otherwise the closest step that gets there,
+ * or the extreme if none does.
  *
  *
  * @example

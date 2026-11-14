@@ -391,11 +391,11 @@ function layoutStackedBar(
       )
     : undefined;
   const valueStyle = resolveTextStyle(ctx, VALUE_LEVEL, { bold: true });
-  // The percentage is measured as it is drawn: a formatted text wider than the default one needs a wider slice.
+  // The percentage and its padding, as drawn: a formatted text wider than the default one needs a wider slice.
   const shareWidths = showPercentages
     ? withDrawingState(ctx, () => {
         applyTextStyle(ctx.doc, valueStyle);
-        return parts.map((part) => ctx.doc.getTextWidth(part.share));
+        return parts.map((part) => ctx.doc.getTextWidth(part.share) + 2 * CHART.stackedBar.labelPadding);
       })
     : [];
   const value = measureTextLevel(ctx, VALUE_LEVEL);
