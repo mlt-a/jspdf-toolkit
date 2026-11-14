@@ -1,6 +1,13 @@
 /** Style of a font face, as jsPDF names them. */
 export type FontStyle = 'normal' | 'bold' | 'italic' | 'bolditalic';
 
+/**
+ * Faces a family lacks on purpose, by family name: `{ Brand: ['italic', 'bolditalic'] }`. Text asked in such a face is
+ * drawn in the closest one the family has, without the warning of a missing face. `italic` covers `bolditalic` too; a
+ * family without a bold face lists `bold` and `bolditalic`. `normal` is never a fallback.
+ */
+export type FontFallbacks = Record<string, readonly Exclude<FontStyle, 'normal'>[]>;
+
 /** A font file to embed. `fileName` names the file in jsPDF's virtual file system. */
 export type FontSource =
   | {

@@ -1,8 +1,16 @@
 import type { jsPDF } from 'jspdf';
 
-import { InvalidOptionError, checkedChoice, checkedObjects, checkedText, describe } from '../core/errors';
+import {
+  InvalidOptionError,
+  checkedArray,
+  checkedChoice,
+  checkedObject,
+  checkedObjects,
+  checkedText,
+  describe,
+} from '../core/errors';
 import { bytesToBase64 } from '../utils/base64';
-import type { FontSource, FontStyle } from './types';
+import type { FontFallbacks, FontSource, FontStyle } from './types';
 
 const FONT_TYPES = ['base64', 'binary'] as const satisfies readonly FontSource['type'][];
 const FONT_STYLES = ['normal', 'bold', 'italic', 'bolditalic'] as const satisfies readonly FontStyle[];
@@ -23,6 +31,21 @@ export function checkFontSources(fonts: readonly FontSource[]): void {
       throw new InvalidOptionError(`Invalid ${what} data: ${describe(font.data)} — must be a Uint8Array`);
     }
   });
+}
+
+const FALLBACK_STYLES = ['bold', 'italic', 'bolditalic'] as const satisfies readonly FontStyle[];
+
+/**
+ * Throws an `InvalidOptionError` for a `fontFallbacks` option that is no object of arrays of `'bold'`, `'italic'`
+ * or `'bolditalic'`. A family nobody registered is no error: its entry does nothing.
+ */
+export function checkFontFallbacks(fallbacks: FontFallbacks): void {
+  checkedObject('fontFallbacks', fallbacks);
+  for (const [family, styles] of Object.entries(fallbacks)) {
+    const what = `fontFallbacks["${family}"]`;
+    checkedArray(what, styles);
+    for (const style of styles) checkedChoice(`${what} face`, style, FALLBACK_STYLES);
+  }
 }
 
 export function registerFonts(doc: jsPDF, fonts: FontSource[]): void {

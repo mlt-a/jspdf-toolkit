@@ -169,6 +169,30 @@ const doc = new PDFDocument({ fonts: interFonts });
   and `labelFontFamily` (labels and field names). A family that is neither built in nor registered throws an
   `InvalidOptionError` at construction. Registered fonts that the theme never uses, and missing faces, are reported in
   `doc.warnings`.
+- **A face missing on purpose**: text asked in a face the family lacks (italic in a family drawn without one) is drawn
+  in the closest face it has, italic upright, bold italic bold, and `doc.warnings` says so: an oversight is worth a
+  warning. When the family is meant to lack it, declare it with `fontFallbacks`, by family name, and the fallback is
+  silent. `'italic'` covers `'bolditalic'` too; a family without bold lists `'bold'` and `'bolditalic'`. A face missing
+  and not declared keeps its warning; a declared face the family has is drawn as usual.
+- **Asking for a face**: `hasFontFace(ctx, role, weight, italic?)` says whether the face `setFont` would set for a
+  `'body'`, `'title'` or `'label'` exists, so a custom component can pick another way to stress a word. It reports the
+  fonts, not the declaration.
+
+```ts
+import { PDFDocument, hasFontFace, setFont } from '@mlt-a/jspdf-toolkit';
+import { interFonts } from '@mlt-a/jspdf-toolkit/fonts/inter';
+
+// Inter without its italic file, on purpose: `*emphasis*` is drawn upright, with no warning.
+const doc = new PDFDocument({
+  fonts: interFonts.filter((font) => font.style !== 'italic'),
+  fontFallbacks: { Inter: ['italic'] },
+});
+doc.richText('A *quiet* emphasis.');
+
+// A custom component stresses with bold where there is no italic.
+const slanted = hasFontFace(doc, 'body', 'regular', true);
+setFont(doc, 'body', slanted ? 'regular' : 'bold', 9, slanted);
+```
 
 ## Theming and presets
 
@@ -297,6 +321,7 @@ All options are optional, including `theme` (default `createTheme()`).
 | `format`, `orientation`                             | `'A4'`, `'portrait'` | `'A3'`, `'A4'`, `'A5'`, `'letter'`, `'legal'` or `[width, height]` in mm; `'portrait' \| 'landscape'`.                                                                                                             |
 | `margins`                                           | see below            | `{ top, right, bottom, left }` in mm; omit a side to keep its default.                                                                                                                                             |
 | `fonts`                                             | none                 | Fonts to embed. See [Fonts](#fonts).                                                                                                                                                                               |
+| `fontFallbacks`                                     | none                 | Faces a family lacks on purpose, by family name: they fall back without a warning. See [Fonts](#fonts).                                                                                                            |
 | `firstPageTop`                                      | `margins.top`        | Top of the content on the first page only (room for a letterhead, or a first page that starts higher).                                                                                                             |
 | `measure`                                           | content width        | Width of the reading column: the default width of text blocks. Tables, charts, columns, separators, the running header and footer and the covers span the content width. Inside a column, the narrower of the two. |
 | `compress`                                          | `true`               | Compress the PDF streams.                                                                                                                                                                                          |
@@ -1140,7 +1165,8 @@ doc.paragraph('Back to the fluent API.');
 Exported building blocks for custom code:
 
 - Text: `setTextStyle(ctx, level)`, `setFont(ctx, role, weight, size, italic?)` (a `'body'`, `'title'` or `'label'`
-  family at `'regular'` or `'bold'`, with face fallback), `measureTextLevel(ctx, level, options?)`
+  family at `'regular'` or `'bold'`, with face fallback), `hasFontFace(ctx, role, weight, italic?)` (whether that face
+  exists), `measureTextLevel(ctx, level, options?)`
   (`{ lineHeight, ascent }`), `computeParagraphHeight`, `computeRichTextHeight`, `computeRichBlocksHeight`.
 - Text placed by hand, in the current font: `drawText(ctx, value, x, y, options?)` (at a baseline, `charSpace` counted
   in `'center'` and `'right'`), `wrapText(ctx, value, width, charSpace?)`, `trackedTextWidth(ctx, value, charSpace?)`,
@@ -1176,7 +1202,7 @@ The types of `@mlt-a/jspdf-toolkit`, by area:
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Document             | `DocumentOptions`, `AddPageOptions`, `BackgroundOptions`, `EnsureSpaceOptions`, `InsetOptions`, `Margins`, `PageFormat`, `DrawingContext`                                                                                                                                                                                                                                                                                           |
 | Theme                | `Theme`, `ResolvedTheme`, `ThemeOverrides`, `ColorPalette`, `ColorInput`, `Typography`, `ResolvedTypography`, `TypographySizes`, `TextLevelStyle`, `Spacing`, `SpacingOverrides`, `HeadingSpacing`, `ThemeAssets`, `CoverConfig`, `ChromeTokens`, `PresetThemeName`                                                                                                                                                                 |
-| Fonts and images     | `FontSource`, `FontStyle`, `LoadFontOptions`, `LoadImageOptions`                                                                                                                                                                                                                                                                                                                                                                    |
+| Fonts and images     | `FontFallbacks`, `FontSource`, `FontStyle`, `LoadFontOptions`, `LoadImageOptions`                                                                                                                                                                                                                                                                                                                                                   |
 | Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`, `DrawTextOptions`                                                                                                                                                                                                     |
 | Lists                | `SeparatorOptions`, `ListItem`, `ListOptions`, `IconListOptions`                                                                                                                                                                                                                                                                                                                                                                    |
 | Fields and forms     | `Field`, `FieldLayout`, `FieldsOptions`, `CheckboxVariant`, `CheckboxOptions`, `InlineQuestionOptions`                                                                                                                                                                                                                                                                                                                              |

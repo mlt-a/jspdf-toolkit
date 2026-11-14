@@ -4,7 +4,7 @@ import { FONT_ROLES } from '../core/constants';
 import type { FontRole } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import { POSITIVE, checkedBoolean, checkedChoice, checkedNumber } from '../core/errors';
-import { resolveFace } from '../fonts/resolve';
+import { hasFace, resolveFace } from '../fonts/resolve';
 import type { FontStyle } from '../fonts/types';
 import type { Typography } from '../theme/types';
 
@@ -47,9 +47,38 @@ export function setFont(
   ctx.doc.setFontSize(size);
 }
 
-/** The registered face closest to `style` (see `resolveFace`); fallback warnings go to the document. */
+/**
+ * The registered face closest to `style` (see `resolveFace`); fallback warnings go to the document, except for the
+ * faces `fontFallbacks` declares.
+ */
 export function resolveFontStyle(ctx: DrawingContext, family: string, style: FontStyle): FontStyle {
-  return resolveFace(ctx.doc, family, style, (message) => ctx.addWarning(message));
+  return resolveFace(ctx.doc, family, style, (message) => ctx.addWarning(message), ctx.expectedFaces);
+}
+
+/**
+ * Whether the face `setFont(ctx, role, weight, size, italic)` asks for exists in the family of `role`: it is registered
+ * or built in, so the text is drawn in it, not in a fallback. The `fontFallbacks` option does not change the answer:
+ * a face declared to fall back is still absent. A custom component draws its italic note differently when it is not.
+ * Throws an `InvalidOptionError` for an unknown role or weight, or an `italic` that is no boolean.
+ *
+ * @example
+ * ```ts
+ * import { hasFontFace, setFont } from '@mlt-a/jspdf-toolkit';
+ *
+ * const slanted = hasFontFace(doc, 'body', 'regular', true);
+ * setFont(doc, 'body', slanted ? 'regular' : 'bold', 9, slanted);
+ * ```
+ */
+export function hasFontFace(
+  ctx: DrawingContext,
+  role: FontRole,
+  weight: keyof Typography['weights'],
+  italic = false,
+): boolean {
+  const family = fontFamilyFor(ctx, checkedChoice('hasFontFace role', role, FONT_ROLES));
+  const bold = checkedChoice('hasFontFace weight', weight, WEIGHTS) === 'bold';
+  const face = fontFace(ctx.theme.typography, bold, checkedBoolean('hasFontFace italic', italic));
+  return hasFace(ctx.doc, family, face);
 }
 
 /** A fully resolved text style: family, jsPDF face, size (pt), color and letter spacing. */

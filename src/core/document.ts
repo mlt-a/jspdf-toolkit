@@ -50,8 +50,10 @@ import type { HeadingOptions, ParagraphOptions, ParagraphsOptions, ResolvedHeadi
 import { THIN_SPACE, normalizeText } from '../drawing/text-lines';
 import { watermarkDrawer } from '../drawing/watermark';
 import type { WatermarkOptions } from '../drawing/watermark';
-import { checkFontSources, registerFonts } from '../fonts/register';
-import type { FontSource } from '../fonts/types';
+import { checkFontFallbacks, checkFontSources, registerFonts } from '../fonts/register';
+import { expectedFaces } from '../fonts/resolve';
+import type { ExpectedFaces } from '../fonts/resolve';
+import type { FontFallbacks, FontSource } from '../fonts/types';
 import { drawClosingNote } from '../page/closing-note';
 import type { ClosingNoteOptions } from '../page/closing-note';
 import { checkVariant, drawBackCover, drawCover } from '../page/cover';
@@ -120,6 +122,16 @@ export interface DocumentOptions {
    * default family; without fonts, Helvetica.
    */
   fonts?: FontSource[];
+  /**
+   * Faces a font family lacks on purpose, by family name: `{ Brand: ['italic', 'bolditalic'] }`. Text asked in such a
+   * face is drawn in the closest face the family has (italic upright, bold italic bold) without the warning a missing
+   * face raises. A face that is missing and not listed keeps its warning, and so does one of a family not listed:
+   * only an oversight is reported. `'italic'` also covers `'bolditalic'`; a family without a bold face lists `'bold'`
+   * and `'bolditalic'`. Faces the family has, built-in fonts and an unregistered family are left alone. Throws an
+   * `InvalidOptionError` for a value that is no object of arrays of `'bold'`, `'italic'` or `'bolditalic'`. See
+   * `hasFontFace` to ask whether a face exists. Default: none.
+   */
+  fontFallbacks?: FontFallbacks;
   /**
    * Top of the content (mm) on the first page only, e.g. lower to leave room for a letterhead, higher to start
    * right away. Default: `margins.top`.
@@ -217,13 +229,14 @@ function validateOptions(options: DocumentOptions, resolved: Margins, pageWidth:
 }
 
 /**
- * Throws `InvalidOptionError` for options that are no object, and for a metadata text, a flag or a `fonts` entry of the
+ * Throws `InvalidOptionError` for options that are no object, and for a metadata text, a flag or a `fonts` entry or a `fontFallbacks` value of the
  * wrong type, before jsPDF is created: jsPDF would only fail on export, with an error of its own.
  */
 function checkDocumentOptions(options: DocumentOptions): void {
   checkedObject('document options', options);
   if (options.margins !== undefined) checkedObject('margins', options.margins);
   if (options.fonts !== undefined) checkFontSources(options.fonts);
+  if (options.fontFallbacks !== undefined) checkFontFallbacks(options.fontFallbacks);
   for (const key of ['title', 'author', 'subject', 'creator'] as const) optionalText(key, options[key]);
   if (options.keywords !== undefined) checkedTexts('keywords', options.keywords);
   optionalBoolean('compress', options.compress);
@@ -433,6 +446,8 @@ export class PDFDocument {
   private newPageHook: (() => void) | null = null;
   /** @internal Every image drawn goes through it: decoded, measured and embedded once per image data. */
   readonly images: ImageCache;
+  /** @internal The faces declared to fall back without a warning, by lowercase family: `resolveFace` reads it. */
+  readonly expectedFaces: ExpectedFaces;
   /** @internal Covers, table of contents entries and anchor, kept right when pages move. */
   readonly pageRefs = new PageReferences();
   // Headings that wait for the next block, to move to the next page with it: see `heading`.
@@ -476,6 +491,7 @@ export class PDFDocument {
 
     const fonts = options.fonts ?? [];
     registerFonts(this.doc, fonts);
+    this.expectedFaces = expectedFaces(options.fontFallbacks);
 
     this.doc.setProperties({
       title: options.title ?? '',

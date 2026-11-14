@@ -8,6 +8,17 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- `fontFallbacks` document option declares the faces a family lacks on purpose: `{ Brand: ['italic', 'bolditalic'] }`.
+  Text asked in such a face is drawn in the same fallback as before (italic upright, bold italic bold, bold regular)
+  without the warning in `doc.warnings`, in text levels, rich text and `setFont` alike. Each face is judged on its own:
+  `'italic'` covers `'bolditalic'` too, `'bold'` does not, and a missing face that is not declared, or a family that
+  is not listed, keeps its warning. Family names match in any case; an entry for a family nobody registered does
+  nothing. A value that is no object of arrays of `'bold'`, `'italic'` or `'bolditalic'` throws an
+  `InvalidOptionError`. Type `FontFallbacks`.
+- `hasFontFace(ctx, role, weight, italic?)` tells whether the face `setFont` would set for a role (`'body'`,
+  `'title'` or `'label'`), through `typography.weights`, is registered or built in. It never warns and does not change
+  the font; `fontFallbacks` does not change its answer. An unknown role or weight, or an `italic` that is no boolean,
+  throws an `InvalidOptionError`.
 - `tableOfContents` takes `formatPage: (page: number) => string`, which writes the page number of an entry (default:
   the number itself, as before): `(page) => String(page).padStart(2, '0')` matches a running header that prints `02`,
   and a prefix or roman numerals work too. It receives the number of `doc.pageLabels` (covers not counted), once the

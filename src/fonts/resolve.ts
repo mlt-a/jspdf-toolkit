@@ -1,6 +1,21 @@
 import type { jsPDF } from 'jspdf';
 
-import type { FontStyle } from './types';
+import type { FontFallbacks, FontStyle } from './types';
+
+/** Faces declared to fall back on purpose, by lowercase family name: what `resolveFace` takes to stay silent. */
+export type ExpectedFaces = ReadonlyMap<string, ReadonlySet<FontStyle>>;
+
+/** The `fontFallbacks` document option, indexed for `resolveFace`: family names lowercased, a family listed twice merged. */
+export function expectedFaces(fallbacks: FontFallbacks | undefined): ExpectedFaces {
+  const expected = new Map<string, Set<FontStyle>>();
+  for (const [family, styles] of Object.entries(fallbacks ?? {})) {
+    const key = family.toLowerCase();
+    const known = expected.get(key) ?? new Set<FontStyle>();
+    for (const style of styles) known.add(style);
+    expected.set(key, known);
+  }
+  return expected;
+}
 
 interface FontListCache {
   list: Record<string, string[]> | null;
@@ -26,23 +41,36 @@ function fontList(doc: jsPDF): Record<string, string[]> {
   return cache.list;
 }
 
+function facesOf(doc: jsPDF, family: string): readonly string[] {
+  const fonts = fontList(doc);
+  return fonts[family] ?? fonts[family.toLowerCase()] ?? [];
+}
+
+/** Whether `family` has a registered `style` face, built-in fonts included: what `resolveFace` would not replace. */
+export function hasFace(doc: jsPDF, family: string, style: FontStyle): boolean {
+  return facesOf(doc, family).includes(style);
+}
+
 /**
  * The registered face of `family` closest to `style`: italic falls back to normal, bold italic to bold, bold
  * to normal. jsPDF would otherwise throw on a family without that face, such as Inter without its italic file.
- * `onWarn` receives one message per fallback taken.
+ * `onWarn` receives one message per fallback taken, except for a face `expected` lists for the family (see
+ * `fontFallbacks`): that step is taken in silence, and each step is judged on its own face. `italic` listed also
+ * covers `bolditalic`; `bold` does not cover it, nor does `bolditalic` cover `bold`.
  */
 export function resolveFace(
   doc: jsPDF,
   family: string,
   style: FontStyle,
   onWarn: (message: string) => void,
+  expected?: ExpectedFaces,
 ): FontStyle {
-  if (style === 'normal') return style;
-  const fonts = fontList(doc);
-  const faces = fonts[family] ?? fonts[family.toLowerCase()] ?? [];
-  if (faces.includes(style)) return style;
+  if (style === 'normal' || hasFace(doc, family, style)) return style;
 
-  const resolved = resolveFace(doc, family, style === 'bolditalic' ? 'bold' : 'normal', onWarn);
+  const resolved = resolveFace(doc, family, style === 'bolditalic' ? 'bold' : 'normal', onWarn, expected);
+  const declared = expected?.get(family.toLowerCase());
+  // A family declared without italic lacks the bold italic too: one declaration, not two.
+  if (declared?.has(style) || (style === 'bolditalic' && declared?.has('italic'))) return resolved;
   onWarn(
     style === 'italic'
       ? `Font family "${family}" has no italic face: italic text is drawn upright`

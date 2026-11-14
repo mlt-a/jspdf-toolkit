@@ -49,7 +49,7 @@ export {
 // === Fonts and images ===
 // Fonts go through the `fonts` document option; the path loaders live in the `/node` entry point.
 export { loadFontFromBase64, loadFontFromBinary } from './fonts';
-export type { FontSource, FontStyle, LoadFontOptions } from './fonts';
+export type { FontFallbacks, FontSource, FontStyle, LoadFontOptions } from './fonts';
 export { loadImageFromBase64, loadImageFromBinary } from './images';
 export type { LoadImageOptions } from './images';
 
@@ -118,7 +118,7 @@ export type { ClosingNoteOptions } from './page/closing-note';
 // options: `{ x, y, … }` for what is drawn at coordinates. Each returns the Y under what it drew.
 // `computeXHeight` takes the options of the matching method and excludes `spaceAfter`; `measureX` returns metrics.
 export { setTextStyle, measureTextLevel, computeParagraphHeight } from './drawing/text';
-export { setFont } from './drawing/text-style';
+export { hasFontFace, setFont } from './drawing/text-style';
 export { drawText, wrapText, trackedTextWidth } from './drawing/text-primitives';
 export type { DrawTextOptions } from './drawing/text-lines';
 export { fitWithEllipsis } from './drawing/text-lines';

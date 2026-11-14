@@ -22,7 +22,7 @@ import { computeSignatureZoneHeight } from '../../src/drawing/signatures';
 import { computeParagraphHeight, measureTextLevel, setTextStyle } from '../../src/drawing/text';
 import { fitWithEllipsis } from '../../src/drawing/text-lines';
 import { drawText, trackedTextWidth, wrapText } from '../../src/drawing/text-primitives';
-import { setFont } from '../../src/drawing/text-style';
+import { hasFontFace, setFont } from '../../src/drawing/text-style';
 import { loadFontFromBase64 } from '../../src/fonts/loader';
 import { parseRichInline, parseRichText } from '../../src/text/markup';
 import { mixInk } from '../../src/theme/colors';
@@ -1476,6 +1476,20 @@ const DOCUMENT: Case[] = [
   }),
   ...option('setTextStyle level', NOT_LEVEL, (d, v) => setTextStyle(d, v as never)),
   ...option('measureTextLevel level', NOT_LEVEL, (d, v) => measureTextLevel(d, v as never)),
+  ...option('document fontFallbacks', NOT_OBJECT, (_d, v) => new PDFDocument({ fontFallbacks: v as never })),
+  ...option(
+    'document fontFallbacks faces',
+    NOT_ARRAY,
+    (_d, v) => new PDFDocument({ fontFallbacks: { Brand: v } as never }),
+  ),
+  ...option(
+    'document fontFallbacks face',
+    ['normal', 'bogus', 5, null],
+    (_d, v) => new PDFDocument({ fontFallbacks: { Brand: [v] } as never }),
+  ),
+  ...option('hasFontFace role', NOT_LEVEL, (d, v) => hasFontFace(d, v as never, 'bold')),
+  ...option('hasFontFace weight', ['heavy', 5, null, undefined], (d, v) => hasFontFace(d, 'body', v as never)),
+  ...option('hasFontFace italic', NOT_FLAG, (d, v) => hasFontFace(d, 'body', 'bold', v as never)),
   ...option('setFont role', NOT_LEVEL, (d, v) => setFont(d, v as never, 'bold', 10)),
   ...option('setFont weight', ['heavy', 5, null, undefined], (d, v) => setFont(d, 'body', v as never, 10)),
   ...option('setFont size', SIZE, (d, v) => setFont(d, 'body', 'bold', v)),

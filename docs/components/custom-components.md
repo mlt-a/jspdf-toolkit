@@ -111,7 +111,8 @@ doc.endBlock(y + ascentMm(size), spaceAfter);
 Exported for custom code:
 
 - **Text**: `setTextStyle(ctx, level)`, `setFont(ctx, role, weight, size, italic?)` (a `'body'`, `'title'` or `'label'`
-  family at `'regular'` or `'bold'`, with face fallback), `measureTextLevel(ctx, level, options?)`
+  family at `'regular'` or `'bold'`, with face fallback), `hasFontFace(ctx, role, weight, italic?)` (whether that face
+  exists: a component can stress a word another way when it does not), `measureTextLevel(ctx, level, options?)`
   (`{ lineHeight, ascent }`), `computeParagraphHeight`, `computeRichTextHeight`, `computeRichBlocksHeight`.
 - **Text placed by hand** (each reads the current font: set it first):
   - `drawText(ctx, value, x, y, options?)` draws at a baseline, with the letter spacing (`charSpace`) counted in

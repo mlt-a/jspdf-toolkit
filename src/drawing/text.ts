@@ -179,7 +179,7 @@ function computeTextStyle(
   const italic = emphasisItalic ?? custom?.italic ?? config.italic === true;
   return Object.freeze({
     family,
-    fontStyle: resolveFace(ctx.doc, family, fontFace(typography, bold, italic), onWarn),
+    fontStyle: resolveFace(ctx.doc, family, fontFace(typography, bold, italic), onWarn, ctx.expectedFaces),
     size: textLevelSize(ctx, level),
     color: levelColor(ctx, level),
   });
