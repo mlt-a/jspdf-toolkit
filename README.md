@@ -526,7 +526,8 @@ doc.fields(
 A `Field` is `{ label, value, highlight?, complement? }`; `highlight` draws the value in a pill, `complement` adds a
 muted note under it. `fields(list, o?)` draws one row, `fieldRows(rows, o?)` several (`Field[][]`). `spaceAfter` is the
 space under the block; `rowGap` is the space between two rows (default 2 mm, 4 mm for `'inline'` and `'leader'`). A
-highlighted value sits on the baseline of a plain one. Fields too many for the width of a row throw an
+highlighted value sits on the baseline of a plain one. `labelSuffix` (default `':'`) is what follows an `'inline'`
+label: `'\u00a0:'` for a French colon, `''` for none; with another layout it throws an `InvalidOptionError`. Fields too many for the width of a row throw an
 `InvalidOptionError` before the first row is drawn. `'stacked'` and `'inline'` set the label in the `fieldLabel` level
 and the value in `fieldValue`; `'leader'` sets them in `body` and `bodyBold`, so a theme restyles a leader row through
 those.

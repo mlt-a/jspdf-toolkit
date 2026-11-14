@@ -23,6 +23,9 @@ All notable changes to this project are documented here. The format follows
   precision (`45 %` with a no-break space, `45,5 %`). It writes the percentages of the legend and inside the bar and
   sets the widths they are measured with; the default is still `45%`. A value that is not a function, or a result that
   is not a string, throws an `InvalidOptionError`.
+- `fields` and `fieldRows` take `labelSuffix`, the text after the label of an `'inline'` field (default `':'`), for
+  another usage (`'\u00a0:'` in French) or none (`''`). It counts in the width of the label. With the `'stacked'` or
+  `'leader'` layout it throws an `InvalidOptionError`; a value that is not a string throws one too.
 
 ### Changed
 

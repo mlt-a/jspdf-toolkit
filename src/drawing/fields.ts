@@ -3,6 +3,7 @@ import type { TextLevel } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
   checkedArray,
+  checkedLeftOut,
   optionalChoice,
   checkedObjects,
   checkedText,
@@ -46,7 +47,7 @@ export interface FieldsOptions {
   rowGap?: number;
   /**
    * - `'stacked'` (default): the label above the value, the fields of a row side by side in columns.
-   * - `'inline'`: one field per line, `Label: value`. A long value wraps under itself, after the label. A highlighted
+   * - `'inline'`: one field per line, `Label: value` (the `labelSuffix` follows the label). A long value wraps under itself, after the label. A highlighted
    *   value keeps its pill. A label wider than half the line falls back to `'stacked'` for that field.
    * - `'leader'`: one field per line, the label on the left, the value on the right in bold or as a pill, dotted
    *   leader between them. A value wider than half the line goes on its own right-aligned lines under the label, with
@@ -59,6 +60,14 @@ export interface FieldsOptions {
    * and the value in `bodyBold`, so a leader row reads as a line of text. A complement is set in `smallMuted`.
    */
   layout?: FieldLayout;
+  /**
+   * Text set right after the label of an `'inline'` field, before the gap that precedes the value. Default: `':'`.
+   * Another language or style writes its own (`' :'` with a no-break space, `' –'`), and an empty string leaves it
+   * out. It is part of the label for the measure: it counts in the width the value is placed after and in the test
+   * that sends a too wide label to the stacked layout. Only `'inline'` has one: with `'stacked'` (the default) or
+   * `'leader'` the option throws an `InvalidOptionError`, like an option of another variant.
+   */
+  labelSuffix?: string;
 }
 
 /** Text levels of the label and the value of each layout: what `FieldsOptions.layout` documents. */
@@ -67,6 +76,9 @@ const FIELD_LEVELS = {
   inline: { label: 'fieldLabel', value: 'fieldValue' },
   leader: { label: 'body', value: 'bodyBold' },
 } as const satisfies Record<FieldLayout, { label: TextLevel; value: TextLevel }>;
+
+/** What follows the label of an inline field when `FieldsOptions.labelSuffix` is left out. */
+const LABEL_SUFFIX = ':';
 
 /** The layouts, as `FieldsOptions.layout` takes them. */
 const LAYOUTS = ['stacked', 'inline', 'leader'] as const satisfies readonly FieldLayout[];
@@ -95,7 +107,10 @@ export function drawFieldRows(ctx: DrawingContext, rows: Field[][], options?: Fi
 function drawRows(ctx: DrawingContext, rows: Field[][], options?: FieldsOptions): number {
   const layout = optionalChoice('fields layout', options?.layout, LAYOUTS) ?? 'stacked';
   const rowGap = optionalNumber('fieldRows rowGap (mm)', options?.rowGap, { min: 0 }) ?? FIELD.rowGap[layout];
+  const labelSuffix = optionalText('fields labelSuffix', options?.labelSuffix);
+  if (layout !== 'inline') checkedLeftOut(`fields ${layout} layout`, options ?? {}, ['labelSuffix']);
   const spaceAfter = ctx.resolveSpaceAfter(options?.spaceAfter);
+  const suffix = labelSuffix ?? LABEL_SUFFIX;
   // The widest stacked row leaves its fields the narrowest columns: checked before the first row is drawn.
   if (layout === 'stacked') columnWidth(ctx.measure, Math.max(1, ...rows.map((row) => row.length)), LAYOUT.columnGap);
 
@@ -104,13 +119,13 @@ function drawRows(ctx: DrawingContext, rows: Field[][], options?: FieldsOptions)
   drawnRows.forEach((row, rowIndex) => {
     const gapAfterRow = rowIndex === drawnRows.length - 1 ? spaceAfter : rowGap;
     if (layout === 'stacked') {
-      drawFieldRow(ctx, row, layout, gapAfterRow);
+      drawFieldRow(ctx, row, layout, suffix, gapAfterRow);
       return;
     }
     // One field per line: `lineGap` between the lines of a row.
     row.forEach((field, index) => {
       const gapAfterLine = index === row.length - 1 ? gapAfterRow : FIELD.lineGap;
-      drawFieldRow(ctx, [field], layout, gapAfterLine);
+      drawFieldRow(ctx, [field], layout, suffix, gapAfterLine);
     });
   });
   // Without a field nothing was drawn: a waiting heading keeps waiting.
@@ -118,7 +133,13 @@ function drawRows(ctx: DrawingContext, rows: Field[][], options?: FieldsOptions)
 }
 
 /** Draws the fields of one row side by side, then moves down by the tallest one plus `gapAfter`. */
-function drawFieldRow(ctx: DrawingContext, fields: Field[], layout: FieldLayout, gapAfter: number): number {
+function drawFieldRow(
+  ctx: DrawingContext,
+  fields: Field[],
+  layout: FieldLayout,
+  labelSuffix: string,
+  gapAfter: number,
+): number {
   return withDrawingState(ctx, () => {
     const { measure } = ctx;
     const margin = ctx.margins.left;
@@ -126,7 +147,7 @@ function drawFieldRow(ctx: DrawingContext, fields: Field[], layout: FieldLayout,
     const width = columnWidth(measure, fields.length, LAYOUT.columnGap);
 
     // Measured once per field and reused by the drawing, so height and rendering cannot diverge.
-    const metrics = fields.map((field) => measureField(ctx, field, width, layout));
+    const metrics = fields.map((field) => measureField(ctx, field, width, layout, labelSuffix));
     const maxHeight = Math.max(...metrics.map((m) => m.height));
 
     ctx.ensureSpace(maxHeight + gapAfter);
@@ -154,7 +175,7 @@ interface StackedMetrics {
 interface InlineMetrics {
   layout: 'inline';
   height: number;
-  /** `Label:` as a hanging prefix, then the value. */
+  /** The label and its suffix as a hanging prefix, then the value. */
   flow: FlowLayout;
   /** Left edge (mm) of the value, from the field left. */
   gutter: number;
@@ -179,10 +200,16 @@ function wrapComplement(ctx: DrawingContext, field: Field, width: number): { lin
 }
 
 /** Single measuring pass, shared by the drawing: line breaks and height of a field in a column of `width`. */
-function measureField(ctx: DrawingContext, field: Field, width: number, layout: FieldLayout = 'stacked'): FieldMetrics {
+function measureField(
+  ctx: DrawingContext,
+  field: Field,
+  width: number,
+  layout: FieldLayout,
+  labelSuffix: string,
+): FieldMetrics {
   switch (layout) {
     case 'inline':
-      return measureInlineField(ctx, field, width);
+      return measureInlineField(ctx, field, width, labelSuffix);
     case 'leader':
       return measureLeaderField(ctx, field, width);
     case 'stacked':
@@ -221,13 +248,18 @@ function measureStackedField(ctx: DrawingContext, field: Field, width: number): 
 }
 
 /** A label too wide to leave room for the value falls back to the stacked layout. */
-function measureInlineField(ctx: DrawingContext, field: Field, width: number): InlineMetrics | StackedMetrics {
+function measureInlineField(
+  ctx: DrawingContext,
+  field: Field,
+  width: number,
+  labelSuffix: string,
+): InlineMetrics | StackedMetrics {
   const levels = FIELD_LEVELS.inline;
   const labelStyle = resolveTextStyle(ctx, levels.label);
   const valueStyle = resolveTextStyle(ctx, levels.value);
   const { lineHeight } = measureTextLevel(ctx, levels.value);
 
-  const prefix = `${normalizeText(field.label)}:`;
+  const prefix = normalizeText(`${field.label}${labelSuffix}`);
   applyFont(ctx.doc, labelStyle);
   const gutter = ctx.doc.getTextWidth(prefix) + FIELD.inlineGap;
   if (gutter > width * FIELD.sideMaxRatio) return measureStackedField(ctx, field, width);

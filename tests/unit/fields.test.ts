@@ -189,6 +189,66 @@ describe('inline and leader layouts', () => {
       const field = { label: LONG_LABEL, value: 'Paris' };
       expect(drawnHeight(makeDoc(), field, 'inline')).toBeCloseTo(drawnHeight(makeDoc(), field, 'stacked'), 6);
     });
+
+    describe('labelSuffix', () => {
+      const field = { label: 'Project', value: 'jspdf-toolkit' };
+      const drawn = (labelSuffix?: string, rows = false) => {
+        const doc = makeDoc();
+        const text = vi.spyOn(doc.doc, 'text');
+        if (rows) drawFieldRows(doc, [[field]], { layout: 'inline', labelSuffix });
+        else drawFields(doc, [field], { layout: 'inline', labelSuffix });
+        return text.mock.calls.map(([value, x]) => ({ value: String(value), x: x as number }));
+      };
+
+      it('is a colon by default', () => {
+        expect(drawn()[0].value).toBe('Project:');
+        expect(drawn(':')).toEqual(drawn());
+      });
+
+      it('writes a no-break space before the colon and places the value after it', () => {
+        const calls = drawn('\u00a0:');
+        expect(calls[0].value).toBe('Project\u00a0:');
+        const doc = makeDoc();
+        setTextStyle(doc, 'fieldLabel');
+        const colon = doc.doc.getTextWidth('Project:');
+        const spaced = doc.doc.getTextWidth('Project\u00a0:');
+        expect(spaced).toBeGreaterThan(colon);
+        expect(calls[1].x - drawn()[1].x).toBeCloseTo(spaced - colon, 6);
+      });
+
+      it('leaves nothing after the label when empty', () => {
+        const calls = drawn('');
+        expect(calls[0].value).toBe('Project');
+        const none = calls[1].x;
+        expect(none).toBeLessThan(drawn()[1].x);
+      });
+
+      it('applies to fieldRows too', () => {
+        expect(drawn('\u00a0:', true)).toEqual(drawn('\u00a0:'));
+      });
+
+      it('counts in the label width that sends a wide label to the stacked layout', () => {
+        const label = 'Registered office';
+        const probe = makeDoc({ measure: 60 });
+        setTextStyle(probe, 'fieldLabel');
+        const room = 60 * FIELD.sideMaxRatio - FIELD.inlineGap;
+        const bare = probe.doc.getTextWidth(label);
+        expect(bare).toBeLessThan(room);
+        const wide = '.'.repeat(Math.ceil((room - bare) / probe.doc.getTextWidth('.')) + 1);
+        const heightWith = (labelSuffix: string, layout: FieldLayout = 'inline') => {
+          const d = makeDoc({ measure: 60 });
+          const start = d.getYPos();
+          drawFields(d, [{ label, value: 'Paris' }], {
+            layout,
+            spaceAfter: 0,
+            ...(layout === 'inline' && { labelSuffix }),
+          });
+          return d.getYPos() - start;
+        };
+        expect(heightWith('')).toBeLessThan(heightWith(wide));
+        expect(heightWith(wide)).toBeCloseTo(heightWith('', 'stacked'), 6);
+      });
+    });
   });
 
   describe('leader', () => {

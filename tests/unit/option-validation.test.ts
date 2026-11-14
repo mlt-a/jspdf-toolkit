@@ -940,6 +940,18 @@ const STRUCTURE_VARIANTS: Case[] = [
     computeInfoBoxHeight(d, 'Content', { title: 'T', bulletPoints: v } as never),
   ),
   ...option('iconList bulletChar', ['*', ''], (d, v) => d.iconList(['One'], { icon: 'img', bulletChar: v } as never)),
+  // Only the inline layout has a label suffix: the stacked (default) and leader ones refuse it, content or none.
+  ...(['stacked', 'leader', undefined] as const).flatMap((layout) => [
+    ...single(`fields ${layout ?? 'default'} layout with labelSuffix`, (d) =>
+      d.fields([FIELD], { layout, labelSuffix: ':' }),
+    ),
+    ...single(`fields ${layout ?? 'default'} layout with labelSuffix, nothing to draw`, (d) =>
+      d.fields([], { layout, labelSuffix: '' }),
+    ),
+    ...single(`fieldRows ${layout ?? 'default'} layout with labelSuffix`, (d) =>
+      d.fieldRows([[FIELD]], { layout, labelSuffix: ':' }),
+    ),
+  ]),
   // A cover takes the options of its own variant only; every option another variant takes is refused.
   ...(Object.keys(COVER_OPTIONS) as (keyof typeof COVER_OPTIONS)[]).flatMap((variant) =>
     FOREIGN_COVER_KEYS.filter(([key]) => !(key in COVER_OPTIONS[variant])).map(([key, value]) =>
@@ -1189,6 +1201,18 @@ const OPTIONAL_BLOCKS: Case[] = [
   ),
   ...option('fieldRows field complement', NOT_TEXT, (d, v) =>
     d.fieldRows([[FIELD], [{ ...FIELD, complement: v as never }]]),
+  ),
+  ...option(
+    'fields labelSuffix',
+    NOT_TEXT,
+    (d, v) => d.fields([FIELD], { layout: 'inline', labelSuffix: v as never }),
+    (d, v) => d.fields([], { layout: 'inline', labelSuffix: v as never }),
+  ),
+  ...option(
+    'fieldRows labelSuffix',
+    NOT_TEXT,
+    (d, v) => d.fieldRows([[FIELD]], { layout: 'inline', labelSuffix: v as never }),
+    (d, v) => d.fieldRows([], { layout: 'inline', labelSuffix: v as never }),
   ),
   ...option(
     'fields layout',
