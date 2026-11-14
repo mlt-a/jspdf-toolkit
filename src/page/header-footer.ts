@@ -1,9 +1,9 @@
 import { CHROME, LINE_WIDTH, capitalMiddle } from '../core/constants';
 import type { DrawingContext } from '../core/context';
-import { checkedObject, optionalBoolean, optionalText } from '../core/errors';
-import { withDrawingState } from '../drawing/drawing-state';
+import { checkedObject, checkedVariant, optionalBoolean, optionalNumber, optionalText } from '../core/errors';
+import { restateFillColor, withDrawingState } from '../drawing/drawing-state';
 import { addCachedImage, scaledSize } from '../drawing/image-helpers';
-import { resolveTextStyle, textLevelSize } from '../drawing/text';
+import { resolveTextStyle, setTextStyle, textLevelSize } from '../drawing/text';
 import { fitWithEllipsis, normalizeText, text, trackedWidth } from '../drawing/text-lines';
 import type { TextStyle } from '../drawing/text-style';
 import { applyFont, applyTextStyle } from '../drawing/text-style';
@@ -11,7 +11,18 @@ import { errorMessage } from '../utils/errors';
 
 /** Running header and footer: declared once, drawn by `finalize()` on the numbered pages (`pageLabels`). */
 
-export interface PageHeaderOptions {
+/** The numbers a custom running header or footer draws on one page: what `{page}` and `{pages}` stand for. */
+export interface PageNumbers {
+  /** Number of the page, from 1, the covers not counted: its entry in `doc.pageLabels`. */
+  page: number;
+  /** Number of numbered pages: the size of `doc.pageLabels`. */
+  pages: number;
+}
+
+/** The running header the library draws: a title and a page number above a rule. */
+export interface PlainPageHeaderOptions {
+  /** A header drawn by the library from the options below. Default: `'plain'`. */
+  variant?: 'plain';
   /** Running title, left-aligned. Cut short with "…" when it would run into the page number or past the margin. */
   title?: string;
   /**
@@ -21,8 +32,30 @@ export interface PageHeaderOptions {
   folio?: boolean;
 }
 
-/** Options of `pageFooter`. */
-export interface PageFooterOptions {
+/** A running header drawn by your callback: see `PDFDocument.pageHeader`. */
+export interface CustomPageHeaderOptions {
+  /** A header drawn by `draw` on every numbered page. */
+  variant: 'custom';
+  /**
+   * Top margin (mm) the header needs, below which the content starts: a lower `margins.top` is raised to it, as the
+   * plain header does with 16 mm; 0 leaves the margins as they are. Less than the page height minus `margins.bottom`.
+   * Default: 0.
+   */
+  reserve?: number;
+  /** Draws the header of one page: `ctx` is the document, on that page; `numbers` its number and the page count. */
+  draw: (ctx: DrawingContext, numbers: PageNumbers) => void;
+}
+
+/**
+ * Options of `pageHeader`, discriminated by `variant`: `plain` (the default) or `custom`. The options of the other
+ * variant throw an `InvalidOptionError` at the call.
+ */
+export type PageHeaderOptions = PlainPageHeaderOptions | CustomPageHeaderOptions;
+
+/** The running footer the library draws: two labels and a logo under a rule. */
+export interface PlainPageFooterOptions {
+  /** A footer drawn by the library from the options below. Default: `'plain'`. */
+  variant?: 'plain';
   /**
    * Left label. `{page}` and `{pages}` stand for the printed page number and the page count, e.g.
    * `'{page}/{pages}'`. Declaring a footer replaces the default one (`{ right: '{page}/{pages}' }`): print the page
@@ -40,12 +73,38 @@ export interface PageFooterOptions {
   rule?: boolean;
 }
 
+/** A running footer drawn by your callback: see `PDFDocument.pageFooter`. */
+export interface CustomPageFooterOptions {
+  /** A footer drawn by `draw` on every numbered page. */
+  variant: 'custom';
+  /** Draws the footer of one page: `ctx` is the document, on that page; `numbers` its number and the page count. */
+  draw: (ctx: DrawingContext, numbers: PageNumbers) => void;
+}
+
 /**
- * Throws an `InvalidOptionError` for `pageHeader` options of the wrong type, when the header is declared: it is drawn
- * by `finalize()`, long after the call.
+ * Options of `pageFooter`, discriminated by `variant`: `plain` (the default) or `custom`. The options of the other
+ * variant throw an `InvalidOptionError` at the call.
  */
-export function checkPageHeader(options: PageHeaderOptions): void {
+export type PageFooterOptions = PlainPageFooterOptions | CustomPageFooterOptions;
+
+/** The options each variant takes besides `variant`: another variant's options are rejected, not ignored. */
+const HEADER_VARIANTS = { plain: ['title', 'folio'], custom: ['reserve', 'draw'] };
+const FOOTER_VARIANTS = { plain: ['left', 'right', 'logo', 'rule'], custom: ['draw'] };
+
+/**
+ * Throws an `InvalidOptionError` for `pageHeader` options of the wrong type or of another variant, when the header is
+ * declared: it is drawn by `finalize()`, long after the call. A `reserve` must leave room for content on the page.
+ */
+export function checkPageHeader(ctx: DrawingContext, options: PageHeaderOptions): void {
   checkedObject('pageHeader options', options);
+  checkedVariant('pageHeader', options, HEADER_VARIANTS, 'plain');
+  if (options.variant === 'custom') {
+    optionalNumber('pageHeader reserve', options.reserve, {
+      min: 0,
+      exclusiveMax: ctx.pageHeight - ctx.margins.bottom,
+    });
+    return;
+  }
   optionalText('pageHeader title', options.title);
   optionalBoolean('pageHeader folio', options.folio);
 }
@@ -54,14 +113,48 @@ export function checkPageHeader(options: PageHeaderOptions): void {
 export function checkPageFooter(options: PageFooterOptions | false): void {
   if (options === false) return;
   checkedObject('pageFooter options', options, 'false');
+  checkedVariant('pageFooter', options, FOOTER_VARIANTS, 'plain');
+  if (options.variant === 'custom') return;
   optionalText('pageFooter left', options.left);
   optionalText('pageFooter right', options.right);
   optionalText('pageFooter logo', options.logo);
   optionalBoolean('pageFooter rule', options.rule);
 }
 
+/** The top margin (mm) a declared header needs. */
+export function headerReserve(options: PageHeaderOptions): number {
+  return options.variant === 'custom' ? (options.reserve ?? 0) : CHROME.header.reserve;
+}
+
 /** Footer `finalize()` draws when none is declared. */
-export const DEFAULT_PAGE_FOOTER: PageFooterOptions = { right: '{page}/{pages}' };
+export const DEFAULT_PAGE_FOOTER: PlainPageFooterOptions = { right: '{page}/{pages}' };
+
+/**
+ * Runs `draw` on every numbered page, each call in a drawing state of its own, from the `body` text style and the fill
+ * jsPDF reports, as the `onNewPage` hook does. jsPDF goes back to the page it was on, also when `draw` throws.
+ */
+function drawCustomChrome(
+  ctx: DrawingContext,
+  draw: (ctx: DrawingContext, numbers: PageNumbers) => void,
+  labels: Map<number, number>,
+): void {
+  const { doc } = ctx;
+  const current = ctx.pageNumber;
+  const pages = labels.size;
+  try {
+    for (const [page, pageLabel] of labels) {
+      doc.setPage(page);
+      withDrawingState(ctx, () => {
+        // A page drawn earlier may have another fill in force than the one jsPDF reports.
+        restateFillColor(doc);
+        setTextStyle(ctx, 'body');
+        draw(ctx, { page: pageLabel, pages });
+      });
+    }
+  } finally {
+    doc.setPage(current);
+  }
+}
 
 const TOKEN = /(\{pages\}|\{page\})/;
 
@@ -110,6 +203,11 @@ function folioOf(pageLabel: number): string {
 }
 
 export function drawPageHeader(ctx: DrawingContext, options: PageHeaderOptions, labels: Map<number, number>): void {
+  if (options.variant === 'custom') drawCustomChrome(ctx, options.draw, labels);
+  else drawPlainPageHeader(ctx, options, labels);
+}
+
+function drawPlainPageHeader(ctx: DrawingContext, options: PlainPageHeaderOptions, labels: Map<number, number>): void {
   const { doc, theme } = ctx;
   const margin = ctx.margins.left;
   const contentRight = margin + ctx.contentWidth;
@@ -150,7 +248,7 @@ export function drawPageHeader(ctx: DrawingContext, options: PageHeaderOptions, 
  */
 function resolveLogo(
   ctx: DrawingContext,
-  options: PageFooterOptions,
+  options: PlainPageFooterOptions,
   labels: { left?: Label; right?: Label },
   labelStyle: TextStyle,
   ruleY: number,
@@ -188,7 +286,16 @@ function resolveLogo(
   }
 }
 
-export function drawPageFooter(ctx: DrawingContext, options: PageFooterOptions, pageLabels: Map<number, number>): void {
+export function drawPageFooter(ctx: DrawingContext, options: PageFooterOptions, labels: Map<number, number>): void {
+  if (options.variant === 'custom') drawCustomChrome(ctx, options.draw, labels);
+  else drawPlainPageFooter(ctx, options, labels);
+}
+
+function drawPlainPageFooter(
+  ctx: DrawingContext,
+  options: PlainPageFooterOptions,
+  pageLabels: Map<number, number>,
+): void {
   const { doc, theme } = ctx;
   const margin = ctx.margins.left;
   const contentRight = margin + ctx.contentWidth;

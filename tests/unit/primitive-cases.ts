@@ -233,6 +233,17 @@ export const FLOW: Case[] = [
         .paragraph('Body')
         .finalize(),
   ],
+  [
+    'pageHeader and pageFooter, custom',
+    (d) =>
+      d
+        .pageHeader({ variant: 'custom', reserve: 20, draw: changeEverything })
+        .pageFooter({ variant: 'custom', draw: changeEverything })
+        .paragraph('Body')
+        .addPage()
+        .paragraph('Body')
+        .finalize(),
+  ],
   ['toBuffer', (d) => d.heading('Title').paragraph('Body').toBuffer()],
 ];
 

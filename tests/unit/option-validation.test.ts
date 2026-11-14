@@ -955,6 +955,34 @@ const STRUCTURE_VARIANTS: Case[] = [
   ...single('plain back cover with draw, the variant given', (d) =>
     d.backCover({ variant: 'plain', draw: () => {} } as never),
   ),
+  // The running header and footer, both ways: a custom one refuses the plain options, a plain one `reserve` and `draw`.
+  ...Object.entries({ title: 'Report', folio: true }).flatMap(([key, value]) =>
+    single(`custom pageHeader with ${key}`, (d) =>
+      d.pageHeader({ variant: 'custom', draw: () => {}, [key]: value } as never),
+    ),
+  ),
+  ...Object.entries({ reserve: 20, draw: () => {} }).flatMap(([key, value]) =>
+    [undefined, 'plain'].flatMap((variant) =>
+      single(`plain pageHeader with ${key}, variant ${String(variant)}`, (d) =>
+        d.pageHeader({ variant, [key]: value } as never),
+      ),
+    ),
+  ),
+  ...Object.entries({ left: 'Left', right: 'Right', logo: 'img', rule: false }).flatMap(([key, value]) =>
+    single(`custom pageFooter with ${key}`, (d) =>
+      d.pageFooter({ variant: 'custom', draw: () => {}, [key]: value } as never),
+    ),
+  ),
+  ...single('plain pageFooter with draw', (d) => d.pageFooter({ draw: () => {} } as never)),
+  ...single('plain pageFooter with draw, the variant given', (d) =>
+    d.pageFooter({ variant: 'plain', draw: () => {} } as never),
+  ),
+  ...option('custom pageHeader draw', [undefined, 5, 'draw', null], (d, v) =>
+    d.pageHeader({ variant: 'custom', draw: v } as never),
+  ),
+  ...option('custom pageFooter draw', [undefined, 5, 'draw', null], (d, v) =>
+    d.pageFooter({ variant: 'custom', draw: v } as never),
+  ),
 ];
 
 // === Optional fields: left out is allowed, set it must have its type ===
@@ -1284,6 +1312,12 @@ const OPTIONAL_PAGES: Case[] = [
     option(`pageFooter ${key}`, NOT_TEXT, (d, v) => d.pageFooter({ [key]: v } as never)),
   ),
   ...option('pageFooter rule', NOT_FLAG, (d, v) => d.pageFooter({ rule: v as never })),
+  ...option('pageHeader variant', ['other', 5, null], (d, v) => d.pageHeader({ variant: v } as never)),
+  ...option('pageFooter variant', ['other', 5, null], (d, v) => d.pageFooter({ variant: v } as never)),
+  // A4 (297 mm) with the default 15 mm bottom margin: a reserve of 283 mm leaves the content no height.
+  ...option('custom pageHeader reserve', [-1, ...NOT_FINITE, 283, 1000], (d, v) =>
+    d.pageHeader({ variant: 'custom', reserve: v, draw: () => {} }),
+  ),
   // The table of contents places the waiting headings: an invalid option must come first.
   ...(['title', 'intro'] as const).flatMap((key) =>
     option(`tableOfContents ${key}`, NOT_TEXT, (d, v) => {

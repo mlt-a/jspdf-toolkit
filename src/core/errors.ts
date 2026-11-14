@@ -237,6 +237,30 @@ export function checkedLeftOut(what: string, options: object, keys: readonly str
   }
 }
 
+/**
+ * The `variant` of `options` when it is a key of `variants` (`fallback` when it is left out: `null` is no variant),
+ * a `custom` one has a `draw` function, and no option of another variant is set. `variants` lists the options each
+ * variant takes besides `variant`. Else an `InvalidOptionError`.
+ */
+export function checkedVariant(
+  what: string,
+  options: { variant?: unknown },
+  variants: Readonly<Record<string, readonly string[]>>,
+  fallback?: string,
+): string {
+  const given = options.variant === undefined ? fallback : options.variant;
+  const variant = checkedChoice(`${what} variant`, given, Object.keys(variants));
+  if (variant === 'custom' && typeof (options as { draw?: unknown }).draw !== 'function') {
+    throw new InvalidOptionError(`The custom ${what} needs a \`draw\` function`);
+  }
+  const own = variants[variant];
+  const others = Object.values(variants)
+    .flat()
+    .filter((key) => !own.includes(key));
+  checkedLeftOut(`${what} ${variant}`, options, others);
+  return variant;
+}
+
 /** The error for an option `value` outside `available`, which the message lists. */
 export function unknownOption(what: string, value: unknown, available: readonly string[]): InvalidOptionError {
   const list = available.length > 0 ? available.map((name) => `'${name}'`).join(', ') : 'none';

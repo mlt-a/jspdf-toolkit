@@ -1,12 +1,10 @@
 import { COVER, LOGO, lineHeightMm } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
-  InvalidOptionError,
   checkedBox,
-  checkedChoice,
-  checkedLeftOut,
   checkedObject,
   checkedTexts,
+  checkedVariant,
   optionalBoolean,
   optionalText,
   unknownOption,
@@ -78,19 +76,8 @@ const VARIANT_OPTIONS: Record<DesignedPage, Record<string, readonly string[]>> =
 export function checkVariant(kind: DesignedPage, options: CoverOptions | BackCoverOptions): void {
   const what = kind === 'cover' ? 'cover' : 'back cover';
   checkedObject(`${what} options`, options);
-  const variants = VARIANT_OPTIONS[kind];
-  // A back cover is a plain one unless it says otherwise: `null` is no variant.
-  const given = options.variant === undefined && kind === 'backCover' ? 'plain' : options.variant;
-  const variant = checkedChoice(`${what} variant`, given, Object.keys(variants));
-  if (variant === 'custom' && typeof (options as { draw?: unknown }).draw !== 'function') {
-    throw new InvalidOptionError(`The custom ${what} needs a \`draw\` function`);
-  }
-  const others = Object.values(variants).flat();
-  checkedLeftOut(
-    `${what} ${variant}`,
-    options,
-    others.filter((key) => !variants[variant].includes(key)),
-  );
+  // A back cover is a plain one unless it says otherwise; a cover names its variant.
+  const variant = checkedVariant(what, options, VARIANT_OPTIONS[kind], kind === 'backCover' ? 'plain' : undefined);
   if (variant === 'custom') return;
   // The options every other variant takes with a type of its own: texts, and the bar of the wave cover.
   const fields = options as Record<string, unknown>;

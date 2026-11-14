@@ -93,7 +93,15 @@ export type {
   BackCoverContact,
 } from './page/cover';
 export type { TableOfContentsOptions } from './drawing/table-of-contents';
-export type { PageHeaderOptions, PageFooterOptions } from './page/header-footer';
+export type {
+  PageHeaderOptions,
+  PlainPageHeaderOptions,
+  CustomPageHeaderOptions,
+  PageFooterOptions,
+  PlainPageFooterOptions,
+  CustomPageFooterOptions,
+  PageNumbers,
+} from './page/header-footer';
 export type { ClosingNoteOptions } from './page/closing-note';
 
 // === Low-level drawing primitives and measures ===

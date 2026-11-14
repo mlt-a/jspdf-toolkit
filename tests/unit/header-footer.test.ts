@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { CHROME } from '../../src/core/constants';
 import { PDFDocument } from '../../src/core/document';
+import { setTextStyle } from '../../src/drawing/text';
 import { createTheme } from '../../src/theme/defaults';
 import { type DrawnText, currentPage, loadLogo, makeDoc, recordTexts } from './helpers';
 
@@ -342,5 +343,133 @@ describe('pageFooter', () => {
     const { texts } = record(doc);
     doc.finalize();
     expect(shown(texts[0])).toBe('Mixed Case page 1');
+  });
+});
+
+describe('custom pageHeader and pageFooter', () => {
+  it('runs draw on the numbered pages, the footer first, with the printed number and the page count', () => {
+    const doc = coveredDoc();
+    const calls: string[] = [];
+    const log =
+      (kind: string) =>
+      (ctx: PDFDocument, { page, pages }: { page: number; pages: number }) => {
+        calls.push(`${kind} on ${currentPage(ctx)}: ${page}/${pages}`);
+      };
+    doc.pageHeader({ variant: 'custom', draw: log('header') });
+    doc.pageFooter({ variant: 'custom', draw: log('footer') });
+    doc.finalize();
+
+    expect(calls).toEqual(['footer on 2: 1/2', 'footer on 3: 2/2', 'header on 2: 1/2', 'header on 3: 2/2']);
+  });
+
+  it('draws nothing of the plain chrome: no default footer, no theme logo, no short-margin warning', () => {
+    const doc = new PDFDocument({
+      theme: createTheme({ name: 't', assets: { footerLogo: loadLogo() } }),
+      margins: { bottom: 5 },
+    });
+    doc.paragraph('Body');
+    doc.pageHeader({ variant: 'custom', draw: () => {} }).pageFooter({ variant: 'custom', draw: () => {} });
+    const { texts, lines, images } = record(doc);
+    doc.finalize();
+    expect(texts).toEqual([]);
+    expect(lines).toEqual([]);
+    expect(images).toEqual([]);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('starts every page from the body style, whatever the page before set', () => {
+    const doc = makeDoc();
+    doc.paragraph('One').addPage().paragraph('Two');
+    const seen: unknown[] = [];
+    doc.pageHeader({
+      variant: 'custom',
+      draw: (ctx) => {
+        const { fontName, fontStyle } = ctx.doc.getFont();
+        seen.push({ fontName, fontStyle, size: ctx.doc.getFontSize(), color: ctx.doc.getTextColor() });
+        ctx.doc.setFont('times', 'italic');
+        ctx.doc.setFontSize(48);
+        ctx.doc.setTextColor('#ff0000');
+      },
+    });
+    doc.finalize();
+
+    const reference = makeDoc();
+    setTextStyle(reference, 'body');
+    const { fontName, fontStyle } = reference.doc.getFont();
+    const body = { fontName, fontStyle, size: reference.doc.getFontSize(), color: reference.doc.getTextColor() };
+    expect(seen).toEqual([body, body]);
+  });
+
+  it('raises a lower top margin to its reserve and starts an empty first page under it', () => {
+    const doc = makeDoc({ margins: { top: 10 }, firstPageTop: 10 });
+    doc.pageHeader({ variant: 'custom', reserve: 30, draw: () => {} });
+    expect(doc.margins.top).toBe(30);
+    expect(doc.getYPos()).toBe(30);
+    expect(doc.addPage().getYPos()).toBe(30);
+    expect(doc.warnings).toEqual([]);
+  });
+
+  it('leaves the margins as they are without a reserve', () => {
+    const doc = makeDoc({ margins: { top: 10 }, firstPageTop: 10 });
+    doc.pageHeader({ variant: 'custom', draw: () => {} });
+    expect(doc.margins.top).toBe(10);
+    expect(doc.getYPos()).toBe(10);
+  });
+
+  it('warns when content already sits in its reserve', () => {
+    const doc = makeDoc();
+    doc.paragraph('Already there');
+    doc.pageHeader({ variant: 'custom', reserve: 30, draw: () => {} });
+    expect(doc.warnings).toEqual([
+      'pageHeader() declared after content started above its rule: the header needs the top 30 mm; ' +
+        'declare it before the content',
+    ]);
+  });
+
+  it('replaces a plain header: an empty page goes back up to the top it sets', () => {
+    const doc = makeDoc({ margins: { top: 10 }, firstPageTop: 10 });
+    doc.pageHeader({ title: 'Report' });
+    expect(doc.getYPos()).toBe(CHROME.header.reserve);
+    doc.pageHeader({ variant: 'custom', draw: () => {} });
+    expect(doc.margins.top).toBe(10);
+    expect(doc.getYPos()).toBe(10);
+    doc.paragraph('Body');
+    const { texts } = record(doc);
+    doc.finalize();
+    expect(texts.some((call) => shown(call) === 'REPORT')).toBe(false);
+  });
+
+  it("takes variant: 'plain' as the default", () => {
+    const doc = makeDoc();
+    doc.paragraph('Body');
+    doc.pageHeader({ variant: 'plain', title: 'Report' }).pageFooter({ variant: 'plain', left: 'Acme' });
+    const { texts } = record(doc);
+    doc.finalize();
+    expect(texts.map((call) => shown(call))).toEqual(['ACME', 'REPORT']);
+  });
+
+  it('warns that a block drawn from draw comes after finalize()', () => {
+    const doc = makeDoc();
+    doc.paragraph('Body');
+    doc.pageFooter({ variant: 'custom', draw: (ctx) => ctx.separator() });
+    doc.finalize();
+    expect(doc.warnings.some((warning) => warning.startsWith('Drawing after finalize()'))).toBe(true);
+  });
+
+  it('stops finalize and propagates when draw throws, jsPDF back on its page', () => {
+    const doc = makeDoc();
+    doc.paragraph('One').addPage().paragraph('Two').addPage().paragraph('Three').backCover();
+    doc.pageFooter(false);
+    const reached: number[] = [];
+    doc.pageHeader({
+      variant: 'custom',
+      draw: (_ctx, { page }) => {
+        reached.push(page);
+        if (page === 2) throw new Error('boom');
+      },
+    });
+    expect(() => doc.finalize()).toThrow('boom');
+    expect(reached).toEqual([1, 2]);
+    expect(doc.pageNumber).toBe(4);
   });
 });

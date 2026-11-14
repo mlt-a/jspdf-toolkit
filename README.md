@@ -316,7 +316,8 @@ that is not a standard size as written above (`'a4'` throws), or a size that is 
 an `InvalidOptionError`.
 
 Margin defaults: `top` 20, `left` 12, `right` = `left`, `bottom` 15 (the footer zone, at least 11 mm to fit a footer). A
-`pageHeader` needs a top margin of 16 mm: it raises a lower one to 16, and leaves the default 20 as it is. Invalid
+`pageHeader` needs a top margin of 16 mm (a custom one, its `reserve`): it raises a lower one to 16, and leaves the
+default 20 as it is. Invalid
 values (negative margins, margins that leave no width or no height, a `measure` wider than the content width) throw an
 `InvalidOptionError` at construction. The check on the height counts `margins.top` and `margins.bottom`: the room a
 `pageHeader` takes is declared later and is not part of it.
@@ -365,7 +366,7 @@ Each method returns the document, so calls chain. `o?` is the optional options o
 | `resolveSpaceAfter(spaceAfter?, fallback?)`                         | The space a custom block leaves under it.                     | [Custom components](#low-level-primitives-and-custom-components) |
 | `tableOfContents(o?)`                                               | A table of contents filled from the headings.                 | [Table of contents](#table-of-contents)                          |
 | `cover(title, o)`, `backCover(o?)`                                  | Cover pages: built-in layouts or your own drawing.            | [Cover pages](#cover-pages)                                      |
-| `pageHeader(o)`, `pageFooter(o)`, `watermark(text, o?)`             | Running header and footer, watermark.                         | [Page decorations](#page-decorations)                            |
+| `pageHeader(o)`, `pageFooter(o)`, `watermark(text, o?)`             | Running header and footer, built-in or your own; watermark.   | [Page decorations](#page-decorations)                            |
 | `background(image, o?)`, `closingNote(text, o?)`                    | A page background image; a note at the bottom of the page.    | [Page decorations](#page-decorations)                            |
 | `registerImage(name, data)`, `registerImages(map)`                  | Names an image for every image option.                        | [Node and browser](#node-and-browser)                            |
 | `finalize()`, `toBuffer()`, `toDataUri()`, `toBlob()`               | Page numbers, footers and export.                             | [Finalize, export…](#finalize-export-warnings-and-errors)        |
@@ -967,8 +968,32 @@ and footer on the numbered pages, and the watermarks last, over everything, blan
   `{page}` and `{pages}` stand for the page number and the page count, written as they are (`3`, `12`). `logo` is a
   registered image name or image data, and defaults to `theme.assets.footerLogo`; `rule: false` drops the rule; `false`
   removes the footer altogether.
+- `pageHeader({ variant: 'custom', reserve?, draw })` and `pageFooter({ variant: 'custom', draw })` draw your own:
+  `finalize()` runs `draw(ctx, { page, pages })` on every numbered page, footer first, each call from the `body` text
+  style and without leaking its fonts or colors to the next. `reserve` (mm, default 0) is the top margin the custom
+  header needs, raised and warned about like the 16 mm of the plain one. Draw with `ctx.doc` and the low-level
+  primitives: a block called from `draw` comes after `finalize()` and warns. An option of the other variant throws an
+  `InvalidOptionError`; a `draw` that throws stops `finalize()` and its error propagates.
 - Page numbers count from 1 in page order, skipping the cover and the back cover, which are not counted
   (`doc.pageLabels` maps physical pages to numbers).
+
+```ts
+import { PDFDocument } from '@mlt-a/jspdf-toolkit';
+
+const doc = new PDFDocument();
+doc.pageHeader({
+  variant: 'custom',
+  reserve: 30,
+  draw: (ctx, { page }) => {
+    ctx.doc.setFillColor(ctx.theme.colors.primary);
+    ctx.doc.rect(0, 0, 8, 24, 'F');
+    ctx.doc.setTextColor(ctx.theme.colors.primary);
+    ctx.doc.text(String(page).padStart(2, '0'), ctx.pageWidth - ctx.margins.right, 16, { align: 'right' });
+  },
+});
+doc.heading('Annual report').paragraph('The content starts under the 30 mm the header reserves.');
+```
+
 - `watermark(text, { allPages?, opacity?, angle?, fontSize?, color? })` marks the current page, or every page, covers
   included, with `allPages: true` (defaults: opacity 0.08, angle -45, 60 pt, `'text'` color). `finalize()` draws it
   over everything on the page, translucent; called before or after the content, it gives the same page.
@@ -1125,20 +1150,20 @@ too. Build it locally with `pnpm docs:api` (output in `docs/api`).
 The options of a method are typed `<Method>Options` (`heading` takes a `HeadingOptions`), a list entry `<Thing>Item`.
 The types of `@mlt-a/jspdf-toolkit`, by area:
 
-| Area                 | Types                                                                                                                                                                                                                                                                                                      |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Document             | `DocumentOptions`, `AddPageOptions`, `BackgroundOptions`, `EnsureSpaceOptions`, `InsetOptions`, `Margins`, `PageFormat`, `DrawingContext`                                                                                                                                                                  |
-| Theme                | `Theme`, `ResolvedTheme`, `ThemeOverrides`, `ColorPalette`, `ColorInput`, `Typography`, `ResolvedTypography`, `TypographySizes`, `TextLevelStyle`, `Spacing`, `SpacingOverrides`, `HeadingSpacing`, `ThemeAssets`, `CoverConfig`, `ChromeTokens`, `PresetThemeName`                                        |
-| Fonts and images     | `FontSource`, `FontStyle`, `LoadFontOptions`, `LoadImageOptions`                                                                                                                                                                                                                                           |
-| Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`                                                                                               |
-| Lists                | `SeparatorOptions`, `ListItem`, `ListOptions`, `IconListOptions`                                                                                                                                                                                                                                           |
-| Fields and forms     | `Field`, `FieldLayout`, `FieldsOptions`, `CheckboxVariant`, `CheckboxOptions`, `InlineQuestionOptions`                                                                                                                                                                                                     |
-| Boxes                | `InfoBoxOptions`, `InfoBoxCommon`, `SurfaceInfoBoxOptions`, `CalloutInfoBoxOptions`, `DeclarationItem`, `DeclarationsBoxOptions`, `AddressLine`, `AddressBlockOptions`, `ParseAddressLinesOptions`, `SignatureItem`, `SignatureBoxBounds`, `SignatureZoneOptions`, `BoxStylePreset`, `BoxOptions`          |
-| Table                | `TableRow`, `TableColumn`, `TableCell`, `TableCellContext`, `TableCellStyle`, `TableOptions`                                                                                                                                                                                                               |
-| Columns and header   | `Column`, `ColumnsOptions`, `HeaderField`, `HeaderColumn`, `HeaderColumnsOptions`, `LogoOptions`, `LogoAnchor`, `LogoPosition`, `LogoPlacement`, `BadgeOptions`                                                                                                                                            |
-| Charts               | `ChartSlice`, `DonutChartOptions`, `StackedBarOptions`, `ChartSeries`, `ChartColumn`, `ColumnChartOptions`, `ChartLine`, `ChartBand`, `LineChartData`, `LineChartOptions`                                                                                                                                  |
-| Pages                | `WatermarkOptions`, `CoverOptions`, `CoverBaseOptions`, `ImageCoverOptions`, `WaveCoverOptions`, `CustomCoverOptions`, `BackCoverOptions`, `PlainBackCoverOptions`, `CustomBackCoverOptions`, `BackCoverContact`, `TableOfContentsOptions`, `PageHeaderOptions`, `PageFooterOptions`, `ClosingNoteOptions` |
-| Pills, icons, images | `HighlightedTextOptions`, `HighlightMetrics`, `IconWithTextOptions`, `ImageOptions`                                                                                                                                                                                                                        |
+| Area                 | Types                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Document             | `DocumentOptions`, `AddPageOptions`, `BackgroundOptions`, `EnsureSpaceOptions`, `InsetOptions`, `Margins`, `PageFormat`, `DrawingContext`                                                                                                                                                                                                                                                                                           |
+| Theme                | `Theme`, `ResolvedTheme`, `ThemeOverrides`, `ColorPalette`, `ColorInput`, `Typography`, `ResolvedTypography`, `TypographySizes`, `TextLevelStyle`, `Spacing`, `SpacingOverrides`, `HeadingSpacing`, `ThemeAssets`, `CoverConfig`, `ChromeTokens`, `PresetThemeName`                                                                                                                                                                 |
+| Fonts and images     | `FontSource`, `FontStyle`, `LoadFontOptions`, `LoadImageOptions`                                                                                                                                                                                                                                                                                                                                                                    |
+| Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`                                                                                                                                                                                                                        |
+| Lists                | `SeparatorOptions`, `ListItem`, `ListOptions`, `IconListOptions`                                                                                                                                                                                                                                                                                                                                                                    |
+| Fields and forms     | `Field`, `FieldLayout`, `FieldsOptions`, `CheckboxVariant`, `CheckboxOptions`, `InlineQuestionOptions`                                                                                                                                                                                                                                                                                                                              |
+| Boxes                | `InfoBoxOptions`, `InfoBoxCommon`, `SurfaceInfoBoxOptions`, `CalloutInfoBoxOptions`, `DeclarationItem`, `DeclarationsBoxOptions`, `AddressLine`, `AddressBlockOptions`, `ParseAddressLinesOptions`, `SignatureItem`, `SignatureBoxBounds`, `SignatureZoneOptions`, `BoxStylePreset`, `BoxOptions`                                                                                                                                   |
+| Table                | `TableRow`, `TableColumn`, `TableCell`, `TableCellContext`, `TableCellStyle`, `TableOptions`                                                                                                                                                                                                                                                                                                                                        |
+| Columns and header   | `Column`, `ColumnsOptions`, `HeaderField`, `HeaderColumn`, `HeaderColumnsOptions`, `LogoOptions`, `LogoAnchor`, `LogoPosition`, `LogoPlacement`, `BadgeOptions`                                                                                                                                                                                                                                                                     |
+| Charts               | `ChartSlice`, `DonutChartOptions`, `StackedBarOptions`, `ChartSeries`, `ChartColumn`, `ColumnChartOptions`, `ChartLine`, `ChartBand`, `LineChartData`, `LineChartOptions`                                                                                                                                                                                                                                                           |
+| Pages                | `WatermarkOptions`, `CoverOptions`, `CoverBaseOptions`, `ImageCoverOptions`, `WaveCoverOptions`, `CustomCoverOptions`, `BackCoverOptions`, `PlainBackCoverOptions`, `CustomBackCoverOptions`, `BackCoverContact`, `TableOfContentsOptions`, `PageHeaderOptions`, `PlainPageHeaderOptions`, `CustomPageHeaderOptions`, `PageFooterOptions`, `PlainPageFooterOptions`, `CustomPageFooterOptions`, `PageNumbers`, `ClosingNoteOptions` |
+| Pills, icons, images | `HighlightedTextOptions`, `HighlightMetrics`, `IconWithTextOptions`, `ImageOptions`                                                                                                                                                                                                                                                                                                                                                 |
 
 ## Examples
 

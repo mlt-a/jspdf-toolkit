@@ -4,6 +4,22 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `pageHeader` and `pageFooter` take `variant: 'custom'` with a `draw(ctx, { page, pages })` callback: `finalize()`
+  runs it on every numbered page, each call from the `body` text style, its fonts and colors kept from the next page.
+  A custom header takes a `reserve`, the top margin it needs (default 0), raised and warned about like the 16 mm of
+  the plain header. An option of the other variant throws an `InvalidOptionError`, both ways.
+- Types `PlainPageHeaderOptions`, `CustomPageHeaderOptions`, `PlainPageFooterOptions`, `CustomPageFooterOptions` and
+  `PageNumbers`.
+
+### Changed
+
+- `PageHeaderOptions` and `PageFooterOptions` are unions discriminated by `variant`: `'plain'`, the default, or
+  `'custom'`. Code that leaves `variant` out works as before.
+
 ## [0.1.0] - 2026-11-13
 
 First public release: themed PDF generation on top of jsPDF, through a fluent, typed API.
@@ -127,4 +143,5 @@ First public release: themed PDF generation on top of jsPDF, through a fluent, t
 - `@mlt-a/jspdf-toolkit/fonts/inter`: `interFonts`, Inter regular, bold and italic.
 - ESM only, typed, with `jspdf` as the only peer dependency. Runs on Node 20 and later, and in the browser.
 
+[Unreleased]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/mlt-a/jspdf-toolkit/releases/tag/v0.1.0

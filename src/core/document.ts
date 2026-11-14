@@ -64,6 +64,7 @@ import {
   checkPageHeader,
   drawPageFooter,
   drawPageHeader,
+  headerReserve,
   type PageFooterOptions,
   type PageHeaderOptions,
 } from '../page/header-footer';
@@ -2185,22 +2186,40 @@ export class PDFDocument {
    * `margins.top` says. Declare it before the content: when the first page already has content above the rule, that
    * page keeps it and a warning is raised; on a first page that is still empty the start moves under the rule.
    *
+   * `variant: 'custom'` runs your `draw(ctx, { page, pages })` on every numbered page instead, from the `body` text
+   * style; the fonts, colors and line width it sets do not reach the next page. Its `reserve` (default 0) is the top
+   * margin it needs, raised and warned about as the 16 mm of the plain header. When `draw` throws, `finalize()` stops
+   * and the error propagates. Throws `InvalidOptionError` at the call for an option of the other variant.
+   *
    * @group Page elements
    *
    * @example
    * ```ts
+   * import { PDFDocument } from '@mlt-a/jspdf-toolkit';
+   *
+   * const doc = new PDFDocument();
    * doc.pageHeader({ title: 'Annual report 2026', folio: true });
+   *
+   * // Or draw your own, 24 mm tall, before the content:
+   * const custom = new PDFDocument();
+   * custom.pageHeader({
+   *   variant: 'custom',
+   *   reserve: 24,
+   *   draw: (ctx, { page, pages }) => {
+   *     ctx.doc.text(`${page} / ${pages}`, ctx.pageWidth - ctx.margins.right, 14, { align: 'right' });
+   *   },
+   * });
    * ```
    */
   pageHeader(options: PageHeaderOptions): this {
     this.checkNotFinalized();
-    checkPageHeader(options);
+    checkPageHeader(this, options);
     this.inPageFrame(() => this.declareHeader(options));
     return this;
   }
 
   private declareHeader(options: PageHeaderOptions): void {
-    const { reserve } = CHROME.header;
+    const reserve = headerReserve(options);
     this.headerOptions = { ...options };
 
     const page = this.pageNumber;
@@ -2218,7 +2237,8 @@ export class PDFDocument {
     const untouched = this.pendingHeadings.length === 0 && this.yPos === pageTop;
 
     this.layout.reserveHeader(reserve, page === 1 && untouched);
-    if (pageTop < reserve && untouched) this.yPos = this.layout.topFor(page);
+    // Down under a taller header, or back up when a header that needs less replaces it.
+    if (untouched) this.yPos = this.layout.topFor(page);
     if (earlierTooHigh || (pageTop < reserve && !untouched)) {
       this.addWarning(
         `pageHeader() declared after content started above its rule: the header needs the top ${reserve} mm; ` +
@@ -2233,19 +2253,28 @@ export class PDFDocument {
    * the footer zone, below the content limit. `false` removes the footer altogether (no rule, no numbers, no
    * logo); `rule: false` keeps the labels and the logo but not the rule.
    *
+   * `variant: 'custom'` runs your `draw(ctx, { page, pages })` on every numbered page instead, as a custom
+   * `pageHeader` does; it takes neither `theme.assets.footerLogo` nor a minimum bottom margin. Throws
+   * `InvalidOptionError` at the call for an option of the other variant.
+   *
    * @group Page elements
    *
    * @example
    * ```ts
    * doc.pageFooter({ left: 'Acme Corp', right: 'Page {page} of {pages}' });
    * doc.pageFooter(false); // no footer at all
+   * doc.pageFooter({
+   *   variant: 'custom',
+   *   draw: (ctx, { page }) => ctx.doc.text(String(page), ctx.pageWidth / 2, ctx.pageHeight - 8, { align: 'center' }),
+   * });
    * ```
    */
   pageFooter(options: PageFooterOptions | false): this {
     this.checkNotFinalized();
     checkPageFooter(options);
     this.inPageFrame(() => {
-      if (options !== false) this.warnShortFooter('pageFooter()');
+      // The plain footer needs its band; a custom one draws in whatever zone it is given.
+      if (options !== false && options.variant !== 'custom') this.warnShortFooter('pageFooter()');
       this.footerOptions = options === false ? false : { ...options };
     });
     return this;
