@@ -581,7 +581,7 @@ export interface RichTextOptions {
 }
 
 function linkStyle(ctx: DrawingContext, style: TextStyle): TextStyle {
-  return { ...style, color: ctx.theme.colors.primary };
+  return { ...style, color: ctx.theme.colors.link };
 }
 
 function richRuns(ctx: DrawingContext, runs: RichInline[], level: TextLevel): TextFlowRun[] {

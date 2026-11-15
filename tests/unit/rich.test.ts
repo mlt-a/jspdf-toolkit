@@ -25,6 +25,7 @@ import { registerFonts } from '../../src/fonts/register';
 import type { FontSource } from '../../src/fonts/types';
 import type { RichBlock } from '../../src/text/markup';
 import { parseRichInline, parseRichText } from '../../src/text/markup';
+import { createTheme } from '../../src/theme/defaults';
 import { LONG, currentPage, makeDoc, recordTexts } from './helpers';
 
 describe('parseRichInline', () => {
@@ -326,6 +327,37 @@ describe('rich text heights', () => {
       expect.any(Number),
       expect.objectContaining({ url: 'https://example.com' }),
     );
+  });
+
+  describe('link color', () => {
+    const linkBlocks: RichBlock[] = [
+      { type: 'paragraph', runs: [{ text: 'See ' }, { text: 'site', link: 'https://example.com' }] },
+    ];
+    // Colors the text and the underline of the link are set with.
+    const linkColors = (doc: PDFDocument) => {
+      const textColor = vi.spyOn(doc.doc, 'setTextColor');
+      const drawColor = vi.spyOn(doc.doc, 'setDrawColor');
+      drawRichBlocks(doc, linkBlocks);
+      return { textColor, drawColor };
+    };
+
+    it('is the primary color of a theme that sets no link color, also when only primary is set', () => {
+      for (const primary of ['#3572B8', '#0F766E']) {
+        const doc = makeDoc({ theme: createTheme({ colors: { primary } }) });
+        expect(doc.theme.colors.link).toBe(primary);
+        const { textColor, drawColor } = linkColors(doc);
+        expect(textColor).toHaveBeenCalledWith(primary);
+        expect(drawColor).toHaveBeenCalledWith(primary);
+      }
+    });
+
+    it('is the link color of the theme, for the text and the underline', () => {
+      const doc = makeDoc({ theme: createTheme({ colors: { primary: '#7C3AED', link: '#B91C1C' } }) });
+      const { textColor, drawColor } = linkColors(doc);
+      expect(textColor).toHaveBeenCalledWith('#B91C1C');
+      expect(drawColor).toHaveBeenCalledWith('#B91C1C');
+      expect(textColor).not.toHaveBeenCalledWith('#7C3AED');
+    });
   });
 
   it('sizes the link zone of a letter-spaced link from its tracked width', () => {

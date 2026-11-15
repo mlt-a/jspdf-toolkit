@@ -1,10 +1,15 @@
 import type { FontRole, HeadingLevel, TextAlign, TextLevel } from '../core/constants';
 import type { LogoPosition } from '../page/logo';
 
-/** The 15 color tokens every block draws from. `generatePalette` derives them from one primary color. */
+/** The 16 color tokens every block draws from. `generatePalette` derives them from one primary color. */
 export interface ColorPalette {
   /** The accent: `h2` headings and `label`, table head, badge text, accent bars, ticked boxes, strong pills. */
   primary: string;
+  /**
+   * Hyperlinks of rich text (text and underline). Default: `primary`; set it when the accent is too close to the text
+   * color for a link to stand out.
+   */
+  link: string;
   /**
    * Text on a `primary` fill (table head, strong pills): white when it reaches 3:1 on it, else white or dark slate,
    * whichever contrasts more.

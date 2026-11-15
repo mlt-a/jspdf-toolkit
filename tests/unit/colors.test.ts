@@ -106,6 +106,7 @@ describe('the colors the helpers return', () => {
 describe('generatePalette', () => {
   const TOKENS = [
     'primary',
+    'link',
     'onPrimary',
     'background',
     'surface',
@@ -122,10 +123,17 @@ describe('generatePalette', () => {
     'error',
   ];
 
-  it('derives the 15 tokens from the primary color', () => {
+  it('derives the 16 tokens from the primary color', () => {
     const palette = generatePalette('#3572B8');
     expect(Object.keys(palette).toSorted()).toEqual(TOKENS.toSorted());
     expect(palette.primary).toBe('#3572B8');
+  });
+
+  it('derives link from the primary color, unless the caller sets it', () => {
+    expect(generatePalette('#3572B8').link).toBe('#3572B8');
+    expect(generatePalette('#abc').link).toBe('#AABBCC');
+    expect(generatePalette('#3572B8', { link: '#0a0' }).link).toBe('#00AA00');
+    expect(generatePalette('#3572B8', { link: undefined }).link).toBe('#3572B8');
   });
 
   it('derives zebraFill from the background and text colors', () => {

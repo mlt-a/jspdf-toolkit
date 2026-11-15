@@ -62,7 +62,8 @@ export function resolveOptionalColor(
 
 /** Returns `colors` with every token written as `#RRGGBB` uppercase. Throws `InvalidColorError` naming the token. */
 export function normalizePalette(colors: ColorPalette): ColorPalette {
-  const normalized = { ...colors };
+  // A hand-built palette written before `link` existed has none: links keep the accent they always had.
+  const normalized = { ...colors, link: colors.link ?? colors.primary };
   for (const token of Object.keys(normalized) as Array<keyof ColorPalette>) {
     normalized[token] = normalizeHex(normalized[token], token);
   }
@@ -266,6 +267,7 @@ export function generatePalette(primary: string, overrides?: Partial<ColorPalett
 
   const base: Omit<ColorPalette, 'zebraFill'> = {
     primary: main,
+    link: main,
     onPrimary: readableOn(main, ON_PRIMARY_LIGHT, ON_PRIMARY_DARK),
     background: '#FFFFFF',
     surface: tint(main, 0.93),

@@ -1436,6 +1436,13 @@ describe('hand-built theme palette', () => {
     for (const value of Object.values(doc.theme.colors)) expect(value).toMatch(/^#[0-9A-F]{6}$/);
   });
 
+  it('gives links the primary color when the palette has no link token', () => {
+    const base = createTheme({ name: 't' });
+    const { link: _link, ...legacy } = base.colors;
+    const doc = new PDFDocument({ theme: { ...base, colors: { ...legacy, primary: '#abc' } as typeof base.colors } });
+    expect(doc.theme.colors.link).toBe('#AABBCC');
+  });
+
   it('throws InvalidColorError naming the token of an invalid color', () => {
     const base = createTheme({ name: 't' });
     const theme = { ...base, colors: { ...base.colors, border: 'grey' } };

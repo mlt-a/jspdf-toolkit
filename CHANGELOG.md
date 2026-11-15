@@ -6,6 +6,13 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `link` palette token: the color of the links of rich text (text and underline). Optional in `colors` of `createTheme`
+  and `generatePalette`; when left out it is `primary`, also when only `primary` is set, so a theme that does not set it
+  draws as before. It lets a theme whose `primary` is close to the text color keep recognizable links. `ColorPalette`
+  gains a `link` key (`ColorInput` accepts `'link'`); a hand-built theme without it gets `primary` in `doc.theme`.
+
 ## [0.3.0] - 2026-11-14
 
 ### Added

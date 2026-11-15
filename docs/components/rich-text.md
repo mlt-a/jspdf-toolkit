@@ -33,7 +33,7 @@ The words outside the markup keep the weight of their [text level](text-levels.m
 `richBlocks(blocks, options?)` draws paragraphs and lists from data. It is how you add a link: a run is
 `{ text, bold?, italic?, link? }`, and a block is `{ type: 'paragraph', runs }`, or a list of runs per item:
 `{ type: 'bulletList', items }` or `{ type: 'numberedList', items }`, numbered. A `\n` in the text of a run starts a new
-line.
+line. A link is underlined and drawn in `theme.colors.link`, which is `primary` unless the theme sets it.
 
 <!-- preview: rich-blocks -->
 

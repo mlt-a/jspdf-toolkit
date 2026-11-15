@@ -561,6 +561,8 @@ const GENERATED_TABLES = {
     const marked = Object.fromEntries(keys.map((key, index) => [key, 100 + index]));
     const roles = { helvetica: 'body', times: 'title', courier: 'label' };
     const theme = api.createTheme({
+      // `link` defaults to `primary`: a token of its own keeps every color matching one token.
+      colors: { link: '#FF00FF' },
       typography: { fontFamily: 'helvetica', titleFontFamily: 'times', labelFontFamily: 'courier', sizes: marked },
     });
     const doc = new api.PDFDocument({ theme });

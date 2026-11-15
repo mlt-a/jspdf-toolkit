@@ -21,7 +21,7 @@ and the rules to know.
 
 ## Features
 
-- One primary color derives a 15-token palette (WCAG contrast aware); 10 presets included.
+- One primary color derives a 16-token palette (WCAG contrast aware); 10 presets included.
 - Automatic pagination: page breaks, headings kept with the block that follows, table continuation.
 - Table of contents, running header and footer, page numbers, watermark, cover and back cover.
 - Forms and legal blocks: fields, checkboxes, declarations, address blocks, signature zones.
@@ -266,7 +266,7 @@ its `#`.
 
 ### Palette
 
-`colors` has 15 tokens: `primary`, `onPrimary` (text on primary: white from a 3:1 contrast, else white or dark by contrast), `background`, `border`,
+`colors` has 16 tokens: `primary`, `link` (links of rich text; defaults to `primary`), `onPrimary` (text on primary: white from a 3:1 contrast, else white or dark by contrast), `background`, `border`,
 `surface`, `surfaceBorder`, `zebraFill` (alternate table rows), `text`, `secondary`, `subtle`, `tint`, `tintBorder`,
 `tintLight`, `success`, `error`. Dark themes work: set `background` and `text`, and `zebraFill` follows.
 
