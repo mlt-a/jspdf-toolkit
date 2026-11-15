@@ -4,7 +4,7 @@ This file provides guidance to coding agents working with code in this repositor
 
 ## Project Status
 
-Library in active early development (v0.3.0). Breaking changes to the public API are expected and acceptable — favor the best design over backwards compatibility.
+Library in active early development (v0.4.0). Breaking changes to the public API are expected and acceptable — favor the best design over backwards compatibility.
 
 ## Commands
 
@@ -42,7 +42,7 @@ Pre-push hook runs `pnpm lint && pnpm fmt:check`. CI runs `pnpm check:all` on No
 
 ```
 createTheme({ colors: { primary: '#3572B8' } })
-  → auto-generates 15-color palette via generatePalette()
+  → auto-generates 16-color palette via generatePalette()
   → new PDFDocument({ theme? })
     → registers `fonts` (first family is the default when the theme names none, else Helvetica; Inter opt-in via `@mlt-a/jspdf-toolkit/fonts/inter`)
     → initializes jsPDF + layout state
@@ -55,7 +55,7 @@ createTheme({ colors: { primary: '#3572B8' } })
 
 - **`src/core/document.ts`** — `PDFDocument` class. The main API. All fluent methods live here, delegating to drawing functions. Tracks Y position, page breaks, cover pages. Page decorations are two fixed layers drawn by `startPage`: theme color, `background` image; the `onNewPage` hook runs after them. `finalize` draws the watermarks last, over everything. Holds the current frame (page or column) that `margins`, `contentWidth` and `measure` return.
 - **`src/core/constants.ts`** — `LAYOUT`, `SPACING`, `LINE_WIDTH`, `BOX`, `COVER`, `TextLevel` and `HeadingLevel` types, `HEADING_LEVELS`. All layout magic numbers are here. `SPACING` is the only scale of gaps: a gap in a component constant is one of its steps; sizes (icon, bar, margin) and radii (`RADIUS`) stay plain numbers.
-- **`src/theme/`** — Theme system. `createTheme()` in `defaults.ts` merges overrides. `colors.ts` has `generatePalette()` which derives 15 tokens from a single primary color using WCAG luminance. `presets.ts` has 10 named themes (ocean, emerald, slate, etc.).
+- **`src/theme/`** — Theme system. `createTheme()` in `defaults.ts` merges overrides. `colors.ts` has `generatePalette()` which derives 16 tokens from a single primary color using WCAG luminance. `presets.ts` has 10 named themes (ocean, emerald, slate, etc.).
 - **`src/core/context.ts`** — `DrawingContext`, a type alias of `PDFDocument`: the name drawing primitives and custom components take.
 - **`src/core/page-layout.ts`** — `PageLayout`, the page geometry: the four margins (`resolveMargins`), `firstPageTop`, the header reserve widening `margins.top`. `topFor(page)` includes the header reserve; `baseTop(page)` (covers) does not.
 - **`src/core/page-format.ts`** — `PageFormat`, `resolvePageFormat`: names and `[width, height]`, validated before jsPDF is built.
@@ -96,7 +96,7 @@ createTheme({ colors: { primary: '#3572B8' } })
 
 **Spacing**: A block owns the space under it (`spaceAfter`, default `theme.spacing.block`); a heading or section may ask for space above (`spaceBefore`, from `theme.spacing.heading`). The gap between two blocks is the larger of the two, never their sum, and nothing is added at the top of a page. `endBlock` and `beginBlock` on `PDFDocument` are the only place this happens. A block may attach to the one above it: `endBlock(bottom, options?.spaceAfter, { kind, fallback })` (internal overload) takes the option as the caller gave it and records the kind only when it is absent: a primitive never tests that itself. `attachTo(kind, gap, height)` (internal), called in place of `ensureSpace`, reserves the room with the move counted, then moves the position up to `gap` under a block of that kind closed in the same frame, never down, and returns the space it left. A page break, `addSpace`, `setYPos`, `beginBlock` or any other `endBlock` forgets the kind. A badge attaches to a heading this way, and a checkbox to the checkbox above it (2 mm, its own space kept under it).
 
-**Theme-driven**: Zero hardcoded colors. All styling flows from `theme.colors` (15 palette tokens) and `theme.typography`. Color options are named `color` and typed `ColorInput` (palette token or hex), resolved by `resolveColor` in `theme/colors.ts` (`resolveOptionalColor` for an option with a default: `null` is refused), before any empty-content exit. A heading wraps like a paragraph: `layoutHeading` serves both `headingHeight` and `drawHeading`. The `boxStyle` presets (`tint`, `border`, `surface`, `surfaceBorder`, `background`) map to palette tokens in `drawing/boxes.ts`.
+**Theme-driven**: Zero hardcoded colors. All styling flows from `theme.colors` (16 palette tokens) and `theme.typography`. Color options are named `color` and typed `ColorInput` (palette token or hex), resolved by `resolveColor` in `theme/colors.ts` (`resolveOptionalColor` for an option with a default: `null` is refused), before any empty-content exit. A heading wraps like a paragraph: `layoutHeading` serves both `headingHeight` and `drawHeading`. The `boxStyle` presets (`tint`, `border`, `surface`, `surfaceBorder`, `background`) map to palette tokens in `drawing/boxes.ts`.
 
 **Presets**: `presetTheme(name, overrides?)` returns a ready `Theme`.
 
