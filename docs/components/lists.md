@@ -48,20 +48,23 @@ An item is a string, or an object:
 
 <!-- options: ListOptions -->
 
-| Option            | Type        | Default                               | Description                                                                                                                                                 |
-| ----------------- | ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `level`           | `TextLevel` | `'body'`                              | Text level of the items.                                                                                                                                    |
-| `indent`          | `number`    | 0                                     | Indent (mm) of the whole list from the left margin, taken off its width.                                                                                    |
-| `maxWidth`        | `number`    | the document `measure` minus `indent` | Width (mm) of the list, bullets included, above 0. Wider than the available width (the content width less `indent`): brought down to it, with a warning.    |
-| `itemSpacing`     | `number`    | 1                                     | Space (mm) between two items: 0 or more.                                                                                                                    |
-| `bulletChar`      | `string`    | `'•'`                                 | Bullet glyph of `bulletList`, a string. `numberedList` checks it and draws its numbers instead; `iconList` has no glyph, so it throws `InvalidOptionError`. |
-| `lineHeightScale` | `number`    | 1                                     | Multiplies the line height.                                                                                                                                 |
-| `spaceAfter`      | `number`    | `theme.spacing.block`                 | Space (mm) under the list.                                                                                                                                  |
+| Option            | Type                  | Default                               | Description                                                                                                                                                 |
+| ----------------- | --------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `level`           | `TextLevel`           | `'body'`                              | Text level of the items.                                                                                                                                    |
+| `indent`          | `number`              | 0                                     | Indent (mm) of the whole list from the left margin, taken off its width.                                                                                    |
+| `maxWidth`        | `number`              | the document `measure` minus `indent` | Width (mm) of the list, bullets included, above 0. Wider than the available width (the content width less `indent`): brought down to it, with a warning.    |
+| `align`           | `'justify' \| 'left'` | `theme.typography.align`, else `left` | `justify` stretches every line but the last one of each item, sub-item and detail.                                                                          |
+| `itemSpacing`     | `number`              | 1                                     | Space (mm) between two items: 0 or more.                                                                                                                    |
+| `bulletChar`      | `string`              | `'•'`                                 | Bullet glyph of `bulletList`, a string. `numberedList` checks it and draws its numbers instead; `iconList` has no glyph, so it throws `InvalidOptionError`. |
+| `lineHeightScale` | `number`              | 1                                     | Multiplies the line height.                                                                                                                                 |
+| `spaceAfter`      | `number`              | `theme.spacing.block`                 | Space (mm) under the list.                                                                                                                                  |
 
 <!-- /options -->
 
 ## Rules
 
+- **Alignment**: `align: 'justify'` stretches every line but the last one of each item, sub-item and detail. Without
+  `align`, `theme.typography.align` decides (`'left'` by default).
 - **Throws** an `InvalidOptionError` for an object item without a `text` string, an `itemSpacing` below 0, a `maxWidth`
   that is not above 0, and an `indent` or a `maxWidth` that leaves the items no width beside their bullets, besides the
   checks every block makes (see [errors](errors.md#what-a-block-checks)). The whole list is checked before its first

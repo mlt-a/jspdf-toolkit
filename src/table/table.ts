@@ -459,6 +459,8 @@ export function drawTable(ctx: DrawingContext, data: TableRow[], tableOptions: T
 
     const titleOptions: ParagraphOptions = {
       level: 'bodyBold',
+      // A title, whatever the alignment of the theme.
+      align: 'left',
       maxWidth: widths.reduce((sum, width) => sum + width, 0),
       spaceAfter: TABLE.continuationTitleGap,
     };

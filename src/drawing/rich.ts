@@ -1,5 +1,5 @@
 import type { TextLevel } from '../core/constants';
-import { FIELD, LEADER, LINE_WIDTH, LIST, TEXT, ascentMm } from '../core/constants';
+import { ALIGNMENTS, FIELD, LEADER, LINE_WIDTH, LIST, TEXT, ascentMm } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
   checkedArray,
@@ -15,7 +15,7 @@ import { parseRichText } from '../text/markup';
 import { withDrawingState, withStroke } from './drawing-state';
 import type { HighlightMetrics } from './highlights';
 import { drawPill, measureHighlightedText } from './highlights';
-import { ALIGNMENTS, measureTextLevel, optionalLevel, resolveTextStyle } from './text';
+import { measureTextLevel, optionalLevel, resolveAlign, resolveTextStyle } from './text';
 import type { MeasuredLine } from './text-lines';
 import {
   breakLongToken,
@@ -573,7 +573,7 @@ export interface RichTextOptions {
   maxWidth?: number;
   /**
    * `justify` stretches the spaces of every line but the last one of each paragraph and list item, and the line before
-   * a `\n` in the text of a run. Default: `left`.
+   * a `\n` in the text of a run. Default: `theme.typography.align`, else `left`.
    */
   align?: 'justify' | 'left';
   /** Space (mm) after the last block. Default: `theme.spacing.block`, also the space between two blocks. */
@@ -646,7 +646,7 @@ function justifyLine(
 }
 
 /** `layoutFlow` with the lines justified when `justify` is set. */
-function layoutAlignedFlow(
+export function layoutAlignedFlow(
   ctx: DrawingContext,
   runs: TextFlowRun[],
   options: FlowOptions,
@@ -691,7 +691,7 @@ export function checkRichBlocks(what: string, blocks: readonly RichBlock[]): voi
 /** Single source of layout for `drawRichBlocks`, `computeRichBlocksHeight` and the list details. */
 export function layoutRichBlocks(ctx: DrawingContext, blocks: RichBlock[], options?: RichTextOptions): RichLayout {
   const level = optionalLevel('richText', options?.level) ?? 'body';
-  const align = optionalChoice('richText align', options?.align, ALIGNMENTS);
+  const align = resolveAlign(ctx, optionalChoice('richText align', options?.align, ALIGNMENTS));
   const frame = resolveLineWidth(ctx, 'richText', options);
   // Brought into the frame only when there is text: nothing to draw raises no warning.
   const width = blocks.length > 0 ? fitLineWidth(ctx, 'richText', frame) : frame.width;

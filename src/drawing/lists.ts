@@ -1,5 +1,5 @@
 import type { TextLevel } from '../core/constants';
-import { ICONS, LIST, centerOnCapitals } from '../core/constants';
+import { ALIGNMENTS, ICONS, LIST, centerOnCapitals } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
   checkedArray,
@@ -7,6 +7,7 @@ import {
   checkedObject,
   checkedText,
   checkedTexts,
+  optionalChoice,
   optionalNumber,
   optionalText,
 } from '../core/errors';
@@ -14,8 +15,8 @@ import type { RichBlock } from '../text/markup';
 import { withDrawingState } from './drawing-state';
 import { drawIcon } from './image-helpers';
 import type { FlowLayout, FlowPrefix, RichLayout } from './rich';
-import { checkRichBlocks, drawFlow, drawRichLayout, layoutFlow, layoutRichBlocks, listPrefixes } from './rich';
-import { measureTextLevel, optionalLevel, resolveTextStyle } from './text';
+import { checkRichBlocks, drawFlow, drawRichLayout, layoutAlignedFlow, layoutRichBlocks, listPrefixes } from './rich';
+import { measureTextLevel, optionalLevel, resolveAlign, resolveTextStyle } from './text';
 import { fitLineWidth, remainingTextWidth, resolveLineWidth } from './text-lines';
 import type { TextStyle } from './text-style';
 
@@ -48,6 +49,11 @@ export interface ListOptions {
    * with a warning. Default: the document `measure` minus `indent`.
    */
   maxWidth?: number;
+  /**
+   * `justify` stretches every line but the last one of each item, sub-item and detail. Default:
+   * `theme.typography.align`, else `left`.
+   */
+  align?: 'justify' | 'left';
   /** Space (mm) between two items: 0 or more. Default: 1. */
   itemSpacing?: number;
   /**
@@ -80,6 +86,7 @@ function layoutItem(
   prefix: FlowPrefix,
   style: TextStyle,
   lineHeight: number,
+  align: 'justify' | 'left',
 ): ItemLayout {
   const itemText = typeof item === 'string' ? item : item.text;
   const subItems = typeof item === 'string' ? [] : (item.subItems ?? []);
@@ -93,12 +100,13 @@ function layoutItem(
 
   // Checked before the flows: a frame too narrow for its prefix is a wrong call, not text to squeeze.
   remainingTextWidth('a list item', width, prefix.width);
-  const text = layoutFlow(ctx, [{ text: itemText, style }], { width, lineHeight, prefix });
+  const justify = align === 'justify';
+  const text = layoutAlignedFlow(ctx, [{ text: itemText, style }], { width, lineHeight, prefix }, justify);
   const subPrefix = { text: '-', style, width: LIST.bulletPrefixWidth };
   const subWidth = width - LIST.subIndent;
   if (subItems.length > 0) remainingTextWidth('a list sub-item', subWidth, subPrefix.width);
   const subLayouts = subItems.map((subItem) =>
-    layoutFlow(ctx, [{ text: subItem, style }], { width: subWidth, lineHeight, prefix: subPrefix }),
+    layoutAlignedFlow(ctx, [{ text: subItem, style }], { width: subWidth, lineHeight, prefix: subPrefix }, justify),
   );
 
   let height = text.height;
@@ -111,7 +119,7 @@ function layoutItem(
   const detailFrame = { indent: indent + prefix.width, maxWidth: width - prefix.width };
   const detail =
     detailBlocks.length > 0
-      ? layoutRichBlocks(ctx, detailBlocks, { level: DETAIL_LEVEL, ...detailFrame, spaceAfter: 0 })
+      ? layoutRichBlocks(ctx, detailBlocks, { level: DETAIL_LEVEL, ...detailFrame, align, spaceAfter: 0 })
       : null;
   if (detail && detail.lines.length > 0) height += LIST.itemSpacing + detail.lines[0].line.height;
   return { text, subItems: subLayouts, detail, height };
@@ -139,6 +147,7 @@ function drawListInternal(ctx: DrawingContext, items: ListItem[], kind: ListKind
   // The options are checked before the items: an invalid one throws even on an empty list.
   const level = optionalLevel('list', options?.level) ?? 'body';
   optionalText('list bulletChar', options?.bulletChar);
+  const align = resolveAlign(ctx, optionalChoice('list align', options?.align, ALIGNMENTS));
   const lineFrame = resolveLineWidth(ctx, 'list', options);
   const itemSpacing = optionalNumber('list itemSpacing (mm)', options?.itemSpacing, { min: 0 }) ?? LIST.itemSpacing;
   const { lineHeight, ascent } = measureTextLevel(ctx, level, options);
@@ -154,7 +163,7 @@ function drawListInternal(ctx: DrawingContext, items: ListItem[], kind: ListKind
     textPrefixOf === null ? { width: ICONS.size + ICONS.gap } : { ...textPrefixOf(index), style };
   const x = ctx.margins.left + frame.indent;
   // Every item is laid out before the first one is drawn: the width a sub-item or a detail leaves is checked there.
-  const layouts = items.map((item, index) => layoutItem(ctx, item, frame, prefixOf(index), style, lineHeight));
+  const layouts = items.map((item, index) => layoutItem(ctx, item, frame, prefixOf(index), style, lineHeight, align));
 
   items.forEach((_item, index) => {
     const layout = layouts[index];

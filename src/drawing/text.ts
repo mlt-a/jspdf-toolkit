@@ -1,5 +1,5 @@
 import type { HeadingLevel, TextLevel } from '../core/constants';
-import { HEADING, HEADING_LEVELS, LINE_WIDTH, ascentMm, descentMm, lineHeightMm } from '../core/constants';
+import { ALIGNMENTS, HEADING, HEADING_LEVELS, LINE_WIDTH, ascentMm, descentMm, lineHeightMm } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
   POSITIVE,
@@ -237,7 +237,10 @@ export interface HeadingOptions {
    * `InvalidOptionError`.
    */
   number?: string;
-  /** Rule under the heading, across the reading column, in the primary color. */
+  /**
+   * Rule under the heading, across the reading column, in the primary color. The `headingRuleWidth` document option
+   * shortens it.
+   */
   rule?: boolean;
   /**
    * Keeps the heading with the block that follows it, so a heading never ends a page alone: `doc.heading()` waits
@@ -362,7 +365,8 @@ export function drawHeading(ctx: DrawingContext, text: string, options?: Heading
       const ruleY = currentY + height;
       doc.setDrawColor(theme.colors.primary);
       doc.setLineWidth(LINE_WIDTH.normal);
-      doc.line(margin, ruleY, margin + ctx.measure, ruleY);
+      // The rule may stop short of the reading column; it never goes past it.
+      doc.line(margin, ruleY, margin + Math.min(ctx.measure, ctx.headingRuleWidth ?? ctx.measure), ruleY);
     }
   });
 
@@ -381,7 +385,10 @@ export interface ParagraphOptions {
    * the document `measure` minus `indent`.
    */
   maxWidth?: number;
-  /** `justify` stretches every line but the last one of each source line. Default: `left`. */
+  /**
+   * `justify` stretches every line but the last one of each source line. Default: `theme.typography.align`, else
+   * `left`.
+   */
   align?: 'justify' | 'left';
   /** Multiplies the line height. Default: 1. */
   lineHeightScale?: number;
@@ -389,11 +396,16 @@ export interface ParagraphOptions {
   spaceAfter?: number;
 }
 
-/** The alignments of a paragraph or of rich text. */
-export const ALIGNMENTS = ['justify', 'left'] as const;
+/**
+ * The alignment a block is set in: its own `align`, else the one of the theme. The caller has checked `align`.
+ */
+export function resolveAlign(ctx: DrawingContext, align: 'justify' | 'left' | undefined): 'justify' | 'left' {
+  return align ?? ctx.theme.typography.align ?? 'left';
+}
 
 /** The options of a paragraph checked, before the text is looked at: an invalid one throws even on an empty text. */
 interface ParagraphFrame {
+  align: 'justify' | 'left';
   line: LineFrame;
   lineHeight: number;
   ascent: number;
@@ -402,10 +414,10 @@ interface ParagraphFrame {
 
 function paragraphFrame(ctx: DrawingContext, options?: ParagraphOptions): ParagraphFrame {
   optionalLevel('paragraph', options?.level);
-  optionalChoice('paragraph align', options?.align, ALIGNMENTS);
+  const align = resolveAlign(ctx, optionalChoice('paragraph align', options?.align, ALIGNMENTS));
   const line = resolveLineWidth(ctx, 'paragraph', options);
   const { lineHeight, ascent } = measureTextLevel(ctx, options?.level ?? 'body', options);
-  return { line, lineHeight, ascent, spaceAfter: ctx.resolveSpaceAfter(options?.spaceAfter) };
+  return { align, line, lineHeight, ascent, spaceAfter: ctx.resolveSpaceAfter(options?.spaceAfter) };
 }
 
 /** Wrapped lines of a paragraph, and where they go. Shared by `drawParagraph` and `computeParagraphHeight`. */
@@ -441,7 +453,7 @@ export function drawParagraph(ctx: DrawingContext, text: string, options?: Parag
   if (text === '') return ctx.peekYPos();
   return withDrawingState(ctx, () => {
     const level = options?.level ?? 'body';
-    const align = options?.align ?? 'left';
+    const { align } = frame;
     const { x, maxWidth, lineHeight, ascent, lines } = layoutParagraph(ctx, text, frame, options);
 
     lines.forEach(({ line, last }) => {

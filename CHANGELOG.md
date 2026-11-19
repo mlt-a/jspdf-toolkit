@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `typography.align` (`'left'` by default, or `'justify'`): the alignment of paragraphs, rich text and lists when the
+  call sets no `align` of its own, which still wins. An invalid value throws in `createTheme`. Info boxes, callouts and
+  tables keep their own alignment; the continuation title of a table stays ragged.
+- `align` option of `bulletList`, `numberedList` and `iconList`: `'justify'` stretches every line but the last one of
+  each item, sub-item and detail.
+- `headingRuleWidth` document option (mm, above 0, at most the content width): the length of the rule under a heading
+  drawn with `rule: true`, so the rule can stop short of the right edge while the text runs to it. A narrower frame (a
+  column, an inset) or `measure` brings it down. Default: the reading column, as before.
+
 ## [0.4.0] - 2026-11-15
 
 ### Added

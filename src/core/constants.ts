@@ -585,6 +585,9 @@ export const ALL_ROLES_LISTED: AssertAllRolesListed = true;
 /** Heading level, `h1` to `h4`. */
 export type HeadingLevel = Extract<TextLevel, 'h1' | 'h2' | 'h3' | 'h4'>;
 
+/** The alignments of a paragraph, of rich text and of a list: `justify` stretches every line but the last one. */
+export const ALIGNMENTS = ['justify', 'left'] as const;
+
 /** Horizontal alignment of a line of text on its anchor. */
 export type TextAlign = 'left' | 'center' | 'right';
 

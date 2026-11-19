@@ -70,7 +70,7 @@ doc.richBlocks([
 | `level`      | `TextLevel`           | `body`                                                   | Text level of the block (size, color, base weight). Emphasis is set run by run.                                                                 |
 | `indent`     | `number`              | 0                                                        | Indent (mm) from the left margin.                                                                                                               |
 | `maxWidth`   | `number`              | the document `measure` minus `indent`                    | Line width (mm), above 0. Wider than the available width (the content width less `indent`): brought down to it, with a warning.                 |
-| `align`      | `'justify' \| 'left'` | `left`                                                   | `justify` stretches the spaces of every line but the last one of each paragraph and list item, and the line before a `\n` in the text of a run. |
+| `align`      | `'justify' \| 'left'` | `theme.typography.align`, else `left`                    | `justify` stretches the spaces of every line but the last one of each paragraph and list item, and the line before a `\n` in the text of a run. |
 | `spaceAfter` | `number`              | `theme.spacing.block`, also the space between two blocks | Space (mm) after the last block.                                                                                                                |
 
 <!-- /options -->

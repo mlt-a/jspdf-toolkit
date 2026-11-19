@@ -210,14 +210,14 @@ const theme = createTheme({
 });
 ```
 
-| Override     | Content                                                                                                |
-| ------------ | ------------------------------------------------------------------------------------------------------ |
-| `name`       | Free label. Default `'custom'`.                                                                        |
-| `colors`     | Any `ColorPalette` token. `primary` defaults to `#2563EB`; tokens left out are derived from it.        |
-| `typography` | `fontFamily`, `titleFontFamily`, `labelFontFamily`, `sizes`, `weights`, `lineHeightFactor`, `levels`.  |
-| `spacing`    | `block` (space under a block, default 4 mm) and `heading` (`before` and `after` of each level), in mm. |
-| `assets`     | `footerLogo` (default logo of `pageFooter`), `backgroundOffsetY`, `covers` (layouts of image covers).  |
-| `chrome`     | `uppercase` (default `true`) and `tracking` (mm) of the running header and footer.                     |
+| Override     | Content                                                                                                        |
+| ------------ | -------------------------------------------------------------------------------------------------------------- |
+| `name`       | Free label. Default `'custom'`.                                                                                |
+| `colors`     | Any `ColorPalette` token. `primary` defaults to `#2563EB`; tokens left out are derived from it.                |
+| `typography` | `fontFamily`, `titleFontFamily`, `labelFontFamily`, `sizes`, `weights`, `lineHeightFactor`, `levels`, `align`. |
+| `spacing`    | `block` (space under a block, default 4 mm) and `heading` (`before` and `after` of each level), in mm.         |
+| `assets`     | `footerLogo` (default logo of `pageFooter`), `backgroundOffsetY`, `covers` (layouts of image covers).          |
+| `chrome`     | `uppercase` (default `true`) and `tracking` (mm) of the running header and footer.                             |
 
 Colors are `#RGB` or `#RRGGBB`. An invalid one throws an `InvalidColorError` carrying the value (and the token, for a
 theme color). A value you leave `undefined` keeps its default, at every depth of the overrides.
@@ -324,6 +324,7 @@ All options are optional, including `theme` (default `createTheme()`).
 | `fontFallbacks`                                     | none                 | Faces a family lacks on purpose, by family name: they fall back without a warning. See [Fonts](#fonts).                                                                                                            |
 | `firstPageTop`                                      | `margins.top`        | Top of the content on the first page only (room for a letterhead, or a first page that starts higher).                                                                                                             |
 | `measure`                                           | content width        | Width of the reading column: the default width of text blocks. Tables, charts, columns, separators, the running header and footer and the covers span the content width. Inside a column, the narrower of the two. |
+| `headingRuleWidth`                                  | `measure`            | Length of the rule under a heading drawn with `rule: true`: at most the content width, and never past the reading column.                                                                                          |
 | `compress`                                          | `true`               | Compress the PDF streams.                                                                                                                                                                                          |
 | `title`, `author`, `subject`, `keywords`, `creator` | none                 | PDF metadata.                                                                                                                                                                                                      |
 | `debug`                                             | `false`              | Print warnings to the console as they are raised.                                                                                                                                                                  |

@@ -1,6 +1,6 @@
-import { FONT_ROLES, HEADING_LEVELS, SPACING, TEXT_LEVELS } from '../core/constants';
+import { ALIGNMENTS, FONT_ROLES, HEADING_LEVELS, SPACING, TEXT_LEVELS } from '../core/constants';
 import type { TextLevel } from '../core/constants';
-import { InvalidOptionError, POSITIVE, checkedNumber, unknownOption } from '../core/errors';
+import { InvalidOptionError, POSITIVE, checkedNumber, optionalChoice, unknownOption } from '../core/errors';
 import { defined } from '../utils/defined';
 import { generatePalette, resolveColor } from './colors';
 import type {
@@ -175,6 +175,7 @@ export function resolveTypography(
   typography: ThemeOverrides['typography'] | undefined,
   palette: ColorPalette,
 ): Typography {
+  optionalChoice('theme.typography.align', typography?.align, ALIGNMENTS);
   return {
     ...defined(typography),
     sizes: resolveSizes(typography?.sizes),

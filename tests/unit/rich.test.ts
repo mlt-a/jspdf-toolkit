@@ -26,7 +26,7 @@ import type { FontSource } from '../../src/fonts/types';
 import type { RichBlock } from '../../src/text/markup';
 import { parseRichInline, parseRichText } from '../../src/text/markup';
 import { createTheme } from '../../src/theme/defaults';
-import { LONG, currentPage, makeDoc, recordTexts } from './helpers';
+import { LONG, columnDoc, currentPage, edgeOf, makeDoc, recordTexts } from './helpers';
 
 describe('parseRichInline', () => {
   it('parses bold and italic', () => {
@@ -506,6 +506,13 @@ describe('rich text align and indent', () => {
     doc.richText(markup, { indent: 12, align: 'justify' });
     const xs = calls.mock.calls.map((call) => Number(call[1]));
     expect(Math.min(...xs)).toBeCloseTo(doc.margins.left + 12, 6);
+  });
+
+  it('reads typography.align, and yields to the align of the call', () => {
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.richText(markup))).toBeCloseTo(100, 1);
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.richText(markup, { align: 'left' }))).toBeLessThan(99.9);
+    expect(edgeOf(columnDoc(), (doc) => doc.richText(markup))).toBeLessThan(99.9);
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.richBlocks(parseRichText(markup)))).toBeCloseTo(100, 1);
   });
 
   it('justifies list items after their prefix', () => {

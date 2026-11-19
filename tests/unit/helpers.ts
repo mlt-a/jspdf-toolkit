@@ -80,6 +80,21 @@ export function recordTexts(doc: PDFDocument): DrawnText[] {
   return drawn;
 }
 
+/** A document with a 100 mm reading column; `align` sets the default alignment of its theme. */
+export const columnDoc = (align?: 'justify' | 'left'): PDFDocument =>
+  makeDoc({ measure: 100, ...(align && { theme: createTheme({ typography: { align } }) }) });
+
+/** The right edge (mm from the left margin) of what `draw` puts on `doc`. */
+export function edgeOf(doc: PDFDocument, draw: (doc: PDFDocument) => void): number {
+  const texts = recordTexts(doc);
+  draw(doc);
+  return rightmost(texts) - doc.margins.left;
+}
+
+/** The right edge (mm) of the text drawn: where the furthest text call ends. */
+export const rightmost = (texts: DrawnText[]): number =>
+  Math.max(...texts.map(({ x, widths }) => x + Math.max(...widths)));
+
 /** The first recorded text call whose first line is `label`. */
 export const textOf = (texts: DrawnText[], label: string) => texts.find((call) => call.lines[0] === label)!;
 

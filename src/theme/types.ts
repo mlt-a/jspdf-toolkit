@@ -118,6 +118,12 @@ export interface Typography {
   /** Line spacing: the distance between two baselines is the font size times this factor. Default: 1.3. */
   lineHeightFactor: number;
   /**
+   * Alignment of paragraphs, rich text and lists when the call sets no `align` of its own: `left`, or `justify` to
+   * stretch every line but the last one of each paragraph or item to the line width. Info boxes, callouts and tables
+   * keep their own alignment. Default: `'left'`.
+   */
+  align?: 'justify' | 'left';
+  /**
    * Style of the text levels, level by level, over the built-in one: e.g. `{ h2: { color: 'text' } }` for section
    * headings in the text color rather than the primary one. Every block set in that level follows. A value that is
    * not valid throws in `createTheme`.

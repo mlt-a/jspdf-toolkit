@@ -45,6 +45,11 @@ for (const level of levels) doc.paragraph(`${level}: the quick brown fox`, { lev
 The table is read from the library. The `title` family is `typography.titleFontFamily`, the `label` family
 `labelFontFamily`; both fall back to the default family, `body`.
 
+## Alignment
+
+`typography.align` (`'left'`, the default, or `'justify'`) is the alignment of paragraphs, rich text and lists when a
+call sets no `align` of its own. Info boxes, callouts and tables keep their own alignment.
+
 ## Restyling a level
 
 `typography.sizes` sets the size of a group of levels, and `typography.levels` restyles a level itself: its `color`,

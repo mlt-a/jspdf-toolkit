@@ -148,6 +148,12 @@ export interface DocumentOptions {
    * the column and this width. Default: the content width.
    */
   measure?: number;
+  /**
+   * Length (mm) of the rule under a heading drawn with `rule: true`, from the left margin, above 0. At most the content
+   * width. A frame narrower than it (a column, an inset) brings it down to its own measure. Default: the reading
+   * column (`measure`).
+   */
+  headingRuleWidth?: number;
   /** Compresses the PDF streams. Default: `true`. */
   compress?: boolean;
   /** PDF metadata title. */
@@ -195,11 +201,11 @@ export interface EnsureSpaceOptions {
 
 /**
  * Throws `InvalidOptionError` for a margin or `firstPageTop` that is not a finite number of 0 or more, margins that
- * leave no width or no height, or a `measure` outside the content width. The running header is declared after
+ * leave no width or no height, a `measure` or a `headingRuleWidth` outside the content width. The running header is declared after
  * construction: its reserve is not part of the height check.
  */
 function validateOptions(options: DocumentOptions, resolved: Margins, pageWidth: number, pageHeight: number): void {
-  const { margins, firstPageTop, measure } = options;
+  const { margins, firstPageTop, measure, headingRuleWidth } = options;
 
   const nonNegative = {
     'margins.top': margins?.top,
@@ -228,6 +234,9 @@ function validateOptions(options: DocumentOptions, resolved: Margins, pageWidth:
 
   const contentWidth = pageWidth - left - right;
   if (measure !== undefined) checkedNumber('measure (mm)', measure, { ...POSITIVE, max: contentWidth });
+  if (headingRuleWidth !== undefined) {
+    checkedNumber('headingRuleWidth (mm)', headingRuleWidth, { ...POSITIVE, max: contentWidth });
+  }
 }
 
 /**
@@ -428,6 +437,8 @@ export class PDFDocument {
   readonly pageHeight: number;
   /** The `debug` option: warnings are printed to the console as they are raised. */
   readonly debug: boolean;
+  /** @internal The `headingRuleWidth` option (mm), absent when the rule spans the reading column. */
+  readonly headingRuleWidth: number | undefined;
   /** @internal Where the content starts and ends on each page. */
   readonly layout: PageLayout;
 
@@ -508,6 +519,7 @@ export class PDFDocument {
 
     this.theme = resolveTheme(options.theme === undefined ? createTheme() : options.theme, fonts);
     this.debug = options.debug ?? false;
+    this.headingRuleWidth = options.headingRuleWidth;
 
     const fontWarning = checkThemeFonts(this.doc, this.theme.typography, fonts);
     if (fontWarning) this.addWarning(fontWarning);

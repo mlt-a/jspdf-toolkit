@@ -34,7 +34,9 @@ import { createTheme } from '../../src/theme/defaults';
 import {
   LONG,
   channels,
+  columnDoc,
   drawingState,
+  edgeOf,
   expectDrawnHeight,
   expectRejectedBeforeDrawing,
   expectTextWithin,
@@ -207,6 +209,65 @@ describe('measure', () => {
 
   it.each([0, -5, 500])('rejects an invalid measure of %s', (measure) => {
     expect(() => makeDoc({ theme: makeDoc().theme, measure })).toThrow(/Invalid measure/);
+  });
+});
+
+describe('typography.align on paragraphs', () => {
+  const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. '.repeat(6);
+  it('stays ragged without it, and justifies to the measure with it', () => {
+    expect(edgeOf(columnDoc(), (doc) => doc.paragraph(text))).toBeLessThan(99.9);
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.paragraph(text))).toBeCloseTo(100, 1);
+  });
+
+  it('is read by paragraphs and by the height of a paragraph', () => {
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.paragraphs([text, text]))).toBeCloseTo(100, 1);
+    expect(computeParagraphHeight(columnDoc('justify'), text)).toBeCloseTo(
+      computeParagraphHeight(columnDoc(), text),
+      6,
+    );
+  });
+
+  it('yields to the align of the call', () => {
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.paragraph(text, { align: 'left' }))).toBeLessThan(99.9);
+    expect(edgeOf(columnDoc('left'), (doc) => doc.paragraph(text, { align: 'justify' }))).toBeCloseTo(100, 1);
+  });
+});
+
+/** The rule `draw` makes on `doc`: its left end and its length (mm). */
+const ruleOf = (doc: PDFDocument, draw: () => void = () => doc.heading('Title', { rule: true })) => {
+  const line = vi.spyOn(doc.doc, 'line');
+  draw();
+  doc.flushPendingHeadings();
+  const [[left, , right]] = line.mock.calls as number[][];
+  return { left, length: right - left };
+};
+
+describe('headingRuleWidth', () => {
+  it('defaults to the measure', () => {
+    const doc = makeDoc({ measure: 120 });
+    expect(ruleOf(doc).length).toBeCloseTo(120, 6);
+  });
+
+  it('shortens the rule, which stays from the left margin', () => {
+    const doc = makeDoc({ measure: 150, headingRuleWidth: 90 });
+    expect(ruleOf(doc)).toEqual({ left: doc.margins.left, length: 90 });
+  });
+
+  it('accepts the content width, and a measure narrower than it brings the rule down', () => {
+    const wide = makeDoc({ headingRuleWidth: makeDoc().contentWidth });
+    expect(ruleOf(wide).length).toBeCloseTo(wide.contentWidth, 6);
+    const doc = makeDoc({ headingRuleWidth: 150, measure: 100 });
+    expect(ruleOf(doc).length).toBeCloseTo(100, 6);
+  });
+
+  it('is brought down to the frame the heading is drawn in', () => {
+    const doc = makeDoc({ headingRuleWidth: 150 });
+    const result = ruleOf(doc, () => doc.inset({ width: 60 }, () => doc.heading('Title', { rule: true })));
+    expect(result.length).toBeCloseTo(60, 6);
+  });
+
+  it.each([0, -5, 500])('rejects an invalid width of %s', (headingRuleWidth) => {
+    expect(() => makeDoc({ headingRuleWidth })).toThrow(/Invalid headingRuleWidth/);
   });
 });
 

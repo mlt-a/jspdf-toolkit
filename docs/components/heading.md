@@ -24,7 +24,9 @@ doc
 
 `number` is drawn before the title in the primary color, on its first line; the lines of a long title align after it.
 `rule` underlines the last line across the reading column. With either, the title itself turns to the text color, unless
-the theme colors its level: the accent moves to the number or the rule.
+the theme colors its level: the accent moves to the number or the rule. The `headingRuleWidth` document option (mm)
+shortens the rule, which then stops short of the right edge of the reading column while the text runs to it; it never
+goes past the reading column of the frame the heading is drawn in.
 
 <!-- preview: heading-number -->
 
@@ -52,7 +54,7 @@ doc
 | `spaceBefore`  | `number`       | `theme.spacing.heading[level].before`             | Space (mm) above the heading. It collapses with the space the previous block left under it: the larger of the two separates them. None at the top of a page.                                                                                                                        |
 | `spaceAfter`   | `number`       | `theme.spacing.heading[level].after`              | Space (mm) under the heading.                                                                                                                                                                                                                                                       |
 | `number`       | `string`       |                                                   | Section number drawn before the title in the primary color, e.g. `'2.1'`, on its first line: the lines of a long title align after it. Listed in the table of contents. A number that leaves the title no width throws an `InvalidOptionError`.                                     |
-| `rule`         | `boolean`      |                                                   | Rule under the heading, across the reading column, in the primary color.                                                                                                                                                                                                            |
+| `rule`         | `boolean`      |                                                   | Rule under the heading, across the reading column, in the primary color. The `headingRuleWidth` document option shortens it.                                                                                                                                                        |
 | `keepWithNext` | `boolean`      | `true`                                            | Keeps the heading with the block that follows it, so a heading never ends a page alone: `doc.heading()` waits for the next block and moves to the next page with its first line or row when both do not fit. Consecutive headings wait together. `false` draws the heading at once. |
 | `toc`          | `boolean`      | listed when its level is within the table `depth` | Lists the heading in the table of contents (`true`) or leaves it out (`false`), whatever the table `depth`.                                                                                                                                                                         |
 

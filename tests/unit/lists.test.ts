@@ -2,10 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import { LIST, SPACING } from '../../src/core/constants';
 import type { PDFDocument } from '../../src/core/document';
+import type { ListOptions } from '../../src/drawing/lists';
 import { drawBulletList, drawNumberedList } from '../../src/drawing/lists';
 import { drawRichBlocks, listPrefixes } from '../../src/drawing/rich';
 import { measureTextLevel, resolveTextStyle, setTextStyle } from '../../src/drawing/text';
-import { type DrawnText, makeDoc, recordTexts, watchDrawing } from './helpers';
+import { PNG, type DrawnText, columnDoc, edgeOf, makeDoc, recordTexts, watchDrawing } from './helpers';
 
 /** Where the text of item 1 starts, and the call that drew the number `prefix`, if any. */
 function firstTextX(doc: PDFDocument, draw: () => void, prefix?: string): { prefixCall?: DrawnText; textX: number } {
@@ -171,6 +172,34 @@ describe('an empty list', () => {
     const drawing = watchDrawing(doc);
     expect(doc.bulletList([], { indent: 10 }).iconList([], { icon: 'mark' }).peekYPos()).toBe(startY);
     drawing.nothingDrawn();
+  });
+});
+
+describe('list align', () => {
+  const long = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. '.repeat(4);
+  it.each([
+    ['a bullet list', (doc: PDFDocument, options?: ListOptions) => doc.bulletList([long], options)],
+    ['a numbered list', (doc: PDFDocument, options?: ListOptions) => doc.numberedList([long], options)],
+    [
+      'an icon list',
+      (doc: PDFDocument, options?: ListOptions) => {
+        doc.registerImage('mark', PNG);
+        doc.iconList([long], { ...options, icon: 'mark' });
+      },
+    ],
+  ])('justifies %s to the width, with the align of the call or of the theme', (_name, draw) => {
+    expect(edgeOf(columnDoc(), (doc) => draw(doc))).toBeLessThan(99.9);
+    expect(edgeOf(columnDoc(), (doc) => draw(doc, { align: 'justify' }))).toBeCloseTo(100, 1);
+    expect(edgeOf(columnDoc('justify'), (doc) => draw(doc))).toBeCloseTo(100, 1);
+    expect(edgeOf(columnDoc('justify'), (doc) => draw(doc, { align: 'left' }))).toBeLessThan(99.9);
+  });
+
+  it('justifies sub-items and details, and keeps the height of the list', () => {
+    const items = [{ text: long, subItems: [long], detail: long }];
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.bulletList(items))).toBeCloseTo(100, 1);
+    expect(edgeOf(columnDoc('justify'), (doc) => doc.bulletList(items, { align: 'left' }))).toBeLessThan(99.9);
+    // Justifying moves words along their line: the lines break where they did.
+    expect(columnDoc('justify').bulletList(items).getYPos()).toBeCloseTo(columnDoc().bulletList(items).getYPos(), 6);
   });
 });
 

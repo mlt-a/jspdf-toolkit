@@ -842,6 +842,25 @@ describe('table pagination', () => {
     for (const cell of cells) expect(cell.y + cell.height).toBeLessThanOrEqual(bottom + 1e-6);
   });
 
+  it('keeps the continuation title ragged under a theme that justifies', () => {
+    const title = 'Orders placed over the whole of the reporting period, every region included (continued)';
+    const narrow = [
+      { header: 'Item', key: 'item', width: 40 },
+      { header: 'Value', key: 'value', width: 30 },
+    ];
+    const doc = makeDoc({ theme: createTheme({ typography: { align: 'justify' } }) });
+    const texts = recordTexts(doc);
+    doc.table(rowsOf(120), { columns: narrow, continuationTitle: title });
+    const onSecond = texts.filter((call) => call.page === 2);
+    const titleLines = onSecond.slice(
+      0,
+      onSecond.findIndex((call) => call.lines[0] === 'Item'),
+    );
+    // Whole lines: a justified one is drawn word by word.
+    expect(titleLines.length).toBeGreaterThan(1);
+    expect(titleLines.flatMap((call) => call.lines).join(' ')).toBe(title);
+  });
+
   it('draws the continuation title without a header with showHead firstPage', () => {
     const { doc, texts } = drawn(rowsOf(120), {
       columns,

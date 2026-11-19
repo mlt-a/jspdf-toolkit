@@ -119,6 +119,20 @@ const SPACES: Case[] = [
     (d, v) => d.bulletList(['One'], { spaceAfter: v }),
     (d, v) => d.bulletList([], { spaceAfter: v }),
   ),
+  ...(['bulletList', 'numberedList'] as const).flatMap((name) =>
+    option(
+      `${name} align`,
+      ['center', 5, null],
+      (d, v) => d[name](['One'], { align: v as never }),
+      (d, v) => d[name]([], { align: v as never }),
+    ),
+  ),
+  ...option(
+    'iconList align',
+    ['center', 5, null],
+    (d, v) => d.iconList(['One'], { icon: 'img', align: v as never }),
+    (d, v) => d.iconList([], { icon: 'img', align: v as never }),
+  ),
   ...option(
     'bulletList itemSpacing',
     GAP,
@@ -1445,6 +1459,14 @@ const DOCUMENT: Case[] = [
   ),
   ...(['compress', 'debug'] as const).flatMap((key) =>
     option(`document ${key}`, NOT_FLAG, (_d, v) => new PDFDocument({ [key]: v } as never)),
+  ),
+  ...option('document headingRuleWidth', [0, -1, Number.NaN, 500, '5', null], (_d, v) => {
+    return new PDFDocument({ headingRuleWidth: v as never });
+  }),
+  ...option(
+    'document theme typography align',
+    ['center', 5, null],
+    (_d, v) => new PDFDocument({ theme: createTheme({ typography: { align: v as never } }) }),
   ),
   ...option('document margins', NOT_OBJECT, (_d, v) => new PDFDocument({ margins: v as never })),
   ...option('document theme', NOT_OBJECT, (_d, v) => new PDFDocument({ theme: v as never })),

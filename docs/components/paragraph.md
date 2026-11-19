@@ -21,6 +21,12 @@ doc
   .paragraph('A text level changes the size and the color.', { level: 'smallMuted' });
 ```
 
+## Alignment
+
+`align` is set per call. When a call leaves it out, `theme.typography.align` decides (`'left'` by default), so a theme
+that sets `align: 'justify'` justifies every paragraph, rich text and list at once; an `align` on the call wins. Info
+boxes, callouts and tables keep their own alignment.
+
 ## Several paragraphs
 
 `paragraphs(texts, options?)` takes the same options, plus `itemSpacing` between two paragraphs. `spaceAfter` is the
@@ -50,7 +56,7 @@ doc.paragraphs(['First point.', 'Second point.', 'Third point, indented like the
 | `level`           | `TextLevel`           | `'body'`                              | Text level of the paragraph.                                                                                                    |
 | `indent`          | `number`              | 0                                     | Indent (mm) from the left margin.                                                                                               |
 | `maxWidth`        | `number`              | the document `measure` minus `indent` | Line width (mm), above 0. Wider than the available width (the content width less `indent`): brought down to it, with a warning. |
-| `align`           | `'justify' \| 'left'` | `left`                                | `justify` stretches every line but the last one of each source line.                                                            |
+| `align`           | `'justify' \| 'left'` | `theme.typography.align`, else `left` | `justify` stretches every line but the last one of each source line.                                                            |
 | `lineHeightScale` | `number`              | 1                                     | Multiplies the line height.                                                                                                     |
 | `spaceAfter`      | `number`              | `theme.spacing.block`                 | Space (mm) after the paragraph.                                                                                                 |
 
@@ -66,7 +72,7 @@ doc.paragraphs(['First point.', 'Second point.', 'Third point, indented like the
 | `level`           | `TextLevel`           | `'body'`                              | Text level of the paragraph.                                                                                                    |
 | `indent`          | `number`              | 0                                     | Indent (mm) from the left margin.                                                                                               |
 | `maxWidth`        | `number`              | the document `measure` minus `indent` | Line width (mm), above 0. Wider than the available width (the content width less `indent`): brought down to it, with a warning. |
-| `align`           | `'justify' \| 'left'` | `left`                                | `justify` stretches every line but the last one of each source line.                                                            |
+| `align`           | `'justify' \| 'left'` | `theme.typography.align`, else `left` | `justify` stretches every line but the last one of each source line.                                                            |
 | `lineHeightScale` | `number`              | 1                                     | Multiplies the line height.                                                                                                     |
 | `spaceAfter`      | `number`              | `theme.spacing.block`                 | Space (mm) after the paragraph.                                                                                                 |
 

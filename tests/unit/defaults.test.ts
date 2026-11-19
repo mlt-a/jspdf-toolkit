@@ -73,6 +73,18 @@ describe('createTheme overrides given as undefined', () => {
   });
 });
 
+describe('typography.align', () => {
+  it('is left out by default and kept as given', () => {
+    expect(createTheme().typography.align).toBeUndefined();
+    expect(createTheme({ typography: { align: 'justify' } }).typography.align).toBe('justify');
+    expect(createTheme({ typography: { align: 'left' } }).typography.align).toBe('left');
+  });
+
+  it.each(['center', 5, null])('refuses %s', (align) => {
+    expect(() => createTheme({ typography: { align: align as never } })).toThrow(/theme.typography.align/);
+  });
+});
+
 describe('typography.levels', () => {
   it('rejects a key that is not a style of a level, a size included', () => {
     const levels = { h2: { size: 20 } } as never;
