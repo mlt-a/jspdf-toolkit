@@ -16,7 +16,7 @@ export interface PanelOptions {
   padding?: number;
   /** Corner radius (mm) of the frame: 0 or more. Default: 1. */
   radius?: number;
-  /** Space (mm) under the panel. Default: `theme.spacing.block`. */
+  /** Space (mm) under the panel: 0 or more. Default: `theme.spacing.block`. */
   spaceAfter?: number;
 }
 
@@ -37,7 +37,8 @@ export function resolvePanelOptions(ctx: DrawingContext, options: PanelOptions |
   const boxStyle = optionalBoxStyle('panel', options?.boxStyle) ?? 'surface';
   const padding = optionalNumber('panel padding (mm)', options?.padding, { min: 0 }) ?? BOX.padding;
   const radius = optionalNumber('panel radius (mm)', options?.radius, { min: 0 }) ?? BOX.radius;
-  const spaceAfter = ctx.resolveSpaceAfter(options?.spaceAfter);
+  // A negative space would pull the next block into the frame: refused, unlike the other blocks, which cover nothing.
+  const spaceAfter = ctx.resolveSpaceAfter(optionalNumber('panel spaceAfter (mm)', options?.spaceAfter, { min: 0 }));
   remainingTextWidth('panel', ctx.measure, 2 * padding);
   return { boxStyle, padding, radius, spaceAfter };
 }

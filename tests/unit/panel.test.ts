@@ -193,6 +193,15 @@ describe('panel across pages', () => {
   });
 });
 
+describe('panel in a column that runs onto a new page', () => {
+  it('leaves the columns after it starting at the top of that page, without its padding', () => {
+    const doc = makeDoc();
+    doc.columns([() => tallPanel(doc), () => doc.panel(() => doc.paragraph('Beside.'), { boxStyle: 'tint' })]);
+    const [beside] = framesOn(doc, 2, doc.theme.colors.tint);
+    expect(beside.top).toBeCloseTo(doc.layout.topFor(2), 3);
+  });
+});
+
 describe('panel callback that throws', () => {
   it('leaves the flow and the frame as they were', () => {
     const doc = makeDoc();

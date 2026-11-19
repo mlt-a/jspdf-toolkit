@@ -70,7 +70,7 @@ doc.paragraph('Signed in two copies, one for each party.');
 | `boxStyle`   | `BoxStylePreset` | `'surface'`           | Fill and border of the frame, a `BoxStylePreset`.                                                            |
 | `padding`    | `number`         | 4                     | Space (mm) between the frame and its content, on its four sides, on every page the panel runs on: 0 or more. |
 | `radius`     | `number`         | 1                     | Corner radius (mm) of the frame: 0 or more.                                                                  |
-| `spaceAfter` | `number`         | `theme.spacing.block` | Space (mm) under the panel.                                                                                  |
+| `spaceAfter` | `number`         | `theme.spacing.block` | Space (mm) under the panel: 0 or more.                                                                       |
 
 <!-- /options -->
 
@@ -81,6 +81,9 @@ doc.paragraph('Signed in two copies, one for each party.');
 - **Measured first**: the callback runs up to three times (measuring passes, then the real one), as with
   [`keepTogether`](flow-control.md#keeptogether). Keep it free of side effects: a callback that draws more on its last
   run gets a frame that runs to the bottom of the page.
+- **Limit with `onNewPage`**: the heights are measured on draft pages without the `onNewPage` hook, so a hook that moves
+  the position leaves the frames out of step with the content, as for `keepTogether`.
+- **Nested panels**: the callback of an inner panel is replayed up to three times for each run of the panel around it.
 - **Across pages**: kept on one page when it fits on one; split otherwise, one closed frame per page. A first frame
   that would hold nothing moves the panel to the next page.
 - **In a column or an inset**: the frame takes the measure of that frame, and the blocks inside wrap to it less the

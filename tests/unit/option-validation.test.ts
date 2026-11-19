@@ -1310,7 +1310,7 @@ const OPTIONAL_BLOCKS: Case[] = [
   ),
   ...option(
     'panel spaceAfter',
-    FINITE,
+    GAP,
     (d, v) => d.panel(() => d.paragraph('Inside'), { spaceAfter: v }),
     (d, v) => d.panel(() => {}, { spaceAfter: v }),
   ),

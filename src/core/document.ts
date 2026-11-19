@@ -469,7 +469,8 @@ export class PDFDocument {
   private frame: Frame;
   private yPos: number;
   // Where the start of the last page left the position, once its `onNewPage` hook ran: where the branches of
-  // `parallel` after a page break restart. Read only after a page break: its starting value is never read.
+  // `parallel` after a page break restart, less the padding of the open panels. Read only after a page break: its
+  // starting value is never read.
   private startedAt = 0;
   private readonly warningList: string[] = [];
   private state: 'open' | 'finalized' | 'exported' = 'open';
@@ -714,6 +715,8 @@ export class PDFDocument {
 
   /** Whether nothing stands above the position: the top of the page, or the top of the content of a panel. */
   private atFlowTop(): boolean {
+    // Nothing to read outside a panel: the page number is not looked up for a flow without one.
+    if (this.panels.length === 0) return this.atPageTop();
     return this.atPageTop() || (this.flowTop.page === this.pageNumber && this.yPos <= this.flowTop.y);
   }
 
@@ -982,7 +985,8 @@ export class PDFDocument {
       });
       if (this.pageNumber !== page) {
         page = this.pageNumber;
-        startY = this.startedAt;
+        // `startedAt` is kept without the padding of the panels the branch opened: those are closed now.
+        startY = this.startedAt + this.flowPadding;
         start = NO_TRAILING;
         bottom = startY;
       }
@@ -1246,7 +1250,7 @@ export class PDFDocument {
       this.inPageFrame(() => this.decoratePage(blank));
     }
     this.continuePanels(bottom);
-    this.startedAt = this.yPos;
+    this.startedAt = this.yPos - this.flowPadding;
     // Raised here, where the page breaks: once for nested branches. Pages `finalize` inserts are in the page frame.
     if (this.measuring === 0) {
       if (this.frame.branch) this.addWarning(BRANCH_PAGE_BREAK_WARNING);
@@ -1880,7 +1884,9 @@ export class PDFDocument {
    * A taller one is split, and each page holds a frame of its own, closed on its four sides, the padding kept inside
    * it at the top and the bottom of the page. A heading called just before the panel stands above it and stays with
    * it. Like `keepTogether`, the callback runs up to three times (measuring passes, then the real one): keep it free of
-   * side effects. Throws an `InvalidOptionError` for a `draw` that is no function, an option out of its bounds, or a
+   * side effects. The heights are measured on draft pages that run no `onNewPage` hook, so a hook that moves the
+   * position leaves the frames out of step with the content (as for `keepTogether`). Nested panels multiply the runs:
+   * the callback of an inner panel is replayed up to three times for each run of the one around it. Throws an `InvalidOptionError` for a `draw` that is no function, an option out of its bounds, or a
    * padding that leaves the content no width, before anything is drawn.
    *
    * @group Boxes
