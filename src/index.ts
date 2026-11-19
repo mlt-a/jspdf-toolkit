@@ -71,6 +71,7 @@ export type { ListItem, ListOptions, IconListOptions } from './drawing/lists';
 export type { CheckboxVariant, CheckboxOptions, InlineQuestionOptions } from './drawing/checkboxes';
 export type { Field, FieldLayout, FieldsOptions } from './drawing/fields';
 export type { InfoBoxOptions, InfoBoxCommon, SurfaceInfoBoxOptions, CalloutInfoBoxOptions } from './drawing/boxes';
+export type { PanelOptions } from './drawing/panel';
 export type { DeclarationItem, DeclarationsBoxOptions } from './drawing/declarations';
 export type { AddressLine, AddressBlockOptions } from './drawing/address';
 export type { SignatureItem, SignatureBoxBounds, SignatureZoneOptions } from './drawing/signatures';

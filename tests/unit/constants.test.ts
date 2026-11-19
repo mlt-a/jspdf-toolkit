@@ -2,6 +2,7 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 
 import {
   BADGE,
+  BOX,
   CHART,
   CHECKBOX,
   COVER,
@@ -74,6 +75,8 @@ describe('the defaults the public JSDoc writes', () => {
     ['PDFDocument.badge, gap under a heading', BADGE.headingGap, 2],
     ['CheckboxOptions.spaceAfter, gap between consecutive checkboxes', CHECKBOX.groupGap, 2],
     ['the back cover inset: logo, contact, legal text', COVER.backInset, 20],
+    ['PanelOptions.padding', BOX.padding, 4],
+    ['PanelOptions.radius', BOX.radius, 1],
   ])('%s', (_where, constant, written) => {
     expect(constant).toBe(written);
   });

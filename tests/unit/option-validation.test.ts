@@ -1283,6 +1283,40 @@ const OPTIONAL_BLOCKS: Case[] = [
   ...option('drawBox boxStyle', [undefined, 'bogus', 5, null], (d, v) =>
     drawBox(d, { ...BOX_OPTIONS, boxStyle: v as never }),
   ),
+  ...option('panel draw', NOT_FUNCTION, (d, v) => d.panel(v as never)),
+  ...option(
+    'panel options',
+    [null, 5, 'text', ['a']],
+    (d, v) => d.panel(() => d.paragraph('Inside'), v as never),
+    (d, v) => d.panel(() => {}, v as never),
+  ),
+  ...option(
+    'panel boxStyle',
+    NOT_CHOICE,
+    (d, v) => d.panel(() => d.paragraph('Inside'), { boxStyle: v as never }),
+    (d, v) => d.panel(() => {}, { boxStyle: v as never }),
+  ),
+  ...option(
+    'panel padding',
+    GAP,
+    (d, v) => d.panel(() => d.paragraph('Inside'), { padding: v }),
+    (d, v) => d.panel(() => {}, { padding: v }),
+  ),
+  ...option(
+    'panel radius',
+    GAP,
+    (d, v) => d.panel(() => d.paragraph('Inside'), { radius: v }),
+    (d, v) => d.panel(() => {}, { radius: v }),
+  ),
+  ...option(
+    'panel spaceAfter',
+    FINITE,
+    (d, v) => d.panel(() => d.paragraph('Inside'), { spaceAfter: v }),
+    (d, v) => d.panel(() => {}, { spaceAfter: v }),
+  ),
+  ...single('panel with a padding that leaves its content no width', (d) =>
+    d.panel(() => d.paragraph('Inside'), { padding: d.measure / 2 }),
+  ),
   ...DECLARATION_CALLS.flatMap(([name, call]) => declarationOptionCases(name, call)),
   ...option(
     'addressBlock boxStyle',

@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `panel(draw, options?)`: a frame around the blocks `draw` adds (headings, fields, paragraphs, rich text, tables…),
+  with a `boxStyle` preset (`'surface'` by default), a `padding` on every side (4 mm), a `radius` (1 mm) and a
+  `spaceAfter`. A panel that fits on one page is kept on one page, on the next one when it does not fit under the
+  position. A taller one is split, with a closed frame on each page and the padding kept at the top and the bottom of
+  the page. The callback is measured first and runs up to three times, as with `keepTogether`. `PanelOptions` is
+  exported.
+
 ## [0.5.0] - 2026-11-19
 
 ### Added

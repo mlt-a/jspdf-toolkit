@@ -2,7 +2,7 @@ import { jsPDF } from 'jspdf';
 
 import { drawAddressBlock } from '../drawing/address';
 import type { AddressLine, AddressBlockOptions } from '../drawing/address';
-import { drawInfoBox } from '../drawing/boxes';
+import { drawBox, drawInfoBox } from '../drawing/boxes';
 import type { InfoBoxOptions } from '../drawing/boxes';
 import { drawColumnChart, drawDonutChart, drawLineChart, drawStackedBar } from '../drawing/charts';
 import type {
@@ -26,6 +26,8 @@ import type { Field, FieldsOptions } from '../drawing/fields';
 import { drawBackgroundImage } from '../drawing/image-helpers';
 import { drawBulletList, drawNumberedList, drawIconList } from '../drawing/lists';
 import type { ListItem, ListOptions, IconListOptions } from '../drawing/lists';
+import { resolvePanelOptions } from '../drawing/panel';
+import type { PanelOptions, ResolvedPanelOptions } from '../drawing/panel';
 import { drawRichBlocks, drawRichText } from '../drawing/rich';
 import type { RichTextOptions } from '../drawing/rich';
 import { drawSeparator } from '../drawing/sections';
@@ -342,6 +344,26 @@ interface Trailing {
 
 const NO_TRAILING: Trailing = { space: 0 };
 
+/** A panel the flow is drawing in: see `panel`. */
+interface OpenPanel {
+  readonly options: ResolvedPanelOptions;
+  /** The `measuring` depth it opened at: the scratch pages of a block measured inside it are not its pages. */
+  readonly depth: number;
+  /** Padding (mm) of the panels around it: on a new page, its frame starts that far under the top of the content. */
+  readonly outer: number;
+  /** Left edge and width (mm) of its frame. */
+  readonly x: number;
+  readonly width: number;
+  /** Height (mm) of its frame on each page, as a measuring pass found them: what the real pass draws. */
+  readonly planned: readonly number[];
+  /** Height (mm) of its frame on each page it has left, then on its last page once closed. */
+  readonly heights: number[];
+  /** Top (mm) of its frame on the current page. */
+  top: number;
+  /** Whether the page broke before anything was drawn in it: its first frame holds only its padding. */
+  emptyStart: boolean;
+}
+
 /**
  * A frame from `left` to `right` (mm from each page edge), `contentWidth` mm wide, over a footer zone `bottom` mm high.
  * Its margins object is built once and frozen; a `pageHeader` declared while the frame is open still moves its `top`.
@@ -457,6 +479,13 @@ export class PDFDocument {
   // The designed page `pageDecoration` is drawing: a page opened meanwhile is content, with a warning.
   private designing: DesignedPage | null = null;
   private trailing = NO_TRAILING;
+  // The panels open in the flow, outermost first, and the padding (mm) they keep together at the top and the bottom
+  // of a page: the content of a panel stays inside its frame on every page it runs on.
+  private readonly panels: OpenPanel[] = [];
+  private flowPadding = 0;
+  // Where the content of the innermost panel starts, and on which page: nothing stands above a block there. Page 0
+  // is no page.
+  private flowTop = { page: 0, y: 0 };
   private newPageHook: (() => void) | null = null;
   /** @internal Every image drawn goes through it: decoded, measured and embedded once per image data. */
   readonly images: ImageCache;
@@ -675,9 +704,27 @@ export class PDFDocument {
     return this.doc.getCurrentPageInfo().pageNumber;
   }
 
-  /** @internal Whether the position is at the top of the current page: nothing drawn on it yet. */
+  /**
+   * @internal Whether the position is at the top of the current page: nothing drawn on it yet. Inside a panel, the top
+   * of the page is under its padding.
+   */
   atPageTop(): boolean {
-    return this.yPos <= this.layout.topFor(this.pageNumber);
+    return this.yPos <= this.layout.topFor(this.pageNumber) + this.flowPadding;
+  }
+
+  /** Whether nothing stands above the position: the top of the page, or the top of the content of a panel. */
+  private atFlowTop(): boolean {
+    return this.atPageTop() || (this.flowTop.page === this.pageNumber && this.yPos <= this.flowTop.y);
+  }
+
+  /** Bottom (mm) of the content on the page, above the padding the open panels keep under it. */
+  private flowBottom(): number {
+    return this.layout.bottom(this.pageHeight) - this.flowPadding;
+  }
+
+  /** Where the content starts on a new page, under the padding the open panels keep above it. */
+  private nextPageTop(): number {
+    return this.layout.topFor(2) + this.flowPadding;
   }
 
   /**
@@ -740,7 +787,7 @@ export class PDFDocument {
   addSpace(mm: number): this {
     checkedNumber('addSpace (mm)', mm);
     this.flushPendingHeadings();
-    if (this.atPageTop()) return this;
+    if (this.atFlowTop()) return this;
     this.yPos += mm;
     this.trailing = NO_TRAILING;
     return this;
@@ -779,7 +826,7 @@ export class PDFDocument {
    */
   spaceAbove(spaceBefore: number, trailing?: number): number {
     if (trailing === undefined) {
-      if (this.atPageTop()) return 0;
+      if (this.atFlowTop()) return 0;
       trailing = this.trailing.space;
     }
     // A negative space under a block covers nothing, as `endBlock` keeps it.
@@ -987,13 +1034,13 @@ export class PDFDocument {
   }
 
   private usableHeight(): number {
-    return this.layout.bottom(this.pageHeight) - this.layout.topFor(2);
+    return this.flowBottom() - this.nextPageTop();
   }
 
   private breakIfShort(height: number): boolean {
     // At the top of a page a break would only leave a blank page behind.
     if (this.atPageTop()) return false;
-    if (this.layout.bottom(this.pageHeight) - this.yPos >= height) return false;
+    if (this.flowBottom() - this.yPos >= height) return false;
     this.addPage();
     return true;
   }
@@ -1070,8 +1117,8 @@ export class PDFDocument {
     // one pass; a break is only worth it when the block fits on a page of its own.
     if (
       !this.atPageTop() &&
-      !this.fitsOnOnePage(draw, this.yPos, this.trailing) &&
-      this.fitsOnOnePage(draw, this.layout.topFor(2), NO_TRAILING)
+      !this.measurePass(draw, this.yPos, this.trailing).fits &&
+      this.measurePass(draw, this.nextPageTop(), NO_TRAILING).fits
     ) {
       // The waiting headings move with the block: hidden from the `onNewPage` hook, which may read the position.
       const waiting = this.takePendingHeadings();
@@ -1112,19 +1159,21 @@ export class PDFDocument {
     return this;
   }
 
-  /** Draws `draw` on a scratch page from `startY` and tells whether it ended on that page, within the content area. */
-  private fitsOnOnePage(draw: () => void, startY: number, trailing: Trailing): boolean {
+  /**
+   * Draws `draw` on a scratch page from `startY`, under a block that left `trailing`, and rolls it back. Returns what
+   * `draw` returned, and whether it ended on that page, within the content area.
+   */
+  private measurePass<T>(draw: () => T, startY: number, trailing: Trailing): { value: T; fits: boolean } {
     const pageCount = this.doc.getNumberOfPages();
     const restore = this.snapshot();
     this.measuring++;
     try {
       this.doc.addPage();
       this.restoreFlow(startY, trailing);
-      draw();
+      const value = draw();
       // The space the last block leaves under it may run past the bottom: only what is drawn has to fit.
-      return (
-        this.doc.getNumberOfPages() === pageCount + 1 && this.contentBottom() <= this.layout.bottom(this.pageHeight)
-      );
+      const fits = this.doc.getNumberOfPages() === pageCount + 1 && this.contentBottom() <= this.flowBottom();
+      return { value, fits };
     } finally {
       this.measuring--;
       restore();
@@ -1184,9 +1233,11 @@ export class PDFDocument {
 
   // Runs for every page jsPDF creates, whoever asks for it.
   private startPage(blank = false): void {
+    // Where the frames of the open panels close on the page the flow leaves.
+    const bottom = this.contentBottom();
     // jsPDF writes the stroke color, line width, cap and join it keeps at the top of a new page, but not the fill.
     restateFillColor(this.doc);
-    this.yPos = this.layout.topFor(2);
+    this.yPos = this.nextPageTop();
     this.trailing = NO_TRAILING;
     // Scratch pages of a measuring pass are deleted: they get no decoration, hook or warning, but `parallel` still
     // restarts the branches that follow from the top of the page it broke.
@@ -1194,6 +1245,7 @@ export class PDFDocument {
       // A page broken from inside a branch of `parallel` is decorated, and its hook run, with the page geometry.
       this.inPageFrame(() => this.decoratePage(blank));
     }
+    this.continuePanels(bottom);
     this.startedAt = this.yPos;
     // Raised here, where the page breaks: once for nested branches. Pages `finalize` inserts are in the page frame.
     if (this.measuring === 0) {
@@ -1819,6 +1871,119 @@ export class PDFDocument {
     this.checkNotFinalized();
     drawInfoBox(this, content, options);
     return this;
+  }
+
+  /**
+   * Draws the blocks `draw` adds inside a frame: a `boxStyle` fill and border around them, `padding` between the two.
+   * The frame takes the measure of the current frame, and the blocks wrap to it less the padding on each side. A panel
+   * that fits on one page stays on one page: on the current page when it fits under the position, else on the next.
+   * A taller one is split, and each page holds a frame of its own, closed on its four sides, the padding kept inside
+   * it at the top and the bottom of the page. A heading called just before the panel stands above it and stays with
+   * it. Like `keepTogether`, the callback runs up to three times (measuring passes, then the real one): keep it free of
+   * side effects. Throws an `InvalidOptionError` for a `draw` that is no function, an option out of its bounds, or a
+   * padding that leaves the content no width, before anything is drawn.
+   *
+   * @group Boxes
+   *
+   * @example
+   * ```ts
+   * doc.panel(() => {
+   *   doc.heading('Retirement savings plan', { level: 'h4' });
+   *   doc.fieldRows([[{ label: 'Insurer', value: 'Acme Life' }, { label: 'Fees', value: '0.6 %' }]]);
+   *   doc.paragraph('Payments may be stopped at any time, without fees.');
+   * });
+   * ```
+   */
+  panel(draw: () => void, options?: PanelOptions): this {
+    this.checkNotFinalized();
+    checkedFunction('panel draw', draw);
+    const resolved = resolvePanelOptions(this, options);
+    const paint = (planned: readonly number[]) => this.drawPanel(draw, resolved, planned);
+    // Measured first, so each frame is drawn under its content, with the height that content takes on its page.
+    let measured = this.measurePass(() => paint([]), this.yPos, this.trailing);
+    if (!this.atPageTop() && !measured.fits) {
+      const fresh = this.measurePass(() => paint([]), this.nextPageTop(), NO_TRAILING);
+      // A break is worth it when the panel then fits, or when its first frame would hold nothing.
+      if (fresh.fits || measured.value.emptyStart) {
+        // The waiting headings move with the panel: hidden from the `onNewPage` hook, which may read the position.
+        const waiting = this.takePendingHeadings();
+        this.doc.addPage();
+        this.pendingHeadings = waiting;
+        measured = fresh;
+      }
+    }
+    paint(measured.value.heights);
+    return this;
+  }
+
+  /**
+   * Draws a panel from the position: its frame on this page, `draw` in a frame narrowed by the padding, the frames of
+   * the pages it runs onto from `startPage`. `planned` holds the height of each frame; a frame it does not know runs
+   * to the bottom of the content. Returns the panel, with the height of its frame on each page.
+   */
+  private drawPanel(draw: () => void, options: ResolvedPanelOptions, planned: readonly number[]): OpenPanel {
+    const { padding } = options;
+    // The waiting headings stand above the frame.
+    this.ensureSpace(2 * padding);
+    const { left: x } = this.margins;
+    const width = this.measure;
+    const panel: OpenPanel = {
+      options,
+      depth: this.measuring,
+      outer: this.flowPadding,
+      x,
+      width,
+      planned,
+      heights: [],
+      top: this.yPos,
+      emptyStart: false,
+    };
+    this.paintPanelFrame(panel);
+    const { flowPadding, flowTop } = this;
+    const contentTop = panel.top + padding;
+    this.panels.push(panel);
+    this.flowPadding += padding;
+    this.flowTop = { page: this.pageNumber, y: contentTop };
+    this.restoreFlow(contentTop, NO_TRAILING);
+    const inner = width - 2 * padding;
+    try {
+      this.inFrame(this.childFrame(x + padding, inner, inner, this.frame.branch), () => {
+        draw();
+        this.flushPendingHeadings();
+      });
+    } finally {
+      this.panels.pop();
+      this.flowPadding = flowPadding;
+      this.flowTop = flowTop;
+    }
+    const bottom = this.contentBottom() + padding;
+    panel.heights.push(bottom - panel.top);
+    this.endBlock(bottom, options.spaceAfter);
+    return panel;
+  }
+
+  /**
+   * On a new page, closes the frame of each open panel of this pass under `bottom`, the content the flow left, and
+   * draws its frame on the new page, before the content.
+   */
+  private continuePanels(bottom: number): void {
+    for (const panel of this.panels) {
+      if (panel.depth !== this.measuring) continue;
+      if (panel.heights.length === 0) panel.emptyStart = bottom <= panel.top + panel.options.padding;
+      // Under the content: the padding of this panel and of the panels inside it.
+      panel.heights.push(bottom + this.flowPadding - panel.outer - panel.top);
+      panel.top = this.layout.topFor(2) + panel.outer;
+      this.paintPanelFrame(panel);
+    }
+  }
+
+  /** Draws the frame of `panel` on the current page, with its planned height. */
+  private paintPanelFrame(panel: OpenPanel): void {
+    const { boxStyle, radius } = panel.options;
+    const height = panel.planned[panel.heights.length] ?? this.layout.bottom(this.pageHeight) - panel.outer - panel.top;
+    // A panel without padding or content has no frame to draw.
+    if (height <= 0) return;
+    drawBox(this, { x: panel.x, y: panel.top, width: panel.width, height, boxStyle, radius });
   }
 
   /**

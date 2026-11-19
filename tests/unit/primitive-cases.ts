@@ -68,6 +68,11 @@ export const FLOW: Case[] = [
   ['fieldRows', (d) => d.fieldRows([[{ label: 'A', value: 'b' }], [{ label: 'C', value: 'd' }]])],
   ['infoBox, surface', (d) => d.infoBox('Content', { title: 'Title', bulletPoints: ['One', 'Two'], icon: 'img' })],
   ['infoBox, callout', (d) => d.infoBox('Content', { variant: 'callout', eyebrow: 'Note', title: 'Title' })],
+  ['panel', (d) => d.panel(() => d.heading('Title', { level: 'h4' }).paragraph(LONG))],
+  [
+    'panel across pages',
+    (d) => d.panel(() => d.paragraphs(Array.from({ length: 50 }, () => 'Line')), { boxStyle: 'tint' }),
+  ],
   [
     'declarationsBox',
     (d) =>

@@ -379,6 +379,7 @@ Each method returns the document, so calls chain. `o?` is the optional options o
 | `fields(list, o?)`, `fieldRows(rows, o?)`                           | Label / value pairs: stacked, inline or with a dotted leader. | [Fields and forms](#fields-and-forms)                            |
 | `checkbox(label, o?)`, `inlineQuestion(question, o?)`               | Checkboxes and question / answer lines.                       | [Fields and forms](#fields-and-forms)                            |
 | `infoBox(content, o)`                                               | A titled box or a callout.                                    | [Boxes](#boxes)                                                  |
+| `panel(draw, o?)`                                                   | A frame around the blocks `draw` adds, one per page.          | [Boxes](#boxes)                                                  |
 | `declarationsBox(items, o?)`, `addressBlock(lines, o?)`             | A box of statements; a boxed address.                         | [Boxes](#boxes)                                                  |
 | `signatureZone(boxes, o?)`                                          | One or two signature boxes.                                   | [Signatures](#signatures)                                        |
 | `donutChart(slices, o?)`, `stackedBar(slices, o?)`                  | Parts of a whole: a ring or pie, a horizontal bar.            | [Charts](#charts)                                                |
@@ -645,6 +646,25 @@ doc
 - `addressBlock(lines, { boxStyle?, spaceAfter? })`: `lines` are `{ text, role }` with `role` one of
   `'title' | 'subtitle' | 'address'`. `parseAddressLines` builds them from a multi-line string (first line title,
   optional second line subtitle, the rest address). The block is as wide as the measure of its frame.
+
+`panel(draw, options?)` frames any blocks: `draw` adds them, inside a `boxStyle` fill and border (`'surface'`) with
+`padding` (4 mm) on every side, a `radius` (1 mm) and a `spaceAfter`. The panel takes the measure of its frame. One that
+fits on a page stays on one page; a taller one is split, with a closed frame on each page. The callback runs up to
+three times, as with `keepTogether`: keep it free of side effects.
+
+```ts
+// assumes `doc` from Quick start
+doc.panel(() => {
+  doc.heading('Retirement savings plan', { level: 'h4' });
+  doc.fieldRows([
+    [
+      { label: 'Insurer', value: 'Acme Life' },
+      { label: 'Fees', value: '0.6 %' },
+    ],
+  ]);
+  doc.richText('Payments may be stopped **at any time**, without fees.');
+});
+```
 
 ### Signatures
 
@@ -1245,7 +1265,7 @@ The types of `@mlt-a/jspdf-toolkit`, by area:
 | Text                 | `TextLevel`, `HeadingLevel`, `TextAlign`, `FontRole`, `HeadingOptions`, `ParagraphOptions`, `ParagraphsOptions`, `RichTextOptions`, `RichBlock`, `RichInline`, `TextLevelMetrics`, `MeasureTextLevelOptions`, `DrawTextOptions`                                                                                                                                                                                                     |
 | Lists                | `SeparatorOptions`, `ListItem`, `ListOptions`, `IconListOptions`                                                                                                                                                                                                                                                                                                                                                                    |
 | Fields and forms     | `Field`, `FieldLayout`, `FieldsOptions`, `CheckboxVariant`, `CheckboxOptions`, `InlineQuestionOptions`                                                                                                                                                                                                                                                                                                                              |
-| Boxes                | `InfoBoxOptions`, `InfoBoxCommon`, `SurfaceInfoBoxOptions`, `CalloutInfoBoxOptions`, `DeclarationItem`, `DeclarationsBoxOptions`, `AddressLine`, `AddressBlockOptions`, `ParseAddressLinesOptions`, `SignatureItem`, `SignatureBoxBounds`, `SignatureZoneOptions`, `BoxStylePreset`, `BoxOptions`                                                                                                                                   |
+| Boxes                | `InfoBoxOptions`, `InfoBoxCommon`, `SurfaceInfoBoxOptions`, `CalloutInfoBoxOptions`, `PanelOptions`, `DeclarationItem`, `DeclarationsBoxOptions`, `AddressLine`, `AddressBlockOptions`, `ParseAddressLinesOptions`, `SignatureItem`, `SignatureBoxBounds`, `SignatureZoneOptions`, `BoxStylePreset`, `BoxOptions`                                                                                                                   |
 | Table                | `TableRow`, `TableColumn`, `TableCell`, `TableCellContext`, `TableCellStyle`, `TableOptions`                                                                                                                                                                                                                                                                                                                                        |
 | Columns and header   | `Column`, `ColumnsOptions`, `HeaderField`, `HeaderColumn`, `HeaderColumnsOptions`, `LogoOptions`, `LogoAnchor`, `LogoPosition`, `LogoPlacement`, `BadgeOptions`                                                                                                                                                                                                                                                                     |
 | Charts               | `ChartSlice`, `DonutChartOptions`, `StackedBarOptions`, `ChartSeries`, `ChartColumn`, `ColumnChartOptions`, `ChartLine`, `ChartBand`, `LineChartData`, `LineChartOptions`                                                                                                                                                                                                                                                           |

@@ -12,6 +12,7 @@ children:
   - checkbox.md
   - inline-question.md
   - info-box.md
+  - panel.md
   - declarations-box.md
   - address-block.md
   - signature-zone.md
@@ -156,6 +157,7 @@ bold italic face: the examples avoid it, so they draw without a warning.
 | Component                              | Draws                                       |
 | -------------------------------------- | ------------------------------------------- |
 | [infoBox](info-box.md)                 | A titled box, or a tinted callout.          |
+| [panel](panel.md)                      | A frame around any blocks, split by page.   |
 | [declarationsBox](declarations-box.md) | A box of statements with highlighted words. |
 | [addressBlock](address-block.md)       | A boxed address.                            |
 | [signatureZone](signature-zone.md)     | One or two signature boxes.                 |
