@@ -4,7 +4,7 @@ This file provides guidance to coding agents working with code in this repositor
 
 ## Project Status
 
-Library in active early development (v0.4.0). Breaking changes to the public API are expected and acceptable — favor the best design over backwards compatibility.
+Library in active early development (v0.5.0). Breaking changes to the public API are expected and acceptable — favor the best design over backwards compatibility.
 
 ## Commands
 
