@@ -175,89 +175,90 @@ text   x=12.00 y=180.92 9pt #64748b Inter-normal "Registered office address as f
 text   x=190.17 y=180.92 9pt #1e293b Inter-bold "Paris"
 stroke x=108.07 y=180.92 w=80.10 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
 text   x=12.00 y=186.05 9pt #64748b Inter-normal "Main activity"
-text   x=84.39 y=190.18 9pt #1e293b Inter-bold "Design and publication of software components for document generation"
-text   x=12.00 y=207.57 14pt #2e8b6e Inter-bold "Tables"
-fill   x=12.00 y=214.44 w=106.00 h=6.67 #2e8c6e B
-stroke x=12.00 y=214.44 w=106.00 h=6.67 #61a891 line=0.30 B
-text   x=14.00 y=218.47 8pt #ffffff Inter-bold "Component"
-fill   x=118.00 y=214.44 w=35.00 h=6.67 #2e8c6e B
-stroke x=118.00 y=214.44 w=35.00 h=6.67 #61a891 line=0.30 B
-text   x=120.00 y=218.47 8pt #ffffff Inter-bold "Category"
-fill   x=153.00 y=214.44 w=25.00 h=6.67 #2e8c6e B
-stroke x=153.00 y=214.44 w=25.00 h=6.67 #61a891 line=0.30 B
-text   x=161.06 y=218.47 8pt #ffffff Inter-bold "Status"
-fill   x=178.00 y=214.44 w=20.00 h=6.67 #2e8c6e B
-stroke x=178.00 y=214.44 w=20.00 h=6.67 #61a891 line=0.30 B
-text   x=185.23 y=218.47 8pt #ffffff Inter-bold "Version"
-fill   x=12.00 y=221.11 w=106.00 h=6.67 #ededf0 B
-stroke x=12.00 y=221.11 w=106.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=14.00 y=225.14 8pt #1e293b Inter-normal "heading"
-fill   x=118.00 y=221.11 w=35.00 h=6.67 #ededf0 B
-stroke x=118.00 y=221.11 w=35.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=120.00 y=225.14 8pt #1e293b Inter-normal "Typography"
-fill   x=153.00 y=221.11 w=25.00 h=6.67 #ededf0 B
-stroke x=153.00 y=221.11 w=25.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=161.31 y=225.14 8pt #1e293b Inter-normal "Stable"
-fill   x=178.00 y=221.11 w=20.00 h=6.67 #ededf0 B
-stroke x=178.00 y=221.11 w=20.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=192.26 y=225.14 8pt #1e293b Inter-normal "1.0"
-fill   x=12.00 y=227.78 w=106.00 h=6.67 #ffffff B
-stroke x=12.00 y=227.78 w=106.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=14.00 y=231.81 8pt #1e293b Inter-normal "paragraph"
-fill   x=118.00 y=227.78 w=35.00 h=6.67 #ffffff B
-stroke x=118.00 y=227.78 w=35.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=120.00 y=231.81 8pt #1e293b Inter-normal "Typography"
-fill   x=153.00 y=227.78 w=25.00 h=6.67 #ffffff B
-stroke x=153.00 y=227.78 w=25.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=161.31 y=231.81 8pt #1e293b Inter-normal "Stable"
-fill   x=178.00 y=227.78 w=20.00 h=6.67 #ffffff B
-stroke x=178.00 y=227.78 w=20.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=192.26 y=231.81 8pt #1e293b Inter-normal "1.0"
-fill   x=12.00 y=234.45 w=106.00 h=6.67 #ededf0 B
-stroke x=12.00 y=234.45 w=106.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=14.00 y=238.48 8pt #1e293b Inter-normal "bulletList"
-fill   x=118.00 y=234.45 w=35.00 h=6.67 #ededf0 B
-stroke x=118.00 y=234.45 w=35.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=120.00 y=238.48 8pt #1e293b Inter-normal "Lists"
-fill   x=153.00 y=234.45 w=25.00 h=6.67 #ededf0 B
-stroke x=153.00 y=234.45 w=25.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=161.31 y=238.48 8pt #1e293b Inter-normal "Stable"
-fill   x=178.00 y=234.45 w=20.00 h=6.67 #ededf0 B
-stroke x=178.00 y=234.45 w=20.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=192.26 y=238.48 8pt #1e293b Inter-normal "1.0"
-fill   x=12.00 y=241.11 w=106.00 h=6.67 #ffffff B
-stroke x=12.00 y=241.11 w=106.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=14.00 y=245.15 8pt #1e293b Inter-normal "table"
-fill   x=118.00 y=241.11 w=35.00 h=6.67 #ffffff B
-stroke x=118.00 y=241.11 w=35.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=120.00 y=245.15 8pt #1e293b Inter-normal "Data"
-fill   x=153.00 y=241.11 w=25.00 h=6.67 #ffffff B
-stroke x=153.00 y=241.11 w=25.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=161.31 y=245.15 8pt #1e293b Inter-normal "Stable"
-fill   x=178.00 y=241.11 w=20.00 h=6.67 #ffffff B
-stroke x=178.00 y=241.11 w=20.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=192.26 y=245.15 8pt #1e293b Inter-normal "1.0"
-fill   x=12.00 y=247.78 w=106.00 h=6.67 #ededf0 B
-stroke x=12.00 y=247.78 w=106.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=14.00 y=251.81 8pt #1e293b Inter-normal "signatureZone"
-fill   x=118.00 y=247.78 w=35.00 h=6.67 #ededf0 B
-stroke x=118.00 y=247.78 w=35.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=120.00 y=251.81 8pt #1e293b Inter-normal "Forms"
-fill   x=153.00 y=247.78 w=25.00 h=6.67 #ededf0 B
-stroke x=153.00 y=247.78 w=25.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=161.31 y=251.81 8pt #1e293b Inter-normal "Stable"
-fill   x=178.00 y=247.78 w=20.00 h=6.67 #ededf0 B
-stroke x=178.00 y=247.78 w=20.00 h=6.67 #e3e8f0 line=0.30 B
-text   x=192.26 y=251.81 8pt #1e293b Inter-normal "1.0"
-fill   x=12.00 y=254.45 w=106.00 h=6.67 #e0ede8 B
-stroke x=12.00 y=254.45 w=106.00 h=6.67 #d6e8e3 line=0.30 B
-text   x=14.00 y=258.48 8pt #1e293b Inter-bold "5 components"
-fill   x=118.00 y=254.45 w=35.00 h=6.67 #e0ede8 B
-stroke x=118.00 y=254.45 w=35.00 h=6.67 #d6e8e3 line=0.30 B
-fill   x=153.00 y=254.45 w=25.00 h=6.67 #e0ede8 B
-stroke x=153.00 y=254.45 w=25.00 h=6.67 #d6e8e3 line=0.30 B
-fill   x=178.00 y=254.45 w=20.00 h=6.67 #e0ede8 B
-stroke x=178.00 y=254.45 w=20.00 h=6.67 #d6e8e3 line=0.30 B
+text   x=84.39 y=186.05 9pt #1e293b Inter-bold "Design and publication of software components for document generation"
+stroke x=32.97 y=186.05 w=49.42 h=0.00 #94a3b8 line=0.30 S dash=[0.40 1.20]
+text   x=12.00 y=203.45 14pt #2e8b6e Inter-bold "Tables"
+fill   x=12.00 y=210.31 w=106.00 h=6.67 #2e8c6e B
+stroke x=12.00 y=210.31 w=106.00 h=6.67 #61a891 line=0.30 B
+text   x=14.00 y=214.34 8pt #ffffff Inter-bold "Component"
+fill   x=118.00 y=210.31 w=35.00 h=6.67 #2e8c6e B
+stroke x=118.00 y=210.31 w=35.00 h=6.67 #61a891 line=0.30 B
+text   x=120.00 y=214.34 8pt #ffffff Inter-bold "Category"
+fill   x=153.00 y=210.31 w=25.00 h=6.67 #2e8c6e B
+stroke x=153.00 y=210.31 w=25.00 h=6.67 #61a891 line=0.30 B
+text   x=161.06 y=214.34 8pt #ffffff Inter-bold "Status"
+fill   x=178.00 y=210.31 w=20.00 h=6.67 #2e8c6e B
+stroke x=178.00 y=210.31 w=20.00 h=6.67 #61a891 line=0.30 B
+text   x=185.23 y=214.34 8pt #ffffff Inter-bold "Version"
+fill   x=12.00 y=216.98 w=106.00 h=6.67 #ededf0 B
+stroke x=12.00 y=216.98 w=106.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=221.01 8pt #1e293b Inter-normal "heading"
+fill   x=118.00 y=216.98 w=35.00 h=6.67 #ededf0 B
+stroke x=118.00 y=216.98 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=120.00 y=221.01 8pt #1e293b Inter-normal "Typography"
+fill   x=153.00 y=216.98 w=25.00 h=6.67 #ededf0 B
+stroke x=153.00 y=216.98 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.31 y=221.01 8pt #1e293b Inter-normal "Stable"
+fill   x=178.00 y=216.98 w=20.00 h=6.67 #ededf0 B
+stroke x=178.00 y=216.98 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=192.26 y=221.01 8pt #1e293b Inter-normal "1.0"
+fill   x=12.00 y=223.65 w=106.00 h=6.67 #ffffff B
+stroke x=12.00 y=223.65 w=106.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=227.68 8pt #1e293b Inter-normal "paragraph"
+fill   x=118.00 y=223.65 w=35.00 h=6.67 #ffffff B
+stroke x=118.00 y=223.65 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=120.00 y=227.68 8pt #1e293b Inter-normal "Typography"
+fill   x=153.00 y=223.65 w=25.00 h=6.67 #ffffff B
+stroke x=153.00 y=223.65 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.31 y=227.68 8pt #1e293b Inter-normal "Stable"
+fill   x=178.00 y=223.65 w=20.00 h=6.67 #ffffff B
+stroke x=178.00 y=223.65 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=192.26 y=227.68 8pt #1e293b Inter-normal "1.0"
+fill   x=12.00 y=230.32 w=106.00 h=6.67 #ededf0 B
+stroke x=12.00 y=230.32 w=106.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=234.35 8pt #1e293b Inter-normal "bulletList"
+fill   x=118.00 y=230.32 w=35.00 h=6.67 #ededf0 B
+stroke x=118.00 y=230.32 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=120.00 y=234.35 8pt #1e293b Inter-normal "Lists"
+fill   x=153.00 y=230.32 w=25.00 h=6.67 #ededf0 B
+stroke x=153.00 y=230.32 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.31 y=234.35 8pt #1e293b Inter-normal "Stable"
+fill   x=178.00 y=230.32 w=20.00 h=6.67 #ededf0 B
+stroke x=178.00 y=230.32 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=192.26 y=234.35 8pt #1e293b Inter-normal "1.0"
+fill   x=12.00 y=236.99 w=106.00 h=6.67 #ffffff B
+stroke x=12.00 y=236.99 w=106.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=241.02 8pt #1e293b Inter-normal "table"
+fill   x=118.00 y=236.99 w=35.00 h=6.67 #ffffff B
+stroke x=118.00 y=236.99 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=120.00 y=241.02 8pt #1e293b Inter-normal "Data"
+fill   x=153.00 y=236.99 w=25.00 h=6.67 #ffffff B
+stroke x=153.00 y=236.99 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.31 y=241.02 8pt #1e293b Inter-normal "Stable"
+fill   x=178.00 y=236.99 w=20.00 h=6.67 #ffffff B
+stroke x=178.00 y=236.99 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=192.26 y=241.02 8pt #1e293b Inter-normal "1.0"
+fill   x=12.00 y=243.66 w=106.00 h=6.67 #ededf0 B
+stroke x=12.00 y=243.66 w=106.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=14.00 y=247.69 8pt #1e293b Inter-normal "signatureZone"
+fill   x=118.00 y=243.66 w=35.00 h=6.67 #ededf0 B
+stroke x=118.00 y=243.66 w=35.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=120.00 y=247.69 8pt #1e293b Inter-normal "Forms"
+fill   x=153.00 y=243.66 w=25.00 h=6.67 #ededf0 B
+stroke x=153.00 y=243.66 w=25.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=161.31 y=247.69 8pt #1e293b Inter-normal "Stable"
+fill   x=178.00 y=243.66 w=20.00 h=6.67 #ededf0 B
+stroke x=178.00 y=243.66 w=20.00 h=6.67 #e3e8f0 line=0.30 B
+text   x=192.26 y=247.69 8pt #1e293b Inter-normal "1.0"
+fill   x=12.00 y=250.32 w=106.00 h=6.67 #e0ede8 B
+stroke x=12.00 y=250.32 w=106.00 h=6.67 #d6e8e3 line=0.30 B
+text   x=14.00 y=254.36 8pt #1e293b Inter-bold "5 components"
+fill   x=118.00 y=250.32 w=35.00 h=6.67 #e0ede8 B
+stroke x=118.00 y=250.32 w=35.00 h=6.67 #d6e8e3 line=0.30 B
+fill   x=153.00 y=250.32 w=25.00 h=6.67 #e0ede8 B
+stroke x=153.00 y=250.32 w=25.00 h=6.67 #d6e8e3 line=0.30 B
+fill   x=178.00 y=250.32 w=20.00 h=6.67 #e0ede8 B
+stroke x=178.00 y=250.32 w=20.00 h=6.67 #d6e8e3 line=0.30 B
 stroke x=12.00 y=284.00 w=186.00 h=0.00 #e3e8f0 line=0.30 S
 text   x=193.48 y=289.39 7pt #64748b Inter-bold tracking=0.18 "3/8"
 

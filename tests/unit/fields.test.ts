@@ -340,6 +340,29 @@ describe('inline and leader layouts', () => {
       expect(row(10).placement).toBe('beside');
     });
 
+    it('keeps a one-line value wider than half the row beside the label, which wraps', () => {
+      const doc = makeDoc({ measure: 100 });
+      const labelStyle = resolveTextStyle(doc, 'body');
+      const valueStyle = resolveTextStyle(doc, 'bodyBold');
+      const label = 'Which variations can you accept on your investment?';
+      const value = 'Portfolio C, marked variations (+20 %)';
+      const row = layoutLeaderRow(doc, {
+        label,
+        labelStyle,
+        value: { text: value, style: valueStyle },
+        width: 100,
+        lineHeight: 5,
+        minRun: FIELD.leaderMinRun,
+      });
+      setTextStyle(doc, 'bodyBold');
+      expect(doc.doc.getTextWidth(value)).toBeGreaterThan(100 * FIELD.sideMaxRatio);
+      setTextStyle(doc, 'body');
+      expect(doc.doc.getTextWidth(label)).toBeLessThan(100);
+      expect(row.placement).toBe('beside');
+      expect(row.labelLines.length).toBeGreaterThan(1);
+      expect(row.height).toBe(row.labelLines.length * 5);
+    });
+
     it('wraps a long label before the value and keeps the dots on its last line', () => {
       const doc = makeDoc({ measure: 100 });
       const line = vi.spyOn(doc.doc, 'line');

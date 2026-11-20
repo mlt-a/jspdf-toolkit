@@ -51,8 +51,8 @@ export interface FieldsOptions {
    *   itself, after the label. A highlighted value keeps its pill. A label wider than half the line falls back to
    *   `'stacked'` for that field.
    * - `'leader'`: one field per line, the label on the left, the value on the right in bold or as a pill, dotted
-   *   leader between them. A value wider than half the line goes on its own right-aligned lines under the label, with
-   *   no leader.
+   *   leader between them. The label wraps before the value. A value on several lines, or one that would leave the
+   *   label less than a quarter of the line, goes on its own right-aligned lines under the label, with no leader.
    *
    * `'inline'` and `'leader'` give every field its own full-width line, so a row of `fieldRows` is a group of lines.
    *

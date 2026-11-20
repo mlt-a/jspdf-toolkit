@@ -6,6 +6,12 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- `fields(…, { layout: 'leader' })`: a one-line value wider than half the line stays beside the label, which wraps
+  before it. It goes under the label only on several lines, or when it would leave the label less than a quarter of
+  the line.
+
 ## [0.6.0] - 2026-11-19
 
 ### Added

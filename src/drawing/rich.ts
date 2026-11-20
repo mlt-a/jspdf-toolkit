@@ -1,5 +1,5 @@
 import type { TextLevel } from '../core/constants';
-import { ALIGNMENTS, FIELD, LEADER, LINE_WIDTH, LIST, TEXT, ascentMm } from '../core/constants';
+import { ALIGNMENTS, LEADER, LINE_WIDTH, LIST, TEXT, ascentMm } from '../core/constants';
 import type { DrawingContext } from '../core/context';
 import {
   checkedArray,
@@ -445,8 +445,8 @@ function layoutLeaderValue(ctx: DrawingContext, value: LeaderValue, width: numbe
 
 /**
  * Single layout of a `label ..... value` row, shared by measuring and drawing. The label wraps in what the value
- * leaves on its line, dots included. A value on several lines, or wider than `FIELD.sideMaxRatio` of the row, goes
- * below the label.
+ * leaves on its line, dots included. A value on several lines, or one that would leave the label less than
+ * `LEADER.labelMinRatio` of the row, goes below the label.
  */
 export function layoutLeaderRow(ctx: DrawingContext, options: LeaderRowOptions): LeaderRowLayout {
   return withDrawingState(ctx, () => {
@@ -458,7 +458,7 @@ export function layoutLeaderRow(ctx: DrawingContext, options: LeaderRowOptions):
     // Without a required run the label only keeps a gap from the value: the dots may vanish.
     const reserved = room + LEADER.gap + (minRun > 0 ? minRun + LEADER.gap : 0);
     const labelRoom = width - (prefix?.width ?? 0) - reserved;
-    const beside = valueLines === 1 && room <= width * FIELD.sideMaxRatio && labelRoom >= width * LEADER.labelMinRatio;
+    const beside = valueLines === 1 && labelRoom >= width * LEADER.labelMinRatio;
     const placement = beside ? 'beside' : 'below';
 
     const labelWidth = beside ? labelRoom : width - (prefix?.width ?? 0);

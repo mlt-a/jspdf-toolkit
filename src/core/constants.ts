@@ -195,8 +195,8 @@ export const FIELD = {
   /** Gap between the `Label:` of an inline field and its value. */
   inlineGap: SPACING.small,
   /**
-   * Widest share of the line the side part of a one-line field may take: an inline label (wider: the field is
-   * stacked) or a leader value (wider: it drops under the label).
+   * Widest share of the line a side label may take: an inline label (wider: the field is stacked) or a header label
+   * column.
    */
   sideMaxRatio: 0.5,
   /** Shortest dotted run between a leader label and its value. */
