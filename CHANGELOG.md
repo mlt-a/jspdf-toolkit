@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-11-20
+
 ### Changed
 
 - `fields(…, { layout: 'leader' })`: a one-line value wider than half the line stays beside the label, which wraps
@@ -267,7 +269,8 @@ First public release: themed PDF generation on top of jsPDF, through a fluent, t
 - `@mlt-a/jspdf-toolkit/fonts/inter`: `interFonts`, Inter regular, bold and italic.
 - ESM only, typed, with `jspdf` as the only peer dependency. Runs on Node 20 and later, and in the browser.
 
-[Unreleased]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/mlt-a/jspdf-toolkit/compare/v0.3.0...v0.4.0
